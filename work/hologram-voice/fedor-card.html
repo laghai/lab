@@ -1,0 +1,232 @@
+<title>Fedor's Recording Card</title>
+<style>
+  :root{
+    --paper:#f4f5f7; --card:#ffffff; --sunk:#eceef2;
+    --ink:#15181e; --ink-2:#4a515e; --ink-3:#7c8393;
+    --rule:#dcdfe6; --rule-2:#c4c9d3;
+    /* Fedor's own three laser lines: 647 nm krypton, 532 nm doubled Nd:YAG, 450 nm blue. */
+    --l647:#cf3a24; --l532:#0f9a56; --l450:#3b79d8;
+    --accent:var(--l532);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0c0f13; --card:#141820; --sunk:#1b2029;
+      --ink:#e9ecf1; --ink-2:#a6aebb; --ink-3:#6f7785;
+      --rule:#242a34; --rule-2:#323947;
+      --l647:#ff6d56; --l532:#38d488; --l450:#6ba5ff;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0c0f13; --card:#141820; --sunk:#1b2029;
+    --ink:#e9ecf1; --ink-2:#a6aebb; --ink-3:#6f7785;
+    --rule:#242a34; --rule-2:#323947;
+    --l647:#ff6d56; --l532:#38d488; --l450:#6ba5ff;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:"Helvetica Neue",Inter,system-ui,-apple-system,sans-serif;
+    font-size:16.5px; line-height:1.55; margin:0; padding:0 18px 80px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+
+  header{padding:52px 0 26px}
+  .kicker{font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase;
+          color:var(--ink-3); margin:0}
+  h1{font-size:clamp(30px,5.4vw,42px); line-height:1.06; letter-spacing:-.02em;
+     margin:12px 0 0; font-weight:700; text-wrap:balance}
+  .sub{font-size:17.5px; color:var(--ink-2); margin:14px 0 0; max-width:56ch}
+  .en{font-size:13px; color:var(--ink-3); font-style:italic; margin:6px 0 0}
+
+  .rules{display:flex; flex-direction:column; gap:14px; margin:34px 0 0}
+  .rule{
+    background:var(--card); border:1px solid var(--rule); border-left:5px solid var(--c);
+    border-radius:4px; padding:20px 22px;
+    display:grid; grid-template-columns:44px 1fr; gap:0 16px; align-items:start;
+  }
+  .n{font-family:ui-monospace,Menlo,monospace; font-size:30px; font-weight:700;
+     color:var(--c); line-height:.95; font-variant-numeric:tabular-nums}
+  .rule > div{min-width:0}
+  .rule h2{font-size:21px; line-height:1.25; margin:0; font-weight:650; letter-spacing:-.01em;
+           text-wrap:balance}
+  .gloss{font-size:12.5px; color:var(--ink-3); font-style:italic; margin:5px 0 0}
+  .do{margin:11px 0 0; font-size:16px; color:var(--ink)}
+  .say{
+    display:inline-block; background:var(--sunk); border-radius:4px;
+    padding:7px 12px; margin:9px 0 0; font-size:15.5px;
+    font-family:ui-monospace,Menlo,monospace;
+  }
+  .why{
+    margin:13px 0 0; padding-top:11px; border-top:1px dashed var(--rule-2);
+    font-size:14px; line-height:1.5; color:var(--ink-2);
+  }
+  .why b{color:var(--c); font-weight:700; font-variant-numeric:tabular-nums}
+  .c1{--c:var(--l647)} .c2{--c:var(--l647)} .c3{--c:var(--l450)}
+  .c4{--c:var(--l450)} .c5{--c:var(--ink-3)} .c6{--c:var(--ink-3)}
+
+  .block{
+    background:var(--card); border:1px solid var(--rule); border-radius:4px;
+    padding:24px 26px; margin:34px 0 0;
+  }
+  .block h3{font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700;
+            color:var(--ink-3); margin:0 0 16px}
+  .check{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:11px}
+  .check li{display:flex; gap:12px; align-items:baseline; font-size:16.5px}
+  .box{flex:0 0 auto; width:15px; height:15px; border:2px solid var(--rule-2);
+       border-radius:3px; display:inline-block; transform:translateY(2px)}
+  .check .g{font-size:12.5px; color:var(--ink-3); font-style:italic}
+
+  .ours{border-left:5px solid var(--l532)}
+  .ours ul{margin:0; padding-left:20px}
+  .ours li{margin-bottom:8px; color:var(--ink-2)}
+  .ours li b{color:var(--ink)}
+  .big{font-size:18px; color:var(--ink); margin:0 0 14px; font-weight:600; text-wrap:balance}
+
+  .foot{margin-top:34px; font-size:12.5px; color:var(--ink-3); line-height:1.6}
+
+  @media print{
+    body{background:#fff; color:#000; font-size:11.5pt; padding:0}
+    .rule,.block{break-inside:avoid; border-color:#bbb; background:#fff}
+    header{padding:0 0 12pt}
+    .foot{margin-top:16pt}
+  }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="kicker">Проект голографического дисплея &middot; запись голосом</p>
+  <h1>Как записывать, чтобы ничего не потерялось</h1>
+  <p class="sub">Пять правил, по порядку важности. Список стал короче: то, что мы сначала приняли
+  за проблему с записью, оказалось нашей ошибкой в настройке.</p>
+  <p class="en">Recording card for Fedor &mdash; five rules, ordered by how much each one saves.</p>
+</header>
+
+<div class="rules">
+
+  <div class="rule c1">
+    <div class="n">1</div>
+    <div>
+      <h2>Числа говорите дважды &mdash; и продублируйте письменно</h2>
+      <p class="gloss">Say every number twice, and also send it in writing</p>
+      <p class="do">Сначала словами, потом цифрами. И пришлите список длин волн, мощностей
+      и размеров текстом или фотографией страницы блокнота.</p>
+      <span class="say">«Зелёный, пятьсот тридцать два нанометра &mdash; 532»</span>
+      <p class="why">Две расшифровки одной и той же записи дали <b>532</b> и <b>530</b> нанометров, и
+      ничто в тексте не показывало, какое из них верное. В одной записи <b>19 чисел из 28</b>
+      распознались неуверенно. Ошибка в числе опаснее пропуска: она выглядит как нормальный текст.</p>
+    </div>
+  </div>
+
+  <div class="rule c2">
+    <div class="n">2</div>
+    <div>
+      <h2>Одна запись &mdash; один язык</h2>
+      <p class="gloss">One language per recording</p>
+      <p class="do">Если запись на английском &mdash; начинайте её сразу по-английски. Русское
+      вступление лучше записать отдельным файлом. Отдельные термины (<span class="mono">Zemax</span>,
+      <span class="mono">in-plane</span>) смешивать можно &mdash; речь о том, на чём начинается запись.</p>
+      <p class="why">Программа определяет язык по <b>первым секундам</b> и потом расшифровывает через
+      него всю запись. Ваша запись на <b>97% английская</b>, но из-за русского вступления была
+      разобрана как русская &mdash; и в описании лазеров появились немецкие и французские слова, а
+      «coherent» превратилось в «coagulated».</p>
+    </div>
+  </div>
+
+  <div class="rule c3">
+    <div class="n">3</div>
+    <div>
+      <h2>Микрофон на 20 сантиметров</h2>
+      <p class="gloss">Microphone at about 20 cm</p>
+      <p class="do">Расстояние ладони. Дверь закрыть, вентилятор и вытяжку выключить.
+      Настраивается один раз &mdash; дальше об этом можно не думать.</p>
+      <p class="why">Первыми пропадают согласные &mdash; <span class="mono">с</span>,
+      <span class="mono">ш</span>, <span class="mono">т</span>, <span class="mono">ф</span> &mdash;
+      именно они различают похожие слова. В ваших записях их энергия <b>2.9&ndash;6.7%</b> при
+      норме <b>выше 12%</b>. Это не про громкость: говорить громче не помогает, помогает ближе.</p>
+    </div>
+  </div>
+
+  <div class="rule c4">
+    <div class="n">4</div>
+    <div>
+      <h2>Названия программ &mdash; по буквам, один раз</h2>
+      <p class="gloss">Spell out product names once per recording</p>
+      <p class="do">В первый раз, когда называете программу, продиктуйте её по буквам. Одного раза
+      на запись достаточно.</p>
+      <span class="say">«Zemax &mdash; зет, и, эм, эй, икс»</span>
+      <p class="why"><span class="mono">Zemax</span> распозналось <b>шестью</b> разными способами,
+      включая <span class="mono">«Друзья и Макс»</span> и <span class="mono">Vimux</span>. Это
+      единственный термин, который не удалось исправить словарём &mdash; поэтому здесь нужна ваша
+      помощь.</p>
+    </div>
+  </div>
+
+  <div class="rule c5">
+    <div class="n">5</div>
+    <div>
+      <h2>Посторонний разговор &mdash; остановите запись</h2>
+      <p class="gloss">Pause the recording if someone comes in</p>
+      <p class="do">Если кто-то зашёл в комнату или вас позвали &mdash; поставьте паузу
+      и продолжите потом.</p>
+      <p class="why">Домашний разговор &mdash; <span class="mono">«пойдем сюда, нам некогда… просто
+      завтраку»</span> &mdash; попал в технический документ и выглядит там точно так же, как описание
+      установки.</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="block">
+  <h3>Перед записью &middot; 30 секунд</h3>
+  <ul class="check">
+    <li><span class="box"></span><span>Дверь закрыта, вентилятор выключен
+      <span class="g">&nbsp;door shut, fan off</span></span></li>
+    <li><span class="box"></span><span>Микрофон на расстоянии ладони
+      <span class="g">&nbsp;mic a hand-span away</span></span></li>
+    <li><span class="box"></span><span>Числа выписаны на бумаге &mdash; их отправим отдельно
+      <span class="g">&nbsp;numbers written down</span></span></li>
+    <li><span class="box"></span><span>Первая фраза &mdash; на языке всей записи
+      <span class="g">&nbsp;open in the language you'll use</span></span></li>
+  </ul>
+</div>
+
+<div class="block ours">
+  <h3>Что мы делаем со своей стороны</h3>
+  <p class="big">Произношение менять не нужно. Терминов избегать не нужно.
+  Длину записи менять тоже не нужно.</p>
+  <ul>
+    <li><b>Главное, и это была наша ошибка.</b> В программу был загружен словарь от совсем другого
+    проекта &mdash; финансовые и IT-термины, которых в ваших записях нет и быть не может. Из-за этого
+    программа <b>молча выбрасывала целые куски</b> вашей речи. Именно так пропали те 32 секунды, где
+    вы объясняли длины волн красного, синего и зелёного лазеров. Мы поставили правильный словарь и
+    проверили: <b>тот фрагмент вернулся полностью</b>, из той же самой записи, без сокращения её
+    длины. Записывать короче не нужно &mdash; нужно было починить настройку.</li>
+    <li>Загрузили <b>словарь по голографии</b> &mdash; около 180 терминов на русском и английском.
+    <span class="mono">голограмма</span>, <span class="mono">дифракция</span>,
+    <span class="mono">дифракционная эффективность</span>, <span class="mono">условие Брэгга</span>,
+    <span class="mono">in-plane</span>, <span class="mono">aisle</span> больше не искажаются.</li>
+    <li>Добавили <b>ваше имя</b>. Раньше оно приходило как
+    <span class="mono">Fielder</span>, <span class="mono">Fjodor</span>,
+    <span class="mono">Felder</span> и даже <span class="mono">filter</span> &mdash; пять написаний
+    в одной записи.</li>
+    <li>Всё, что раньше выглядело как ваши ошибки &mdash; <span class="mono">«галаграммы»</span>,
+    <span class="mono">«дефрагирует»</span>, <span class="mono">«географический экран»</span> &mdash;
+    было <b>нашей недонастройкой</b>, а не вашей дикцией.</li>
+  </ul>
+</div>
+
+<p class="foot">
+  Составлено 15 августа 2026 по результатам измерения четырёх записей: 6.8, 11.5, 14.0 и 22.6 минут.
+  Каждое число здесь измерено, а не оценено на слух.<br><br>
+  <b>Исправлено в тот же день.</b> В первой версии этой памятки первым правилом стояло «записывайте
+  по 5 минут». Это оказалось неверно. Проверка на одной и той же 11-минутной записи, где менялся
+  только словарь: с чужим словарём потеряно <b>104 секунды</b>, без словаря &mdash; <b>57</b>, с
+  правильным словарём по голографии &mdash; <b>39</b>. Потери были вызваны настройкой, а не длиной
+  записи, и правило снято.
+</p>
+
+</div>

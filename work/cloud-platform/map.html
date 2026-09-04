@@ -1,0 +1,746 @@
+<title>Cloud Infrastructure Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E7EBEC;
+  --panel:#FBFCFC;
+  --panel2:#F1F4F5;
+  --ink:#0F1618;
+  --ink2:#3E4C52;
+  --muted:#7A868C;
+  --hair:#C3CCD0;
+  --hair2:#D9E0E3;
+  --live:#0C8A69;
+  --live-fill:rgba(12,138,105,.09);
+  --live-fill2:rgba(12,138,105,.20);
+  --warn:#A96C0B;
+  --warn-fill:rgba(169,108,11,.07);
+  --bad:#B93E2C;
+  --bad-fill:rgba(185,62,44,.10);
+  --ghost:#9AA6AC;
+  --shadow:0 1px 2px rgba(16,28,34,.06),0 8px 24px rgba(16,28,34,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0B1114;
+    --panel:#141C21;
+    --panel2:#182229;
+    --ink:#E3EAED;
+    --ink2:#AFBCC3;
+    --muted:#7E8C93;
+    --hair:#2A363D;
+    --hair2:#222D34;
+    --live:#2FC79B;
+    --live-fill:rgba(47,199,155,.11);
+    --live-fill2:rgba(47,199,155,.24);
+    --warn:#E0A33E;
+    --warn-fill:rgba(224,163,62,.09);
+    --bad:#F0705A;
+    --bad-fill:rgba(240,112,90,.13);
+    --ghost:#5C6971;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.32);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0B1114;
+  --panel:#141C21;
+  --panel2:#182229;
+  --ink:#E3EAED;
+  --ink2:#AFBCC3;
+  --muted:#7E8C93;
+  --hair:#2A363D;
+  --hair2:#222D34;
+  --live:#2FC79B;
+  --live-fill:rgba(47,199,155,.11);
+  --live-fill2:rgba(47,199,155,.24);
+  --warn:#E0A33E;
+  --warn-fill:rgba(224,163,62,.09);
+  --bad:#F0705A;
+  --bad-fill:rgba(240,112,90,.13);
+  --ghost:#5C6971;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1220px;margin:0 auto;padding:38px 22px 90px;display:flex;flex-direction:column;gap:30px}
+
+.masthead{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:14px;
+}
+.masthead h1{
+  margin:0;font-size:clamp(30px,4.6vw,50px);font-weight:700;letter-spacing:-.024em;line-height:.98;
+  text-wrap:balance;
+}
+.stamp{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;line-height:1.65;
+  color:var(--muted);text-align:right;font-variant-numeric:tabular-nums;
+}
+.stamp b{color:var(--ink2);font-weight:600}
+.stamp .k{color:var(--ghost);letter-spacing:.13em}
+
+.fig{
+  background:var(--panel);border:1px solid var(--hair);border-radius:3px;
+  padding:20px 20px 22px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:14px;margin:0;
+}
+.figtitle{
+  display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;
+  border-bottom:1px solid var(--hair2);padding-bottom:10px;
+}
+.figtitle .n{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;font-weight:600;
+  color:var(--muted);letter-spacing:.10em;
+}
+.figtitle h2{
+  margin:0;font-size:15px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--ink);
+}
+.figbody{overflow-x:auto}
+svg{display:block;width:100%;height:auto;min-width:640px}
+
+/* --- svg paint classes --- */
+.pane{fill:var(--panel2);stroke:var(--hair);stroke-width:1}
+.pane-live{fill:var(--live-fill);stroke:var(--live);stroke-width:2}
+.pane-warn{fill:none;stroke:var(--warn);stroke-width:2;stroke-dasharray:9 7}
+.pane-ghost{fill:none;stroke:var(--ghost);stroke-width:1.5;stroke-dasharray:2 6}
+.chip{fill:var(--panel);stroke:var(--hair);stroke-width:1}
+.chip-live{fill:var(--panel);stroke:var(--live);stroke-width:1.5}
+.chip-dash{fill:none;stroke:var(--warn);stroke-width:1.5;stroke-dasharray:5 5}
+.chip-bad{fill:var(--bad-fill);stroke:var(--bad);stroke-width:1.5}
+
+.fL{fill:var(--live)} .fW{fill:var(--warn)} .fB{fill:var(--bad)}
+.fI{fill:var(--ink)} .fM{fill:var(--muted)} .fG{fill:var(--ghost)} .fI2{fill:var(--ink2)}
+.sL{stroke:var(--live);fill:none} .sW{stroke:var(--warn);fill:none}
+.sB{stroke:var(--bad);fill:none} .sG{stroke:var(--ghost);fill:none}
+.sH{stroke:var(--hair);fill:none} .sM{stroke:var(--muted);fill:none} .sI{stroke:var(--ink);fill:none}
+.trk{fill:none;stroke:var(--hair);stroke-width:1.5}
+.trkf{fill:var(--panel2);stroke:var(--hair);stroke-width:1}
+
+text{font-family:"Archivo","Helvetica Neue",Arial,sans-serif}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.lbl{font-size:12.5px;font-weight:600;letter-spacing:.13em;text-transform:uppercase}
+.big{font-size:26px;font-weight:600;letter-spacing:-.02em}
+.huge{font-size:38px;font-weight:700;letter-spacing:-.03em}
+.name{font-size:30px;font-weight:700;letter-spacing:-.02em}
+.sm{font-size:12.5px;font-weight:500}
+.sm2{font-size:13px;font-weight:500}
+.md{font-size:15px;font-weight:600}
+
+.key{
+  display:flex;gap:26px;flex-wrap:wrap;align-items:center;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12.5px;color:var(--muted);
+  border-top:1px solid var(--hair);padding-top:14px;
+}
+.key span{display:inline-flex;align-items:center;gap:8px}
+.key b{font-weight:500;color:var(--muted)}
+.sw{width:26px;height:0;border-top-width:2px;border-top-style:solid;display:inline-block}
+.sw.solid{border-color:var(--live)}
+.sw.dash{border-color:var(--warn);border-top-style:dashed}
+.sw.dot{border-color:var(--ghost);border-top-style:dotted}
+.sw.brk{border-color:var(--bad);border-top-style:dashed}
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <h1>Cloud Infrastructure Map</h1>
+    <div class="stamp">
+<span class="k">PROBED</span> <b>2026-08-22</b><br>
+      <span class="k">GCLOUD</span> 581.0.0 <span class="k">READ-ONLY</span><br>
+      <span class="k">BILLING</span> <b>018183-FB9221-7D731A</b>
+    </div>
+  </header>
+
+  <!-- ================= FIGURE 1 : THREE PROVIDERS ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">01</span><h2>Three providers, three states</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 420" role="img" aria-label="GCP is live and authenticated from this machine; AWS is funded but no credential reaches it; Azure has no account at all.">
+      <defs>
+        <marker id="ar-live" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--live)"/>
+        </marker>
+      </defs>
+
+      <!-- ---------- GCP ---------- -->
+      <rect class="pane-live" x="10" y="20" width="350" height="200" rx="3"/>
+      <circle cx="42" cy="62" r="9" class="fL"/>
+      <circle cx="42" cy="62" r="17" class="sL" stroke-width="1.5" opacity=".45"/>
+      <text class="name fI" x="68" y="74">GCP</text>
+      <text class="mono sm fL lbl" x="68" y="94">LIVE</text>
+      <text class="mono sm2 fI2" x="346" y="56" text-anchor="end">cloudup-platform-01</text>
+      <text class="mono sm fM" x="346" y="74" text-anchor="end">us-central1</text>
+      <text class="mono sm fM" x="346" y="92" text-anchor="end">37 APIs</text>
+
+      <rect class="chip-live" x="28" y="118" width="314" height="84" rx="2"/>
+      <text class="mono lbl fM" x="44" y="140">VERTEX &middot; ANTHROPIC</text>
+      <text class="mono big fI" x="44" y="174">11</text>
+      <text class="mono lbl fM" x="88" y="174">MODELS GA</text>
+      <text class="mono sm fM" x="44" y="192">opus-5 &middot; sonnet-5 &middot; fable-5</text>
+
+      <!-- ---------- AWS ---------- -->
+      <rect class="pane-warn" x="400" y="44" width="350" height="280" rx="3"/>
+      <circle cx="432" cy="86" r="9" class="sW" stroke-width="2.5"/>
+      <text class="name fI2" x="458" y="98">AWS</text>
+      <text class="mono sm fW lbl" x="458" y="118">FUNDED &middot; DARK</text>
+      <text class="mono sm2 fI2" x="736" y="80" text-anchor="end">934814114565</text>
+      <text class="mono sm fM" x="736" y="98" text-anchor="end">&ldquo;Touch Grass Later&rdquo;</text>
+
+      <rect class="chip-dash" x="418" y="140" width="314" height="84" rx="2"/>
+      <text class="mono lbl fM" x="434" y="162">CREDITS</text>
+      <text class="mono big fW" x="434" y="196">$100&ndash;200</text>
+      <text class="mono big fG" x="556" y="196">?</text>
+      <text class="mono lbl fM" x="434" y="214">EXPIRES</text>
+      <text class="mono sm fM" x="502" y="214">~2027-08-19</text>
+      <text class="mono lbl fM" x="716" y="162" text-anchor="end">SPENT</text>
+      <text class="mono huge fG" x="716" y="202" text-anchor="end">?</text>
+
+      <rect class="chip-bad" x="418" y="234" width="314" height="72" rx="2"/>
+      <text class="mono lbl fB" x="434" y="256">CREDENTIAL</text>
+      <text class="mono md fB" x="716" y="257" text-anchor="end">ABSENT</text>
+      <g transform="translate(434,268)">
+        <rect x="0" y="0" width="30" height="26" rx="2" class="sB" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle cx="15" cy="10" r="4.5" class="sB" stroke-width="1.5"/>
+        <path d="M15,15 L15,21" class="sB" stroke-width="1.5"/>
+      </g>
+      <text class="mono lbl fM" x="474" y="278">LOOKED IN</text>
+      <text class="mono sm fM" x="474" y="296">~/.aws/config &middot; keychain</text>
+
+      <!-- ---------- AZURE ---------- -->
+      <rect class="pane-ghost" x="790" y="76" width="300" height="160" rx="3"/>
+      <text class="name fG" x="816" y="120">AZURE</text>
+      <text class="mono sm fG lbl" x="816" y="140">ABSENT BY DECISION</text>
+      <g transform="translate(1046,116)">
+        <circle cx="0" cy="0" r="18" class="sG" stroke-width="2" stroke-dasharray="4 6"/>
+        <path d="M-12,12 L12,-12" class="sG" stroke-width="2"/>
+      </g>
+      <text class="mono lbl fG" x="816" y="180">CREDIT</text>
+      <text class="mono big fG" x="816" y="210">$200</text>
+      <g transform="translate(958,192)">
+        <circle cx="0" cy="0" r="15" class="sG" stroke-width="1.5"/>
+        <path d="M0,0 L0,-9" class="sG" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="1.8" class="fG"/>
+      </g>
+      <text class="mono lbl fG" x="982" y="197">UNSTARTED</text>
+
+      <!-- ---------- reach to this machine ---------- -->
+      <line x1="185" y1="220" x2="185" y2="316" class="sL" stroke-width="2.5" marker-end="url(#ar-live)"/>
+      <text class="mono sm fL" x="198" y="268">authenticated</text>
+
+      <line x1="575" y1="324" x2="575" y2="352" class="sW" stroke-width="2" stroke-dasharray="7 6"/>
+      <g transform="translate(575,368)">
+        <path d="M-11,-11 L11,11 M11,-11 L-11,11" class="sB" stroke-width="3.5"/>
+      </g>
+      <line x1="575" y1="384" x2="575" y2="398" class="sW" stroke-width="2" stroke-dasharray="4 5" opacity=".55"/>
+      <text class="mono sm fB" x="598" y="372">aws sts &rarr; NoCredentials</text>
+
+      <line x1="940" y1="236" x2="940" y2="300" class="sG" stroke-width="1.5" stroke-dasharray="2 6"/>
+      <circle cx="940" cy="314" r="9" class="sG" stroke-width="1.5"/>
+      <path d="M934,320 L946,308" class="sG" stroke-width="1.5"/>
+      <text class="mono sm fG" x="958" y="318">az</text>
+
+      <rect class="pane" x="40" y="316" width="300" height="70" rx="3"/>
+      <rect x="62" y="334" width="42" height="28" rx="2" class="sI" stroke-width="1.5" fill="none"/>
+      <path d="M56,366 L110,366" class="sI" stroke-width="1.5"/>
+      <text class="mono lbl fI" x="126" y="358">THIS MACHINE</text>
+    </svg>
+    </div>
+    <div class="key">
+      <span><i class="sw solid"></i>REACHABLE</span>
+      <span><i class="sw dash"></i>UNWIRED</span>
+      <span><i class="sw dot"></i>ABSENT</span>
+      <span>? UNVERIFIABLE HERE</span>
+    </div>
+  </figure>
+
+  <!-- ================= FIGURE 2 : PIPELINE ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">02</span><h2>cloudup-platform-01 &mdash; what flows, what persists</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 560" role="img" aria-label="Source tarballs go through Cloud Build to Artifact Registry, then fan out to transient Cloud Run jobs writing GCS artifacts and to four scale-to-zero Cloud Run services. Separately, brain-01 is a persistent always-on VM.">
+      <defs>
+        <marker id="p-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+        </marker>
+        <marker id="p-arrow-l" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--live)"/>
+        </marker>
+      </defs>
+
+      <text class="mono lbl fM" x="10" y="26">TRANSIENT</text>
+      <line x1="10" y1="36" x2="1150" y2="36" class="sH" stroke-width="1"/>
+
+      <!-- 5 stage boxes -->
+      <g>
+        <rect class="chip" x="14" y="60" width="180" height="96" rx="2" stroke-dasharray="6 4"/>
+        <text class="mono lbl fM" x="28" y="82">SOURCE .tgz</text>
+        <text class="mono md fI" x="28" y="106">36 objects</text>
+        <text class="mono sm fM" x="28" y="124">613 MB</text>
+        <text class="mono sm fM" x="28" y="142">_cloudbuild bucket</text>
+
+        <rect class="chip" x="248" y="60" width="180" height="96" rx="2" stroke-dasharray="6 4"/>
+        <text class="mono lbl fM" x="262" y="82">CLOUD BUILD</text>
+        <text class="mono md fI" x="262" y="106">27 builds</text>
+        <text class="mono md fL" x="262" y="126">26</text>
+        <text class="mono lbl fM" x="286" y="126">OK</text>
+        <text class="mono md fW" x="322" y="126">1</text>
+        <text class="mono lbl fM" x="338" y="126">RUNNING</text>
+        <text class="mono sm fM" x="262" y="145">21&ndash;34 s</text>
+
+        <rect class="chip-live" x="482" y="60" width="180" height="96" rx="2"/>
+        <text class="mono lbl fM" x="496" y="82">ARTIFACT REGISTRY</text>
+        <text class="mono md fI" x="496" y="106">35 images</text>
+        <text class="mono sm fM" x="496" y="124">cloudup 4.42 GiB</text>
+        <text class="mono sm fM" x="496" y="142">cityarts 0.36 GiB</text>
+
+        <rect class="chip" x="716" y="60" width="180" height="96" rx="2" stroke-dasharray="6 4"/>
+        <text class="mono lbl fM" x="730" y="82">CLOUD RUN JOBS</text>
+        <text class="mono md fI" x="730" y="106">5 jobs</text>
+        <text class="mono sm fM" x="730" y="124">15 executions</text>
+        <text class="mono sm fM" x="730" y="142">1,043 tasks</text>
+
+        <rect class="chip-live" x="950" y="60" width="196" height="96" rx="2"/>
+        <text class="mono lbl fM" x="964" y="82">GCS ARTIFACTS</text>
+        <text class="mono md fI" x="964" y="106">1,105 objects</text>
+        <text class="mono sm fM" x="964" y="124">1.26 GB / 4 buckets</text>
+        <text class="mono sm fM" x="964" y="142">renders &middot; audio &middot; JSON</text>
+      </g>
+
+      <line x1="196" y1="108" x2="244" y2="108" class="sI" stroke-width="1.5" marker-end="url(#p-arrow)"/>
+      <text class="mono sm fM" x="220" y="94" text-anchor="middle">push</text>
+      <line x1="430" y1="108" x2="478" y2="108" class="sI" stroke-width="1.5" marker-end="url(#p-arrow)"/>
+      <text class="mono sm fM" x="454" y="94" text-anchor="middle">tag</text>
+      <line x1="664" y1="108" x2="712" y2="108" class="sI" stroke-width="1.5" marker-end="url(#p-arrow)"/>
+      <text class="mono sm fM" x="688" y="94" text-anchor="middle">pull</text>
+      <line x1="898" y1="108" x2="946" y2="108" class="sI" stroke-width="1.5" marker-end="url(#p-arrow)"/>
+      <text class="mono sm fM" x="922" y="94" text-anchor="middle">write</text>
+
+      <!-- lifetime ticks under the transient lane -->
+      <text class="mono lbl fM" x="14" y="192">LIFETIME</text>
+      <g class="sH" stroke-width="3" stroke-linecap="butt">
+        <line x1="108" y1="188" x2="134" y2="188"/><line x1="150" y1="188" x2="176" y2="188"/>
+        <line x1="192" y1="188" x2="218" y2="188"/><line x1="234" y1="188" x2="260" y2="188"/>
+        <line x1="276" y1="188" x2="302" y2="188"/><line x1="318" y1="188" x2="344" y2="188"/>
+        <line x1="360" y1="188" x2="386" y2="188"/><line x1="402" y1="188" x2="428" y2="188"/>
+        <line x1="444" y1="188" x2="470" y2="188"/><line x1="486" y1="188" x2="512" y2="188"/>
+        <line x1="528" y1="188" x2="554" y2="188"/><line x1="570" y1="188" x2="596" y2="188"/>
+        <line x1="612" y1="188" x2="638" y2="188"/><line x1="654" y1="188" x2="680" y2="188"/>
+        <line x1="696" y1="188" x2="722" y2="188"/><line x1="738" y1="188" x2="764" y2="188"/>
+        <line x1="780" y1="188" x2="806" y2="188"/><line x1="822" y1="188" x2="848" y2="188"/>
+        <line x1="864" y1="188" x2="890" y2="188"/><line x1="906" y1="188" x2="932" y2="188"/>
+        <line x1="948" y1="188" x2="974" y2="188"/>
+      </g>
+      <text class="mono sm fM" x="1150" y="192" text-anchor="end">minutes</text>
+
+      <!-- branch: run services -->
+      <line x1="572" y1="158" x2="572" y2="228" class="sI" stroke-width="1.5"/>
+      <line x1="572" y1="228" x2="716" y2="228" class="sI" stroke-width="1.5" marker-end="url(#p-arrow)"/>
+      <text class="mono sm fM" x="586" y="222">deploy</text>
+      <rect class="chip-live" x="720" y="200" width="426" height="80" rx="2"/>
+      <text class="mono lbl fM" x="734" y="222">CLOUD RUN SERVICES</text>
+      <text class="mono md fM" x="734" y="248">cityarts:</text>
+      <text class="mono md fI" x="826" y="248">dev-a</text>
+      <text class="mono md fI" x="898" y="248">dev-b</text>
+      <text class="mono md fI" x="970" y="248">dev-c</text>
+      <text class="mono md fI" x="1042" y="248">stage-b</text>
+      <text class="mono sm fM" x="734" y="266">min-instances 0 &middot; $0 idle</text>
+
+      <!-- PERSISTENT lane -->
+      <text class="mono lbl fW" x="10" y="326">PERSISTENT</text>
+      <line x1="10" y1="336" x2="1150" y2="336" class="sW" stroke-width="1.5"/>
+
+      <rect x="14" y="360" width="640" height="160" rx="3" fill="var(--warn-fill)" stroke="var(--warn)" stroke-width="2"/>
+      <circle cx="46" cy="396" r="8" class="fW"/>
+      <text class="name fI" x="70" y="406">brain-01</text>
+      <text class="mono sm fW lbl" x="70" y="424">RUNNING</text>
+      <text class="mono sm2 fI2" x="634" y="392" text-anchor="end">us-central1-a</text>
+      <text class="mono sm fM" x="634" y="410" text-anchor="end">34.45.206.2</text>
+      <text class="mono lbl fM" x="386" y="428">UP SINCE</text>
+      <text class="mono sm fM" x="634" y="428" text-anchor="end">2026-08-21 14:39 PT</text>
+
+      <g>
+        <text class="mono lbl fM" x="34" y="458">MACHINE</text>
+        <text class="mono md fI" x="34" y="478">e2-standard-4</text>
+        <text class="mono sm fM" x="34" y="496">4 vCPU &middot; 16 GiB</text>
+
+        <text class="mono lbl fM" x="212" y="458">DISK</text>
+        <text class="mono md fI" x="212" y="478">50 GB</text>
+        <text class="mono sm fM" x="212" y="496">pd-balanced</text>
+
+        <text class="mono lbl fM" x="340" y="458">LABELS</text>
+        <text class="mono md fI" x="340" y="478">ttl=exempt</text>
+        <text class="mono sm fM" x="340" y="496">reap=never</text>
+
+        <text class="mono lbl fM" x="500" y="458">GUARD</text>
+        <text class="mono md fI" x="500" y="478">idle 60 min</text>
+        <text class="mono sm fM" x="500" y="496">systemd timer</text>
+      </g>
+
+      <!-- unbroken lifetime bar -->
+      <text class="mono lbl fM" x="678" y="400">LIFETIME</text>
+      <rect x="678" y="410" width="468" height="10" rx="2" class="fW"/>
+      <path d="M1146,406 L1146,424" class="sW" stroke-width="2" stroke-dasharray="3 3"/>
+
+      <text class="mono lbl fM" x="678" y="456">PER MONTH</text>
+      <text class="mono huge fW" x="678" y="492">$97.84</text>
+      <text class="mono lbl fW" x="824" y="488">RUNNING</text>
+      <rect x="678" y="502" width="392" height="14" rx="2" fill="var(--warn-fill)" stroke="var(--warn)" stroke-width="2"/>
+      <rect x="678" y="524" width="20" height="14" rx="2" class="trkf"/>
+      <text class="mono md fM" x="708" y="536">$5</text>
+      <text class="mono lbl fM" x="752" y="535">STOPPED</text>
+    </svg>
+    </div>
+  </figure>
+
+  <!-- ================= FIGURE 3 : CAPACITY ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">03</span><h2>Compute capacity available, in vCPU</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 340" role="img" aria-label="Cloud Run has a 200 vCPU pool; Compute Engine is capped at 32 vCPU project-wide with 4 in use; GPU capacity is zero and no GPU can launch.">
+      <!-- scale 0..200 mapped to x 250..1100 -->
+      <g class="sH" stroke-width="1">
+        <line x1="250" y1="56" x2="250" y2="300"/>
+        <line x1="462.5" y1="56" x2="462.5" y2="300" stroke-dasharray="2 5"/>
+        <line x1="675" y1="56" x2="675" y2="300" stroke-dasharray="2 5"/>
+        <line x1="887.5" y1="56" x2="887.5" y2="300" stroke-dasharray="2 5"/>
+        <line x1="1100" y1="56" x2="1100" y2="300" stroke-dasharray="2 5"/>
+      </g>
+      <g class="mono sm fM">
+        <text x="250" y="44" text-anchor="middle">0</text>
+        <text x="462.5" y="44" text-anchor="middle">50</text>
+        <text x="675" y="44" text-anchor="middle">100</text>
+        <text x="887.5" y="44" text-anchor="middle">150</text>
+        <text x="1100" y="44" text-anchor="middle">200</text>
+      </g>
+
+      <!-- Cloud Run 200 -->
+      <text class="mono md fI" x="10" y="94">Cloud Run</text>
+      <text class="mono sm fM" x="10" y="112">jobs pool</text>
+      <rect x="250" y="72" width="850" height="46" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2"/>
+      <text class="mono huge fL" x="1084" y="106" text-anchor="end">200</text>
+      <text class="mono lbl fL" x="266" y="100">ENFORCED AT</text>
+      <text class="mono lbl fL" x="386" y="100">DEPLOY</text>
+      <text class="mono sm fL" x="452" y="100">+</text>
+      <text class="mono lbl fL" x="474" y="100">EXECUTE</text>
+
+      <!-- Compute Engine 32, 4 used -->
+      <text class="mono md fI" x="10" y="180">Compute Engine</text>
+      <text class="mono sm fM" x="10" y="198">CPUS_ALL_REGIONS</text>
+      <rect x="250" y="158" width="850" height="46" rx="2" class="trkf" stroke-dasharray="4 4"/>
+      <rect x="250" y="158" width="136" height="46" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2"/>
+      <rect x="250" y="158" width="17" height="46" rx="2" class="fW"/>
+      <text class="mono big fL" x="400" y="190">32</text>
+      <text class="mono lbl fW" x="272" y="228">IN USE</text>
+      <text class="mono md fW" x="338" y="229">4</text>
+      <text class="mono sm fM" x="358" y="229">brain-01</text>
+      <line x1="258" y1="204" x2="266" y2="216" class="sW" stroke-width="1.5"/>
+
+
+      <!-- GPU 0 -->
+      <text class="mono md fI" x="10" y="266">GPU</text>
+      <text class="mono sm fM" x="10" y="284">GPUS_ALL_REGIONS</text>
+      <rect x="250" y="244" width="850" height="46" rx="2" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="8 6"/>
+      <g class="sB" stroke-width="1" opacity=".45">
+        <line x1="262" y1="290" x2="308" y2="244"/><line x1="308" y1="290" x2="354" y2="244"/>
+        <line x1="354" y1="290" x2="400" y2="244"/><line x1="400" y1="290" x2="446" y2="244"/>
+        <line x1="446" y1="290" x2="492" y2="244"/><line x1="492" y1="290" x2="538" y2="244"/>
+        <line x1="538" y1="290" x2="584" y2="244"/><line x1="584" y1="290" x2="630" y2="244"/>
+        <line x1="630" y1="290" x2="676" y2="244"/><line x1="676" y1="290" x2="722" y2="244"/>
+        <line x1="722" y1="290" x2="768" y2="244"/><line x1="768" y1="290" x2="814" y2="244"/>
+        <line x1="814" y1="290" x2="860" y2="244"/><line x1="860" y1="290" x2="906" y2="244"/>
+        <line x1="906" y1="290" x2="952" y2="244"/><line x1="952" y1="290" x2="998" y2="244"/>
+        <line x1="998" y1="290" x2="1044" y2="244"/><line x1="1044" y1="290" x2="1090" y2="244"/>
+      </g>
+      <rect x="258" y="244" width="452" height="46" fill="var(--panel)"/>
+      <text class="mono lbl fM" x="268" y="262">L4 PER REGION</text>
+      <text class="mono md fI" x="396" y="263">1</text>
+      <text class="mono lbl fM" x="268" y="282">ALL REGIONS</text>
+      <text class="mono md fB" x="396" y="283">0</text>
+      <path d="M416,252 L426,252 L426,290 L416,290 M426,271 L442,271" class="sB" stroke-width="1.5" fill="none"/>
+      <circle cx="470" cy="267" r="21" fill="var(--panel)" stroke="var(--bad)" stroke-width="2"/>
+      <text class="mono huge fB" x="470" y="280" text-anchor="middle">0</text>
+      <text class="mono lbl fB" x="504" y="262">LAUNCHABLE</text>
+      <text class="mono lbl fB" x="504" y="284">QUOTA INCREASE DENIED</text>
+    </svg>
+    </div>
+  </figure>
+
+  <!-- ================= FIGURE 4 : MONEY ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">04</span><h2>Monthly budget against actual and standing spend, USD</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 384" role="img" aria-label="Against a 300 dollar monthly budget, 12 dollars 51 cents has been spent to date, and brain-01 adds a standing 97 dollars 84 cents per month if it is never stopped.">
+      <!-- scale 0..300 -> x 40..1120 ; 3.6 px per dollar -->
+      <g class="sH" stroke-width="1">
+        <line x1="40" y1="40" x2="40" y2="300"/>
+        <line x1="580" y1="40" x2="580" y2="300" stroke-dasharray="2 5"/>
+        <line x1="1120" y1="40" x2="1120" y2="300" stroke-dasharray="2 5"/>
+      </g>
+      <g class="mono sm fM">
+        <text x="40" y="30">$0</text>
+        <text x="580" y="30" text-anchor="middle">$150</text>
+        <text x="1120" y="30" text-anchor="end">$300</text>
+      </g>
+
+      <!-- budget track -->
+      <text class="mono lbl fI" x="40" y="70">BUDGET</text>
+      <text class="mono sm fM" x="110" y="70">cloudup-monthly</text>
+      <rect x="40" y="80" width="1080" height="42" rx="2" class="trkf" stroke-dasharray="5 4"/>
+      <text class="mono big fI" x="1104" y="110" text-anchor="end">$300</text>
+
+      <!-- spent to date -->
+      <text class="mono lbl fI" x="40" y="164">SPENT TO DATE</text>
+      <text class="mono sm fM" x="176" y="164">Cloud Run &middot; 14-day</text>
+      <rect x="40" y="174" width="1080" height="42" rx="2" class="trkf"/>
+      <rect x="40" y="174" width="45" height="42" rx="2" fill="var(--live)"/>
+      <line x1="85" y1="216" x2="120" y2="248" class="sL" stroke-width="1.5"/>
+      <text class="mono big fL" x="126" y="252">$12.51</text>
+
+      <!-- brain-01 standing line -->
+      <text class="mono lbl fW" x="40" y="292">STANDING</text>
+      <text class="mono sm fM" x="130" y="292">brain-01 &middot; 730 h</text>
+      <rect x="40" y="302" width="1080" height="42" rx="2" class="trkf"/>
+      <rect x="40" y="302" width="352" height="42" rx="2" fill="var(--warn-fill)" stroke="var(--warn)" stroke-width="2"/>
+      <g class="sW" stroke-width="1" opacity=".5">
+        <line x1="48" y1="344" x2="90" y2="302"/><line x1="90" y1="344" x2="132" y2="302"/>
+        <line x1="132" y1="344" x2="174" y2="302"/><line x1="174" y1="344" x2="216" y2="302"/>
+        <line x1="216" y1="344" x2="258" y2="302"/><line x1="258" y1="344" x2="300" y2="302"/>
+        <line x1="300" y1="344" x2="342" y2="302"/><line x1="342" y1="344" x2="384" y2="302"/>
+      </g>
+      <text class="mono huge fW" x="408" y="336">$97.84</text>
+      <line x1="85" y1="218" x2="85" y2="356" class="sM" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>
+      <path d="M85,352 L85,368 M85,360 L392,360 M392,352 L392,368" class="sW" stroke-width="1.5" fill="none"/>
+      <text class="mono md fW" x="402" y="365">7.8x</text>
+    </svg>
+    </div>
+    <div class="key">
+      <span><i class="sw solid"></i>INCURRED</span>
+      <span><i class="sw dash"></i>COMMITTED</span>
+      <span>ARTIFACT REGISTRY + $0.43/mo</span>
+      <span>GCS &mdash; <b>FREE TIER</b></span>
+    </div>
+  </figure>
+
+  <!-- ================= FIGURE 5 : ALERT GAP ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">05</span><h2>Where a budget alert can and cannot land</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 400" role="img" aria-label="Three budget thresholds fire into email for billing admins, but the Pub/Sub topic that would carry them to this machine does not exist, so no program here can learn that a threshold was crossed.">
+      <defs>
+        <marker id="a-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--live)"/>
+        </marker>
+        <marker id="a-ink2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/>
+        </marker>
+      </defs>
+
+      <!-- budget -->
+      <rect class="chip" x="14" y="120" width="196" height="120" rx="2"/>
+      <text class="mono lbl fM" x="30" y="146">BUDGET</text>
+      <text class="mono md fI" x="30" y="172">cloudup-monthly</text>
+      <text class="mono huge fI" x="30" y="212">$300</text>
+      <text class="mono lbl fM" x="30" y="230">PER CALENDAR MONTH</text>
+
+      <!-- thresholds -->
+      <line x1="212" y1="180" x2="256" y2="180" class="sI" stroke-width="1.5" marker-end="url(#a-ink2)"/>
+      <rect class="chip-live" x="260" y="82" width="220" height="60" rx="2"/>
+      <text class="mono md fI" x="276" y="108">$150</text>
+      <text class="mono sm fM" x="276" y="126">50% &middot; CURRENT_SPEND</text>
+      <rect class="chip-live" x="260" y="150" width="220" height="60" rx="2"/>
+      <text class="mono md fI" x="276" y="176">$300</text>
+      <text class="mono sm fM" x="276" y="194">100% &middot; CURRENT_SPEND</text>
+      <rect class="chip-live" x="260" y="218" width="220" height="60" rx="2"/>
+      <text class="mono md fI" x="276" y="244">$300</text>
+      <text class="mono sm fM" x="276" y="262">100% &middot; FORECASTED</text>
+      <text class="mono lbl fM" x="260" y="66">3 THRESHOLDS</text>
+
+      <!-- bus collecting all three thresholds -->
+      <g class="sH" stroke-width="1.5">
+        <line x1="482" y1="112" x2="516" y2="112"/>
+        <line x1="482" y1="180" x2="516" y2="180"/>
+        <line x1="482" y1="248" x2="516" y2="248"/>
+      </g>
+      <line x1="516" y1="112" x2="516" y2="248" class="sH" stroke-width="1.5"/>
+      <!-- fork: email path (works) -->
+      <path d="M516,112 L556,112 L556,62 L600,62" class="sL" stroke-width="2" fill="none" marker-end="url(#a-ok)"/>
+      <rect class="chip-live" x="604" y="34" width="270" height="58" rx="2"/>
+      <text class="mono md fI" x="620" y="66">Email &rarr; billing admins</text>
+
+      <!-- fork: pubsub path (missing) -->
+      <line x1="516" y1="248" x2="594" y2="248" class="sB" stroke-width="2" stroke-dasharray="7 6"/>
+      <rect x="600" y="212" width="230" height="76" rx="2" fill="none" stroke="var(--bad)" stroke-width="2" stroke-dasharray="7 6"/>
+      <text class="mono lbl fB" x="616" y="238">PUB/SUB TOPIC</text>
+      <text class="mono big fB" x="616" y="270">none</text>
+      <text class="mono sm fM" x="600" y="306">notificationsRule = {}</text>
+
+      <!-- broken segment -->
+      <line x1="834" y1="250" x2="880" y2="250" class="sB" stroke-width="2" stroke-dasharray="6 6"/>
+      <g transform="translate(906,250)">
+        <path d="M-13,-13 L13,13 M13,-13 L-13,13" class="sB" stroke-width="4"/>
+      </g>
+      <line x1="932" y1="250" x2="972" y2="250" class="sB" stroke-width="2" stroke-dasharray="6 6"/>
+      <text class="mono sm fB" x="906" y="222" text-anchor="middle">BROKEN</text>
+
+      <rect x="976" y="212" width="172" height="76" rx="2" fill="none" stroke="var(--ghost)" stroke-width="1.5" stroke-dasharray="3 5"/>
+      <rect x="1004" y="234" width="42" height="28" rx="2" class="sG" stroke-width="1.5" fill="none"/>
+      <path d="M998,266 L1052,266" class="sG" stroke-width="1.5"/>
+      <text class="mono sm fG" x="1062" y="252">this</text>
+      <text class="mono sm fG" x="1062" y="268">machine</text>
+      <text class="mono lbl fG" x="976" y="304">CANNOT BE REACHED</text>
+
+      <!-- bottom summary bar -->
+      <line x1="14" y1="336" x2="1146" y2="336" class="sH" stroke-width="1"/>
+      <text class="mono md fB" x="14" y="366">0</text>
+      <text class="mono lbl fM" x="36" y="367">BIGQUERY BILLING EXPORTS</text>
+      <text class="mono lbl fB" x="300" y="367">INVOICE NEVER CHECKED</text>
+    </svg>
+    </div>
+  </figure>
+
+  <!-- ================= FIGURE 6 : WHAT RAN ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">06</span><h2>Metered vCPU-hours by job</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 460" role="img" aria-label="Six Cloud Run jobs have run. cabin-field dominates at 864 tasks and 99.3 vCPU-hours; coffee-ring is second at 59.1; the rest are under 3. One of fifteen executions failed, producing nothing.">
+      <!-- scale 0..100 vCPU-h -> x 300..1090 -->
+      <g class="sH" stroke-width="1">
+        <line x1="300" y1="52" x2="300" y2="380"/>
+        <line x1="497.5" y1="52" x2="497.5" y2="380" stroke-dasharray="2 5"/>
+        <line x1="695" y1="52" x2="695" y2="380" stroke-dasharray="2 5"/>
+        <line x1="892.5" y1="52" x2="892.5" y2="380" stroke-dasharray="2 5"/>
+        <line x1="1090" y1="52" x2="1090" y2="380" stroke-dasharray="2 5"/>
+      </g>
+      <g class="mono sm fM">
+        <text x="300" y="40" text-anchor="middle">0</text>
+        <text x="497.5" y="40" text-anchor="middle">25</text>
+        <text x="695" y="40" text-anchor="middle">50</text>
+        <text x="892.5" y="40" text-anchor="middle">75</text>
+        <text x="1090" y="40" text-anchor="middle">100 vCPU-h</text>
+      </g>
+
+      <!-- cabin-field -->
+      <text class="mono md fI" x="14" y="82">cabin-field</text>
+      <text class="mono sm fM" x="14" y="100">864 tasks &middot; 2 vCPU</text>
+      <rect x="300" y="64" width="784" height="44" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2"/>
+      <text class="mono md fI" x="316" y="92">864 / 864</text>
+      <text class="mono big fI" x="1070" y="96" text-anchor="end">$7.86</text>
+      <text class="mono sm fM" x="182" y="92">55:47</text>
+
+      <!-- coffee-ring -->
+      <text class="mono md fI" x="14" y="152">coffee-ring</text>
+      <text class="mono sm fM" x="14" y="170">7 runs x 26 &middot; 8 vCPU</text>
+      <rect x="300" y="134" width="467" height="44" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2"/>
+      <text class="mono md fI" x="316" y="162">156 / 182</text>
+      <text class="mono big fI" x="753" y="166" text-anchor="end">$4.26</text>
+      <text class="mono lbl fM" x="182" y="162">BEST</text>
+      <text class="mono sm fM" x="228" y="162">09:02</text>
+      <!-- failed execution marker -->
+      <rect x="300" y="186" width="60" height="20" rx="2" class="chip-bad"/>
+      <text class="mono sm fB" x="330" y="200" text-anchor="middle">0 / 26</text>
+      <text class="mono lbl fB" x="372" y="200">FAILED</text>
+      <text class="mono sm fB" x="440" y="200">1 / 15</text>
+
+      <!-- cabin-smoke -->
+      <text class="mono md fI" x="14" y="236">cabin-smoke</text>
+      <text class="mono lbl fM" x="14" y="254">JOB DELETED</text>
+      <rect x="300" y="218" width="23" height="44" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2" stroke-dasharray="4 3"/>
+      <text class="mono md fI" x="336" y="246">2.97</text>
+      <text class="mono md fM" x="404" y="246">$0.24</text>
+
+      <!-- cityarts-transcribe -->
+      <text class="mono md fI" x="14" y="292">cityarts-transcribe</text>
+      <text class="mono sm fM" x="14" y="310">6 tasks &middot; 8 vCPU / 16 GiB</text>
+      <rect x="300" y="274" width="9" height="44" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2"/>
+      <text class="mono md fI" x="336" y="302">1.13</text>
+      <text class="mono md fM" x="404" y="302">$0.09</text>
+
+      <!-- cabin-probe -->
+      <text class="mono md fI" x="14" y="342">cabin-probe</text>
+      <text class="mono sm fM" x="14" y="360">16 tasks</text>
+      <rect x="300" y="326" width="6" height="36" rx="2" fill="var(--live-fill2)" stroke="var(--live)" stroke-width="2"/>
+      <text class="mono md fI" x="336" y="350">0.71</text>
+      <text class="mono md fM" x="404" y="350">$0.06</text>
+
+      <!-- asr -->
+      <text class="mono md fI" x="14" y="392">asr</text>
+      <text class="mono sm fM" x="14" y="410">1 task</text>
+      <rect x="300" y="376" width="3" height="36" rx="2" fill="var(--live)" stroke="var(--live)" stroke-width="2"/>
+      <text class="mono md fI" x="336" y="400">0.13</text>
+      <text class="mono md fM" x="404" y="400">$0.01</text>
+
+      <line x1="14" y1="428" x2="1146" y2="428" class="sH" stroke-width="1"/>
+      <text class="mono huge fI" x="14" y="454">163</text>
+      <text class="mono sm fM" x="96" y="454">metered vCPU-hours</text>
+    </svg>
+    </div>
+  </figure>
+
+  <!-- ================= FIGURE 7 : REST OF THE BILLING ACCOUNT ================= -->
+  <figure class="fig">
+    <div class="figtitle"><span class="n">07</span><h2>Everything else on the same billing account</h2></div>
+    <div class="figbody">
+    <svg viewBox="0 0 1160 266" role="img" aria-label="Ten GCP projects exist; three are billed. Only cloudup-platform-01 is instrumented. ai-tinker and beginner-strength carry live resources whose spend the cost board does not read.">
+      <text class="mono lbl fM" x="14" y="27">PROJECTS</text>
+      <text class="mono md fI" x="106" y="28">10</text>
+      <g transform="translate(146,16)">
+        <rect x="0"   y="0" width="15" height="15" rx="2" fill="var(--live)"/>
+        <rect x="21"  y="0" width="15" height="15" rx="2" class="fI2"/>
+        <rect x="42"  y="0" width="15" height="15" rx="2" class="fI2"/>
+        <rect x="63"  y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+        <rect x="84"  y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+        <rect x="105" y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+        <rect x="126" y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+        <rect x="147" y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+        <rect x="168" y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+        <rect x="189" y="0" width="15" height="15" rx="2" fill="none" stroke="var(--hair)" stroke-width="1.5"/>
+      </g>
+      <text class="mono lbl fM" x="380" y="27">BILLED</text>
+      <text class="mono md fI" x="446" y="28">3</text>
+      <text class="mono lbl fL" x="486" y="27">INSTRUMENTED</text>
+      <text class="mono md fL" x="614" y="28">1</text>
+      <line x1="14" y1="36" x2="1146" y2="36" class="sH" stroke-width="1"/>
+
+      <rect class="pane-live" x="14" y="56" width="360" height="150" rx="3"/>
+      <circle cx="42" cy="88" r="7" class="fL"/>
+      <text class="md fI" x="60" y="94">cloudup-platform-01</text>
+      <text class="mono sm fL lbl" x="60" y="112">MEASURED</text>
+      <text class="mono big fI" x="34" y="156">$12.51</text>
+      <text class="mono sm fM" x="34" y="176">Cloud Run, 14 days</text>
+
+      <rect class="chip" x="396" y="56" width="360" height="150" rx="3" stroke-dasharray="6 5"/>
+      <circle cx="424" cy="88" r="7" class="sW" stroke-width="2"/>
+      <text class="md fI2" x="442" y="94">ai-tinker-493800</text>
+      <text class="mono sm fW lbl" x="442" y="112">LIVE, UNMEASURED</text>
+      <text class="mono huge fG" x="416" y="162">?</text>
+      <text class="mono sm fM" x="452" y="150">1 Cloud Run service</text>
+      <text class="mono lbl fM" x="452" y="170">LIVE SINCE</text>
+      <text class="mono sm fM" x="558" y="170">2026-04</text>
+      <text class="mono sm fM" x="452" y="190">2 buckets &middot; 0.8 MB</text>
+
+      <rect class="chip" x="778" y="56" width="368" height="150" rx="3" stroke-dasharray="6 5"/>
+      <circle cx="806" cy="88" r="7" class="sG" stroke-width="2"/>
+      <text class="md fI2" x="824" y="94">beginner-strength-8948</text>
+      <text class="mono sm fG lbl" x="824" y="112">DORMANT</text>
+      <text class="mono huge fG" x="798" y="162">?</text>
+      <text class="mono sm fM" x="834" y="152">0 compute &middot; 0 Cloud Run</text>
+      <text class="mono sm fM" x="834" y="172">1 bucket &middot; 40 KB</text>
+
+      <path d="M14,216 L14,232 L374,232 L374,216" class="sL" stroke-width="2" fill="none"/>
+      <text class="mono lbl fL" x="14" y="254">COST BOARD READS</text>
+      <path d="M396,216 L396,232 L1146,232 L1146,216" class="sB" stroke-width="2" stroke-dasharray="6 5" fill="none"/>
+      <text class="mono lbl fB" x="396" y="254">NOT READ</text>
+    </svg>
+    </div>
+  </figure>
+
+</div>

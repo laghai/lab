@@ -1,0 +1,808 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expose GDS Builder</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --ink: #1e2329;
+      --muted: #65707c;
+      --line: #d8dde4;
+      --accent: #0f766e;
+      --accent-2: #2563eb;
+      --warn: #b45309;
+      --danger: #b91c1c;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow: hidden;
+    }
+
+    main {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      overflow: hidden;
+    }
+
+    aside {
+      background: var(--panel);
+      border-right: 1px solid var(--line);
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .sidebar-content {
+      min-height: 0;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-actions {
+      border-top: 1px solid var(--line);
+      background: var(--panel);
+      padding: 12px 18px 18px;
+    }
+
+    section {
+      padding: 18px;
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: 19px;
+      margin: 0 0 16px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: 13px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 22px 0 8px;
+      letter-spacing: 0.04em;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 100%;
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 6px 8px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+    }
+
+    input[readonly] {
+      background: #f8fafc;
+      color: var(--muted);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      align-items: end;
+      margin-bottom: 10px;
+    }
+
+    .twocol {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      height: 34px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 0 12px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    button.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+      width: 100%;
+    }
+
+    button.secondary {
+      background: #eef6ff;
+      border-color: #c7ddff;
+      color: #174ea6;
+    }
+
+    .status {
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      background: #cbd5e1;
+      flex: 0 0 auto;
+    }
+
+    .status.error {
+      border-color: #ef4444;
+      background: #ef4444;
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.18);
+    }
+
+    .status.ok {
+      border-color: #22c55e;
+      background: #22c55e;
+      box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.18);
+    }
+
+    .status.busy {
+      border-color: #f59e0b;
+      background: #f59e0b;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
+    }
+
+    .status-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 8px;
+    }
+
+    .status-row h2 {
+      margin: 0;
+    }
+
+    .status-tooltip {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      z-index: 12;
+      display: none;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #111827;
+      color: #fff;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.22);
+      font-size: 13px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .status-row:hover .status-tooltip {
+      display: block;
+    }
+
+    .toast-stack {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 10;
+      display: grid;
+      gap: 8px;
+      max-width: min(420px, calc(100vw - 36px));
+    }
+
+    .toast {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 10px 12px;
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.16);
+      overflow-wrap: anywhere;
+    }
+
+    .toast.ok {
+      border-color: #bbf7d0;
+      background: #f0fdf4;
+      color: #166534;
+    }
+
+    .toast.error {
+      border-color: #fecaca;
+      background: #fff1f2;
+      color: #b91c1c;
+    }
+
+    .summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .metric {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 20px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .canvas-wrap {
+      min-height: 0;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      cursor: crosshair;
+    }
+
+    .canvas-wrap.selecting {
+      cursor: crosshair;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      min-height: 560px;
+      display: block;
+      background: #fafafa;
+      touch-action: none;
+    }
+
+    .block {
+      fill: #dbeafe;
+      stroke: var(--accent-2);
+      stroke-width: 1.5;
+      cursor: pointer;
+    }
+
+    .block.selected {
+      fill: #dbeafe;
+      stroke: var(--accent-2);
+      stroke-width: 1.5;
+    }
+
+    .expose-overlay {
+      fill: rgba(22, 163, 74, 0.28);
+      stroke: #16a34a;
+      stroke-width: 2;
+      pointer-events: none;
+    }
+
+    .selection-box {
+      fill: rgba(37, 99, 235, 0.12);
+      stroke: #2563eb;
+      stroke-width: 2;
+      stroke-dasharray: 8 5;
+      pointer-events: none;
+    }
+
+    .block-label {
+      pointer-events: none;
+      font-size: 12px;
+      fill: #111827;
+      text-anchor: middle;
+      dominant-baseline: middle;
+    }
+
+    .block-label.selected {
+      font-weight: 700;
+      fill: #064e3b;
+    }
+
+    .block-list {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+      min-height: 0;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .blocks-panel {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr);
+      flex: 1 1 auto;
+    }
+
+    .block-item {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 8px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #cbd5e1;
+    }
+
+    .block-item.selected {
+      border-color: var(--accent);
+      background: #f0fdfa;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+      aside {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        height: 70vh;
+      }
+      svg { min-height: 440px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <aside>
+      <div class="sidebar-content">
+        <h1>Expose GDS Builder</h1>
+
+        <h2>Load Blocks</h2>
+        <div class="row">
+          <div>
+            <label for="patternId">Pattern ID</label>
+            <input id="patternId" value="" placeholder="e.g. 433282">
+          </div>
+          <button id="loadPattern" class="secondary">Load</button>
+        </div>
+
+        <div id="statusRow" class="status-row">
+          <h2>Status</h2>
+          <div id="status" class="status" aria-label="Status"></div>
+          <div id="statusTooltip" class="status-tooltip">Load a pattern ID.</div>
+        </div>
+
+        <h2>Expose Settings</h2>
+        <div>
+          <label for="overlap">Overlap (um)</label>
+          <input id="overlap" type="number" value="10" step="5">
+        </div>
+
+        <h2>Layer</h2>
+        <div class="twocol">
+          <div>
+            <label for="layer">Number</label>
+            <input id="layer" type="number" value="6" step="1">
+          </div>
+          <div>
+            <label for="datatype">Datatype</label>
+            <input id="datatype" type="number" value="0" step="1">
+          </div>
+        </div>
+
+        <h2>Blocks</h2>
+        <div class="blocks-panel">
+          <div class="block-list" id="blockList"></div>
+        </div>
+      </div>
+      <div class="sidebar-actions">
+        <button id="build" class="primary">Build Expose GDS</button>
+      </div>
+    </aside>
+
+    <section>
+      <div class="summary">
+        <div class="metric"><strong id="totalCount">0</strong><span>Total blocks</span></div>
+        <div class="metric"><strong id="selectedCount">0</strong><span>Selected</span></div>
+        <div class="metric"><strong id="patternText">-</strong><span>Pattern</span></div>
+      </div>
+      <div class="canvas-wrap">
+        <svg id="map" role="img" aria-label="Block layout"></svg>
+      </div>
+    </section>
+  </main>
+  <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+  <script>
+    let currentPlan = null;
+    let selectedIds = new Set();
+    let viewBox = null;
+    let dragStart = null;
+    let didDrag = false;
+    let selectionBoxEl = null;
+
+    const statusEl = document.getElementById("status");
+    const statusTooltipEl = document.getElementById("statusTooltip");
+    const toastStackEl = document.getElementById("toastStack");
+    const mapEl = document.getElementById("map");
+    const canvasWrapEl = document.querySelector(".canvas-wrap");
+    const blockListEl = document.getElementById("blockList");
+    const totalCountEl = document.getElementById("totalCount");
+    const selectedCountEl = document.getElementById("selectedCount");
+    const patternTextEl = document.getElementById("patternText");
+
+    function setStatus(text, kind = "") {
+      statusEl.className = `status ${kind}`.trim();
+      statusEl.setAttribute("aria-label", text);
+      statusTooltipEl.textContent = text;
+    }
+
+    function showToast(text, kind = "") {
+      const toast = document.createElement("div");
+      toast.className = `toast ${kind}`.trim();
+      toast.textContent = text;
+      toastStackEl.appendChild(toast);
+      setTimeout(() => {
+        toast.remove();
+      }, 4500);
+    }
+
+    function setPlan(payload) {
+      currentPlan = {
+        pattern_id: payload.pattern_id,
+        block_types: payload.block_types,
+        blocks: payload.blocks,
+      };
+      selectedIds = new Set();
+      totalCountEl.textContent = payload.blocks.length;
+      patternTextEl.textContent = payload.pattern_id || "uploaded";
+      resetView(payload.blocks);
+      render();
+      const message = `Loaded ${payload.blocks.length} blocks. Click blocks to keep.`;
+      setStatus(message, "ok");
+      showToast(message, "ok");
+    }
+
+    function bounds(blocks) {
+      if (!blocks.length) return [0, 0, 100, 100];
+      let xmin = Infinity, xmax = -Infinity, ymin = Infinity, ymax = -Infinity;
+      for (const block of blocks) {
+        const [cx, cy] = block.center;
+        const [w, h] = block.size;
+        xmin = Math.min(xmin, cx - w / 2);
+        xmax = Math.max(xmax, cx + w / 2);
+        ymin = Math.min(ymin, cy - h / 2);
+        ymax = Math.max(ymax, cy + h / 2);
+      }
+      const pad = Math.max((xmax - xmin) * 0.08, (ymax - ymin) * 0.08, 50);
+      return [xmin - pad, ymin - pad, xmax + pad, ymax + pad];
+    }
+
+    function resetView(blocks) {
+      const [xmin, ymin, xmax, ymax] = bounds(blocks);
+      viewBox = {
+        x: xmin,
+        y: -ymax,
+        width: Math.max(xmax - xmin, 1),
+        height: Math.max(ymax - ymin, 1),
+      };
+    }
+
+    function applyViewBox() {
+      if (!viewBox) resetView(currentPlan ? currentPlan.blocks : []);
+      mapEl.setAttribute(
+        "viewBox",
+        `${viewBox.x} ${viewBox.y} ${viewBox.width} ${viewBox.height}`,
+      );
+    }
+
+    function svgPointFromEvent(event) {
+      const rect = mapEl.getBoundingClientRect();
+      return {
+        x: viewBox.x + ((event.clientX - rect.left) / rect.width) * viewBox.width,
+        y: viewBox.y + ((event.clientY - rect.top) / rect.height) * viewBox.height,
+      };
+    }
+
+    function toggle(id) {
+      if (selectedIds.has(id)) selectedIds.delete(id);
+      else selectedIds.add(id);
+      render();
+    }
+
+    function normalizedRect(a, b) {
+      const xmin = Math.min(a.x, b.x);
+      const xmax = Math.max(a.x, b.x);
+      const ymin = Math.min(a.y, b.y);
+      const ymax = Math.max(a.y, b.y);
+      return {x: xmin, y: ymin, width: xmax - xmin, height: ymax - ymin};
+    }
+
+    function blockIntersectsRect(block, rect) {
+      const [cx, cy] = block.center;
+      const [w, h] = block.size;
+      const blockRect = {
+        x: cx - w / 2,
+        y: -cy - h / 2,
+        width: w,
+        height: h,
+      };
+      return !(
+        blockRect.x + blockRect.width < rect.x ||
+        rect.x + rect.width < blockRect.x ||
+        blockRect.y + blockRect.height < rect.y ||
+        rect.y + rect.height < blockRect.y
+      );
+    }
+
+    function updateSelectionBox(rect) {
+      if (!selectionBoxEl) {
+        selectionBoxEl = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        selectionBoxEl.setAttribute("class", "selection-box");
+        mapEl.appendChild(selectionBoxEl);
+      }
+      selectionBoxEl.setAttribute("x", rect.x);
+      selectionBoxEl.setAttribute("y", rect.y);
+      selectionBoxEl.setAttribute("width", rect.width);
+      selectionBoxEl.setAttribute("height", rect.height);
+    }
+
+    function clearSelectionBox() {
+      if (selectionBoxEl) {
+        selectionBoxEl.remove();
+        selectionBoxEl = null;
+      }
+    }
+
+    function render() {
+      const blocks = currentPlan ? currentPlan.blocks : [];
+      selectedCountEl.textContent = selectedIds.size;
+      renderMap(blocks);
+      renderList(blocks);
+    }
+
+    function renderMap(blocks) {
+      mapEl.innerHTML = "";
+      selectionBoxEl = null;
+      applyViewBox();
+      const overlap = Number(document.getElementById("overlap").value) || 0;
+
+      for (const block of blocks) {
+        const [cx, cy] = block.center;
+        const [w, h] = block.size;
+        const selected = selectedIds.has(block.id);
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("x", cx - w / 2);
+        rect.setAttribute("y", -cy - h / 2);
+        rect.setAttribute("width", w);
+        rect.setAttribute("height", h);
+        rect.setAttribute("rx", 3);
+        rect.setAttribute("class", selected ? "block selected" : "block");
+        rect.dataset.blockId = block.id;
+        mapEl.appendChild(rect);
+
+        if (selected) {
+          const exposeW = Math.max(w - overlap, 0);
+          const exposeH = Math.max(h - overlap, 0);
+          const exposeRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          exposeRect.setAttribute("x", cx - exposeW / 2);
+          exposeRect.setAttribute("y", -cy - exposeH / 2);
+          exposeRect.setAttribute("width", exposeW);
+          exposeRect.setAttribute("height", exposeH);
+          exposeRect.setAttribute("rx", 2);
+          exposeRect.setAttribute("class", "expose-overlay");
+          mapEl.appendChild(exposeRect);
+        }
+
+        const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        text.setAttribute("x", cx);
+        text.setAttribute("y", -cy);
+        text.setAttribute("class", selected ? "block-label selected" : "block-label");
+        text.textContent = `${block.id} g${block.group}`;
+        mapEl.appendChild(text);
+      }
+    }
+
+    function renderList(blocks) {
+      blockListEl.innerHTML = "";
+      for (const block of blocks) {
+        const item = document.createElement("div");
+        item.className = selectedIds.has(block.id) ? "block-item selected" : "block-item";
+        item.addEventListener("click", () => toggle(block.id));
+        item.innerHTML = `
+          <span class="swatch"></span>
+          <span><strong>${block.id}</strong><br><span class="small">${block.type}</span></span>
+          <span class="small">g${block.group}</span>
+        `;
+        blockListEl.appendChild(item);
+      }
+    }
+
+    async function loadPattern() {
+      const patternId = document.getElementById("patternId").value.trim();
+      if (!patternId) {
+        const message = "Enter a pattern ID first.";
+        setStatus(message, "error");
+        showToast(message, "error");
+        return;
+      }
+      setStatus("Loading pattern...", "busy");
+      try {
+        const res = await fetch(`/api/load_pattern?pattern_id=${encodeURIComponent(patternId)}`);
+        const payload = await res.json();
+        if (!payload.ok) {
+          setStatus(payload.error, "error");
+          showToast(payload.error, "error");
+          return;
+        }
+        setPlan(payload);
+      } catch (error) {
+        console.error(error);
+        const message = `Could not load pattern: ${error.message}`;
+        setStatus(message, "error");
+        showToast(message, "error");
+      }
+    }
+
+    async function buildExpose() {
+      if (!currentPlan) {
+        const message = "Load blocks before building.";
+        setStatus(message, "error");
+        showToast(message, "error");
+        return;
+      }
+      if (!selectedIds.size) {
+        const message = "Select at least one block to keep.";
+        setStatus(message, "error");
+        showToast(message, "error");
+        return;
+      }
+      setStatus("Building expose GDS...", "busy");
+      try {
+        const res = await fetch("/api/build", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({
+            plan: currentPlan,
+            selected_ids: [...selectedIds],
+            overlap_um: document.getElementById("overlap").value,
+            layer_number: document.getElementById("layer").value,
+            datatype: document.getElementById("datatype").value,
+          }),
+        });
+        const payload = await res.json();
+        if (!payload.ok) {
+          setStatus(payload.error, "error");
+          showToast(payload.error, "error");
+          return;
+        }
+        const message = `Saved ${payload.n_blocks} blocks to ${payload.path}`;
+        setStatus(message, "ok");
+        showToast(message, "ok");
+      } catch (error) {
+        console.error(error);
+        const message = `Could not build expose GDS: ${error.message}`;
+        setStatus(message, "error");
+        showToast(message, "error");
+      }
+    }
+
+    document.getElementById("loadPattern").addEventListener("click", loadPattern);
+    document.getElementById("patternId").addEventListener("keydown", event => {
+      if (event.key === "Enter") loadPattern();
+    });
+    document.getElementById("build").addEventListener("click", buildExpose);
+    document.getElementById("overlap").addEventListener("input", render);
+
+    mapEl.addEventListener("wheel", event => {
+      if (!currentPlan) return;
+      event.preventDefault();
+
+      if (event.ctrlKey || event.altKey) {
+        const cursor = svgPointFromEvent(event);
+        const zoom = Math.exp(event.deltaY * 0.006);
+        const nextWidth = viewBox.width * zoom;
+        const nextHeight = viewBox.height * zoom;
+        viewBox.x = cursor.x - ((cursor.x - viewBox.x) / viewBox.width) * nextWidth;
+        viewBox.y = cursor.y - ((cursor.y - viewBox.y) / viewBox.height) * nextHeight;
+        viewBox.width = nextWidth;
+        viewBox.height = nextHeight;
+      } else {
+        const rect = mapEl.getBoundingClientRect();
+        viewBox.x += (event.deltaX / rect.width) * viewBox.width;
+        viewBox.y += (event.deltaY / rect.height) * viewBox.height;
+      }
+
+      applyViewBox();
+    }, {passive: false});
+
+    mapEl.addEventListener("pointerdown", event => {
+      if (!currentPlan) return;
+      const blockId = event.target.classList.contains("block")
+        ? event.target.dataset.blockId
+        : null;
+      dragStart = {
+        point: svgPointFromEvent(event),
+        blockId,
+      };
+      didDrag = false;
+      canvasWrapEl.classList.add("selecting");
+      mapEl.setPointerCapture(event.pointerId);
+    });
+
+    mapEl.addEventListener("pointermove", event => {
+      if (!dragStart) return;
+      const current = svgPointFromEvent(event);
+      const rect = normalizedRect(dragStart.point, current);
+      if (rect.width + rect.height > 2) didDrag = true;
+      if (didDrag) updateSelectionBox(rect);
+    });
+
+    function endDrag(event) {
+      if (!dragStart) return;
+      const current = svgPointFromEvent(event);
+      const rect = normalizedRect(dragStart.point, current);
+      const clickedBlockId = dragStart.blockId;
+      const shouldToggle = clickedBlockId && !didDrag;
+      const shouldSelectByRect = didDrag && rect.width > 0 && rect.height > 0;
+      dragStart = null;
+      canvasWrapEl.classList.remove("selecting");
+      try {
+        mapEl.releasePointerCapture(event.pointerId);
+      } catch (_error) {
+      }
+      if (shouldToggle) toggle(clickedBlockId);
+      if (shouldSelectByRect) {
+        for (const block of currentPlan.blocks) {
+          if (blockIntersectsRect(block, rect)) {
+            if (selectedIds.has(block.id)) selectedIds.delete(block.id);
+            else selectedIds.add(block.id);
+          }
+        }
+        clearSelectionBox();
+        render();
+      } else {
+        clearSelectionBox();
+      }
+      setTimeout(() => { didDrag = false; }, 0);
+    }
+
+    mapEl.addEventListener("pointerup", endDrag);
+    mapEl.addEventListener("pointercancel", endDrag);
+  </script>
+</body>
+</html>

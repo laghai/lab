@@ -1,0 +1,314 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Validate or Falsify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap">
+<style>
+:root{--bg:#f7f6f3;--ink:#1a1814;--mid:#5f5a52;--dim:#8b857b;--hair:#cfc9be;
+ --pale:#e6e1d7;--flag:#b0341c;--go:#3f6b4a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+ --bg:#0e0f0c;--ink:#efece5;--mid:#a09a8f;--dim:#6f695f;--hair:#2c2d24;
+ --pale:#1e2018;--flag:#e8654a;--go:#7fb08c}}
+:root[data-theme="dark"]{--bg:#0e0f0c;--ink:#efece5;--mid:#a09a8f;--dim:#6f695f;
+ --hair:#2c2d24;--pale:#1e2018;--flag:#e8654a;--go:#7fb08c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-size:12px;
+ font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
+ -webkit-font-smoothing:antialiased}
+.wrap{max-width:54rem;margin:0 auto;padding:2.2rem 1.5rem 4rem}
+.top{display:flex;justify-content:space-between;align-items:baseline;
+ padding-bottom:.6rem;border-bottom:1px solid var(--hair);gap:1rem;flex-wrap:wrap}
+.top b{font-weight:500}.top span{color:var(--dim);font-size:11px}
+.step{display:grid;grid-template-columns:6.5rem 1fr;gap:1.2rem;
+ border-bottom:1px solid var(--hair);padding:1.4rem 0}
+.step:last-child{border-bottom:none}
+h2{font-size:11px;font-weight:400;color:var(--dim);margin:.1rem 0 0;
+ text-align:right;line-height:1.45}
+svg{width:100%;height:auto;display:block;overflow:visible}
+.l{font:400 12px Inter,sans-serif;fill:var(--ink)}
+.m{font:500 12px Inter,sans-serif;fill:var(--ink)}
+.s{font:400 11px Inter,sans-serif;fill:var(--mid)}
+.d{font:400 11px Inter,sans-serif;fill:var(--dim)}
+.f{font:400 11px Inter,sans-serif;fill:var(--flag)}
+.fm{font:500 12px Inter,sans-serif;fill:var(--flag)}
+.g{font:400 11px Inter,sans-serif;fill:var(--go)}
+.gm{font:500 12px Inter,sans-serif;fill:var(--go)}
+.tn{font:400 10px Inter,sans-serif;fill:var(--dim)}
+.note{color:var(--mid);margin:.6rem 0 0;max-width:62ch;line-height:1.55}
+.note b{color:var(--ink);font-weight:500}
+@media (max-width:640px){.step{grid-template-columns:1fr;gap:.5rem}
+ h2{text-align:left}}
+</style>
+<div class="wrap">
+<div class="top"><b>Sima's model, checked against outside evidence</b><span>she asked to be validated or falsified · 22 Aug 2026 · two research lanes</span></div>
+
+<div class="step"><h2>the premise<br>is wrong</h2><div>
+<svg viewBox="0 0 620 214">
+<text class="s" x="0" y="12">"they're bringing in a million dollars — how much of that should they invest back?" · video 7:57</text>
+<line x1="0" y1="52" x2="620" y2="52" stroke="var(--flag)" stroke-dasharray="4 4"/>
+<text class="f" x="0" y="46">$1M — the figure she quoted. it is the 2027 target, not the current year.</text>
+<g fill="var(--pale)" stroke="var(--hair)">
+<rect x="30" y="75" width="40" height="87"/><rect x="86" y="114" width="40" height="48"/>
+<rect x="142" y="112" width="40" height="50"/><rect x="198" y="95" width="40" height="67"/>
+<rect x="254" y="101" width="40" height="61"/><rect x="310" y="97" width="40" height="65"/>
+<rect x="366" y="88" width="40" height="74"/><rect x="422" y="98" width="40" height="64"/>
+</g>
+<rect x="478" y="103" width="40" height="59" fill="none" stroke="var(--flag)"/>
+<rect x="534" y="78" width="40" height="84" fill="var(--pale)" stroke="var(--ink)"/>
+<line x1="20" y1="162" x2="590" y2="162" stroke="var(--hair)"/>
+<g class="tn" text-anchor="middle">
+<text x="50" y="176">2016</text><text x="106" y="176">2017</text><text x="162" y="176">2018</text>
+<text x="218" y="176">2019</text><text x="274" y="176">2020</text><text x="330" y="176">2021</text>
+<text x="386" y="176">2022</text><text x="442" y="176">2023</text>
+<text x="498" y="176" fill="var(--flag)">2024</text><text x="554" y="176" fill="var(--ink)">2025</text>
+</g>
+<text class="f" x="498" y="192" text-anchor="middle">$533K</text>
+<text class="m" x="554" y="192" text-anchor="middle">$766K</text>
+<text class="f" x="620" y="206" text-anchor="end">2024 ran a $229K deficit</text>
+<text class="s" x="0" y="206">ten years of filed 990s. the high was $789K, in 2016.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>her pillars<br>the verdict</h2><div>
+<svg viewBox="0 0 620 140">
+<text class="s" x="0" y="12">she asked to be checked, not agreed with. three of four hold.</text>
+<rect x="0" y="24" width="146" height="30" rx="2" fill="none" stroke="var(--go)"/>
+<text class="m" x="9" y="43">Marketing</text>
+<text class="g" x="0" y="70">holds</text>
+<text class="s" x="0" y="86">separate from development</text>
+<text class="s" x="0" y="100">is universal at every scale</text>
+<rect x="158" y="24" width="146" height="30" rx="2" fill="none" stroke="var(--flag)" stroke-dasharray="3 3"/>
+<text class="fm" x="167" y="43">PR</text>
+<text class="f" x="158" y="70">demote to a tactic</text>
+<text class="s" x="158" y="86">no current framework treats</text>
+<text class="s" x="158" y="100">earned media as a function,</text>
+<text class="s" x="158" y="114">and the channel is shrinking</text>
+<text class="s" x="158" y="128">— 136 outlets lost last year</text>
+<rect x="316" y="24" width="146" height="30" rx="2" fill="none" stroke="var(--go)"/>
+<text class="m" x="325" y="43">Development</text>
+<text class="g" x="316" y="70">holds</text>
+<text class="s" x="316" y="86">the three audiences match</text>
+<text class="s" x="316" y="100">how the sector segments</text>
+<rect x="474" y="24" width="146" height="30" rx="2" fill="var(--pale)" stroke="var(--go)"/>
+<text class="m" x="483" y="43">Community building</text>
+<text class="gm" x="474" y="70">her best call</text>
+<text class="s" x="474" y="86">the #1 stated priority in</text>
+<text class="s" x="474" y="100">the sector — and she was</text>
+<text class="s" x="474" y="114">least sure about this one</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>the word<br>not the idea</h2><div>
+<svg viewBox="0 0 620 106">
+<text class="s" x="0" y="12">one label to change. the function underneath is right, and her placement of it may be better than the sector's.</text>
+<rect x="0" y="26" width="180" height="30" rx="2" fill="none" stroke="var(--flag)" stroke-dasharray="3 3"/>
+<text class="fm" x="9" y="45">"Lead generation"</text>
+<path d="M188 41 L216 41" stroke="var(--dim)"/><polygon points="222,41 214,37 214,45" fill="var(--dim)"/>
+<rect x="228" y="26" width="180" height="30" rx="2" fill="var(--pale)"/>
+<text class="m" x="237" y="45">"Donor acquisition"</text>
+<text class="s" x="424" y="38">what AFP, CASE and Blackbaud</text>
+<text class="s" x="424" y="52">actually call it</text>
+<text class="s" x="0" y="78">search "lead generation for nonprofits" and you get software vendors. identification and</text>
+<text class="s" x="0" y="92">qualification are stages 1–2 of the standard fundraising cycle — keep her placement inside</text>
+<text class="s" x="0" y="106">Marketing; it is what makes Marketing owe a number.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>what the<br>model omits</h2><div>
+<svg viewBox="0 0 620 154">
+<text class="s" x="0" y="12">five gaps, ranked by how much money is attached. the first two are load-bearing.</text>
+<rect x="0" y="24" width="298" height="46" rx="2" fill="none" stroke="var(--flag)"/>
+<text class="fm" x="9" y="42">Stewardship and retention</text>
+<text class="s" x="9" y="60">the model is all acquisition, no keeping</text>
+<rect x="312" y="24" width="308" height="46" rx="2" fill="none" stroke="var(--flag)"/>
+<text class="fm" x="321" y="42">Owned channels — the list, the site</text>
+<text class="s" x="321" y="60">her Media splits Earned / Paid only</text>
+<text class="s" x="0" y="88">the sector raised 5.0% more money last year from 3.6% fewer donors, and new-donor retention runs near 18%.</text>
+<text class="s" x="0" y="102">owned is the only leg with a clean measured return attached: about $2.40 per email subscriber per year.</text>
+<rect x="0" y="116" width="196" height="26" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="s" x="9" y="133">Major and planned gifts</text>
+<rect x="212" y="116" width="196" height="26" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="s" x="221" y="133">Board-led fundraising</text>
+<rect x="424" y="116" width="196" height="26" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="s" x="433" y="133">Measurement of any of it</text>
+<text class="s" x="0" y="154">board-led fundraising is a conspicuous omission coming from a board member.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>the constraint<br>that dominates</h2><div>
+<svg viewBox="0 0 620 132">
+<text class="s" x="0" y="12">the closest structural peer in the country: Brooklyn, youth plus artists plus murals, 28 years.</text>
+<rect x="0" y="26" width="290" height="72" rx="2" fill="var(--pale)"/>
+<text class="m" x="10" y="46">Groundswell</text>
+<text class="s" x="10" y="64">$1.37M revenue · 13 staff</text>
+<text class="s" x="10" y="80">entire marketing function:</text>
+<text class="s" x="10" y="94">1 comms specialist + 1 social/photo coordinator</text>
+<path d="M298 62 L326 62" stroke="var(--dim)"/><polygon points="332,62 324,58 324,66" fill="var(--dim)"/>
+<rect x="338" y="26" width="282" height="72" rx="2" fill="none" stroke="var(--flag)"/>
+<text class="fm" x="348" y="46">CITYarts, smaller</text>
+<text class="s" x="348" y="64">$766K revenue</text>
+<text class="s" x="348" y="80">a four-pillar model with an asset layer</text>
+<text class="s" x="348" y="94">describes a department that will not exist</text>
+<text class="s" x="0" y="120">and that comms specialist also carries corporate fundraising. below roughly 3 FTE, production crowds out strategy.</text>
+<text class="s" x="0" y="132">so the model's job is to be a priority stack and an explicit not-doing list for one person.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>Q1 · what<br>percent</h2><div>
+<svg viewBox="0 0 620 148">
+<text class="s" x="0" y="12">there is no single defensible number, because the phrase means two things that differ by about 10x.</text>
+<rect x="0" y="26" width="298" height="56" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="m" x="9" y="45">Paid media only</text>
+<text class="s" x="9" y="62">what the 990 measures. sector median 0.12%</text>
+<text class="s" x="9" y="76">of expenses; ~0.66% among those who advertise</text>
+<rect x="312" y="26" width="308" height="56" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="m" x="321" y="45">The whole comms function</text>
+<text class="s" x="321" y="62">staff, site, design, photo, print, media.</text>
+<text class="s" x="321" y="76">the familiar "5–15% of budget"</text>
+<rect x="312" y="90" width="308" height="24" rx="2" fill="none" stroke="var(--flag)" stroke-dasharray="3 3"/>
+<text class="f" x="321" y="106">no underlying survey — never say "studies show"</text>
+<rect x="0" y="90" width="298" height="24" rx="2" fill="var(--pale)"/>
+<text class="m" x="9" y="106">at $766K, that is $4–11K/yr</text>
+<text class="s" x="0" y="134">a defensible first-year position: 2–5% of budget as an all-in communications line, roughly $15–35K, of which</text>
+<text class="s" x="0" y="148">paid media is a minority slice. CITYarts has no ticket or tuition revenue, so arts benchmarks of 9–12% do not apply.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>Q2 · is it a<br>reputation risk</h2><div>
+<svg viewBox="0 0 620 156">
+<text class="s" x="0" y="12">no — and the mechanism by which it could have hurt was deleted three years ago.</text>
+<rect x="0" y="26" width="290" height="50" rx="2" fill="var(--pale)"/>
+<text class="m" x="10" y="45">Charity Navigator, Sept 2023</text>
+<text class="s" x="10" y="63">removed the administrative and fundraising</text>
+<text class="s" x="10" y="77">expense ratios from its scoring entirely</text>
+<rect x="304" y="26" width="316" height="50" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="m" x="314" y="45">the experiment people cite backwards</text>
+<text class="s" x="314" y="63">a 5% overhead load produced no measurable</text>
+<text class="s" x="314" y="77">donor penalty. the penalty appears at 50%.</text>
+<text class="s" x="0" y="100">9 in 10 donors say they care about performance. about 3 in 100 act on it.</text>
+<rect x="0" y="110" width="620" height="44" rx="2" fill="none" stroke="var(--flag)"/>
+<text class="fm" x="10" y="128">the real risk is not reputation — it is a funder's written indirect-cost cap.</text>
+<text class="s" x="10" y="145">that is a contract term, not a perception. it is checkable, and it should be checked before the ask.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>Q3 · donated<br>services</h2><div>
+<svg viewBox="0 0 620 146">
+<text class="s" x="0" y="12">she asked whether marketing can arrive as in-kind. it can — at roughly a twentieth of the headline.</text>
+<rect x="0" y="26" width="180" height="34" rx="2" fill="var(--pale)"/>
+<text class="m" x="9" y="47">$10,000 / month</text>
+<text class="s" x="0" y="76">the Google Ad Grant headline.</text>
+<text class="s" x="0" y="90">CITYarts qualifies.</text>
+<path d="M188 43 L216 43" stroke="var(--flag)"/><polygon points="222,43 214,39 214,47" fill="var(--flag)"/>
+<rect x="228" y="26" width="180" height="34" rx="2" fill="none" stroke="var(--flag)"/>
+<text class="fm" x="237" y="47">$300–500 / month</text>
+<text class="s" x="228" y="76">what an unmanaged nonprofit</text>
+<text class="s" x="228" y="90">actually spends of it — 3 to 5%</text>
+<rect x="424" y="26" width="196" height="34" rx="2" fill="none" stroke="var(--hair)"/>
+<text class="l" x="433" y="47">Microsoft's equivalent</text>
+<text class="s" x="424" y="76">shut down. final grants Nov 2025.</text>
+<text class="s" x="424" y="90">strike it from any older plan.</text>
+<rect x="0" y="106" width="620" height="40" rx="2" fill="none" stroke="var(--flag)" stroke-dasharray="3 3"/>
+<text class="fm" x="10" y="124">an accounting trap worth one email to the auditor</text>
+<text class="s" x="10" y="140">booked at fair value, the grant lands as both contribution revenue and advertising expense — ~$120K on a $766K org</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>Q4 · the site<br>or the media</h2><div>
+<svg viewBox="0 0 620 220">
+<text class="s" x="0" y="12">her question: $5,000 on an agency website versus $5,000 on paid media. the honest answer is neither.</text>
+<rect x="0" y="26" width="110" height="30" rx="2" fill="var(--pale)"/><text class="m" x="9" y="46">$5,000</text>
+<path d="M116 41 L140 41" stroke="var(--dim)"/><polygon points="146,41 138,37 138,45" fill="var(--dim)"/>
+<rect x="152" y="26" width="130" height="30" rx="2" fill="none" stroke="var(--hair)"/><text class="l" x="161" y="46">2,500 visitors</text>
+<path d="M288 41 L312 41" stroke="var(--dim)"/><polygon points="318,41 310,37 310,45" fill="var(--dim)"/>
+<rect x="324" y="26" width="150" height="30" rx="2" fill="none" stroke="var(--flag)"/><text class="fm" x="333" y="46">$3,325 back</text>
+<text class="s" x="486" y="38">at ~$2 a click and</text>
+<text class="s" x="486" y="52">$1.33 a visitor</text>
+<text class="s" x="0" y="76">and CITYarts converts below that rate, because of what the money would land on:</text>
+<rect x="0" y="88" width="620" height="44" rx="2" fill="none" stroke="var(--flag)"/>
+<text class="fm" x="10" y="106">cityarts.org/donate, checked live today: no amount field, eight giving tiers wired to nothing,</text>
+<text class="s" x="10" y="124">two legacy PayPal buttons, plus Venmo, Zelle, Aeropay, a phone number and a postal address</text>
+<text class="s" x="0" y="152">a $5,000 agency site is also wrong — that price buys a template install. and the friction above is</text>
+<text class="s" x="0" y="166">PayPal's, not the platform's: the build track reports CITYarts already PAYS for donation tooling it</text>
+<text class="s" x="0" y="180">has never switched on. if that holds, part of the fix costs nothing in software.</text>
+<text class="s" x="0" y="200">so: neither option she named. make giving work first, then buy media against it. tracked conversions</text>
+<text class="s" x="0" y="214">also unlock the Google Ad Grant, which requires one a month.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>hosting has a<br>fundraising cost</h2><div>
+<svg viewBox="0 0 620 334">
+<text class="s" x="0" y="12">staying on Squarespace may cost the mechanic that turns a campaign into a run rate. three evidence levels.</text>
+
+<rect x="0" y="26" width="196" height="34" rx="2" fill="var(--pale)" stroke="var(--ink)"/>
+<text class="m" x="9" y="47">measured, twice</text>
+<text class="s" x="0" y="76">the Apple Pay association path,</text>
+<text class="s" x="0" y="90">measured on both hosts.</text>
+<text class="s" x="0" y="108">Squarespace: platform-owned —</text>
+<text class="s" x="0" y="122">their file at 9,114 B, any other</text>
+<text class="s" x="0" y="136">path 404s with 145 KB of HTML.</text>
+<text class="s" x="0" y="154">our Cloud Run: serves OUR bytes,</text>
+<text class="s" x="0" y="168">200, 96 B, not HTML.</text>
+<text class="d" x="0" y="186">unownable vs. ours to place.</text>
+
+<rect x="212" y="26" width="196" height="34" rx="2" fill="none" stroke="var(--flag)" stroke-dasharray="3 3"/>
+<text class="fm" x="221" y="47">quoted, not tested</text>
+<text class="s" x="212" y="76">Squarespace's own help pages</text>
+<text class="s" x="212" y="90">say wallets are one-time only,</text>
+<text class="s" x="212" y="104">and that recurring donations</text>
+<text class="s" x="212" y="118">require a donor account.</text>
+<text class="f" x="212" y="136">nobody has raised a wallet</text>
+<text class="f" x="212" y="150">sheet and watched it refuse.</text>
+<text class="d" x="212" y="164">these are quotes. treat them so.</text>
+
+<rect x="424" y="26" width="196" height="34" rx="2" fill="none" stroke="var(--go)"/>
+<text class="gm" x="433" y="47">one afternoon settles it</text>
+<text class="s" x="424" y="76">donation block on an unlisted</text>
+<text class="s" x="424" y="90">page, CITYarts' Stripe attached,</text>
+<text class="s" x="424" y="104">Safari on an iPhone, choose</text>
+<text class="s" x="424" y="118">Monthly — does the Apple Pay</text>
+<text class="s" x="424" y="132">sheet appear or not?</text>
+<text class="g" x="424" y="150">no engineering. converts two</text>
+<text class="g" x="424" y="164">quotes into two measurements.</text>
+
+<line x1="0" y1="180" x2="620" y2="180" stroke="var(--hair)"/>
+<text class="s" x="0" y="198">if the quotes hold, wallet-plus-monthly is impossible on Squarespace by two independent routes, native and custom.</text>
+<text class="s" x="0" y="212">if only the measured third holds, the objection may collapse entirely. those are different worlds for her plan.</text>
+<rect x="0" y="228" width="620" height="96" rx="2" fill="var(--pale)" stroke="var(--ink)"/>
+<text class="fm" x="10" y="248">there is no plan: it is a trial expiring 5 Sep, and JavaScript in code blocks needs Core or above.</text>
+<text class="s" x="10" y="266">so "can we embed our own widget" is a budget question, not a technical one — and it points at Squarespace's</text>
+<text class="s" x="10" y="282">own donation block rather than at embedding ours. the proving ground also has a two-week shelf life.</text>
+<text class="f" x="10" y="304">but serving the file is necessary, not sufficient: Apple must still approve nonprofit donations against a</text>
+<text class="f" x="10" y="318">current Candid Seal, which only CITYarts can earn. neither host gets there without it.</text>
+</svg>
+</div></div>
+
+<div class="step"><h2>what we could<br>not establish</h2><div>
+<svg viewBox="0 0 620 112">
+<text class="s" x="0" y="12">stated so it does not get read as settled.</text>
+<rect x="0" y="24" width="196" height="30" rx="2" fill="none" stroke="var(--hair)" stroke-dasharray="3 3"/>
+<text class="s" x="9" y="43">website vs media, head to head</text>
+<text class="s" x="0" y="70">no randomised study exists.</text>
+<text class="s" x="0" y="84">the Q4 answer is a chain of</text>
+<text class="s" x="0" y="98">inference — only the site audit</text>
+<text class="s" x="0" y="112">is a directly measured fact.</text>
+<rect x="212" y="24" width="196" height="30" rx="2" fill="none" stroke="var(--hair)" stroke-dasharray="3 3"/>
+<text class="s" x="221" y="43">arts-sector marketing spend</text>
+<text class="s" x="212" y="70">the benchmark cohorts start</text>
+<text class="s" x="212" y="84">above CITYarts' size, and</text>
+<text class="s" x="212" y="98">carry no arts breakout.</text>
+<rect x="424" y="24" width="196" height="30" rx="2" fill="none" stroke="var(--hair)" stroke-dasharray="3 3"/>
+<text class="s" x="433" y="43">Groundswell's exact roles</text>
+<text class="s" x="424" y="70">their financials I confirmed</text>
+<text class="s" x="424" y="84">independently; the job titles</text>
+<text class="s" x="424" y="98">I could not — their site is</text>
+<text class="s" x="424" y="112">mid-rebuild.</text>
+</svg>
+</div></div>
+
+<p class="note"><b>The one thing to fix before any of this is presented.</b> Confirm the current-year operating budget with the executive director. Every percentage above is multiplied by that base, and if a number goes on a slide against $1M while the filed return says $766K in a year that followed a $229K deficit, the memo loses on an input error rather than on its argument.</p>
+<p class="note" style="margin-top:.9rem"><b>What holds up well.</b> Her instinct to segment and target is directly supported: the largest controlled study of arts audience-building found segment-targeted work gained a median 60% versus 27% for broad efforts. Its headline finding also tests her — audience gains did not translate into financial sustainability — which argues for instrumenting the funnel rather than assuming reach converts. That is the same conclusion the exposed-to-donated ratio pointed at yesterday, arrived at from a different direction.</p>
+<p class="note" style="margin-top:.9rem;color:var(--dim)">Two research lanes, 22 Aug 2026, sources labeled by evidence type — survey, sector data, practitioner, or vendor content. Full working: <i>findings/research-marketing-structure.md</i> and <i>findings/research-marketing-budget.md</i>. I independently re-verified the CITYarts and Groundswell filings and the live donate page; the rest is the lanes' own sourcing.</p>
+
+</div>

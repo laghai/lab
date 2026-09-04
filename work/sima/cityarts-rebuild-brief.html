@@ -1,0 +1,765 @@
+<title>The CITYarts Rebuild</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:      #F6F6F2;
+    --surface:     #FFFFFF;
+    --surface-alt: #EFEFE9;
+    --ink:         #14171F;
+    --ink-soft:    #464C5A;
+    --ink-faint:   #767D8C;
+    --line:        #DBDBD3;
+    --line-soft:   #E7E7E0;
+    --accent:      #1B3FA0;
+    --accent-soft: #E4E8F6;
+    --flag:        #B23E22;
+    --flag-soft:   #F6E5E0;
+    --good:        #2E6B4F;
+    --shadow:      0 1px 2px rgba(20,23,31,.05), 0 8px 24px -16px rgba(20,23,31,.22);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:      #101218;
+      --surface:     #181B23;
+      --surface-alt: #1F232C;
+      --ink:         #ECECE7;
+      --ink-soft:    #A9B0BF;
+      --ink-faint:   #7B8394;
+      --line:        #2C313C;
+      --line-soft:   #23272F;
+      --accent:      #8AA6FF;
+      --accent-soft: #1C2440;
+      --flag:        #E88B71;
+      --flag-soft:   #33211C;
+      --good:        #6FC79C;
+      --shadow:      0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.8);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground:      #101218;
+    --surface:     #181B23;
+    --surface-alt: #1F232C;
+    --ink:         #ECECE7;
+    --ink-soft:    #A9B0BF;
+    --ink-faint:   #7B8394;
+    --line:        #2C313C;
+    --line-soft:   #23272F;
+    --accent:      #8AA6FF;
+    --accent-soft: #1C2440;
+    --flag:        #E88B71;
+    --flag-soft:   #33211C;
+    --good:        #6FC79C;
+    --shadow:      0 1px 2px rgba(0,0,0,.4), 0 10px 30px -18px rgba(0,0,0,.8);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 47rem;
+    margin: 0 auto;
+    padding: 3.5rem 1.5rem 6rem;
+  }
+
+  /* ---------- type ---------- */
+
+  h1, h2, h3, .label, .code, th, .btn {
+    font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 7vw, 3.6rem);
+    font-weight: 800;
+    line-height: 0.98;
+    letter-spacing: -0.031em;
+    text-wrap: balance;
+    margin: 0.5rem 0 0;
+  }
+
+  h2 {
+    font-size: 1.32rem;
+    font-weight: 700;
+    letter-spacing: -0.012em;
+    line-height: 1.2;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  p { margin: 0; }
+
+  .label {
+    font-size: 0.688rem;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .code {
+    font-family: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  .lede {
+    font-size: 1.24rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    font-weight: 300;
+    text-wrap: pretty;
+  }
+
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    padding-bottom: 2.25rem;
+    border-bottom: 2px solid var(--ink);
+  }
+
+  .masthead .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    align-items: baseline;
+  }
+
+  .thesis {
+    font-size: 1.16rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    max-width: 34rem;
+  }
+
+  /* ---------- sections ---------- */
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 3.25rem 0 0;
+  }
+
+  .sec-head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--line);
+    border: 0;
+    margin: 0;
+  }
+
+  .stack { display: flex; flex-direction: column; gap: 1rem; }
+  .stack-tight { display: flex; flex-direction: column; gap: 0.6rem; }
+
+  /* ---------- quote ---------- */
+
+  blockquote {
+    margin: 0;
+    padding: 0.15rem 0 0.15rem 1.15rem;
+    border-left: 3px solid var(--accent);
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  blockquote cite {
+    display: block;
+    margin-top: 0.6rem;
+    font-style: normal;
+    font-family: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-faint);
+  }
+
+  /* ---------- the number ---------- */
+
+  .goal {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .goal div {
+    background: var(--surface);
+    padding: 1.1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .goal .n {
+    font-family: "Archivo", sans-serif;
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .goal .n.hi { color: var(--accent); }
+  .goal .n.flag { color: var(--flag); }
+
+  /* ---------- findings table ---------- */
+
+  .scroller { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  th {
+    text-align: left;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding: 0 0.9rem 0.55rem 0;
+    border-bottom: 1px solid var(--ink);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 0.85rem 0.9rem 0.85rem 0;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+    line-height: 1.45;
+  }
+
+  td:first-child { white-space: nowrap; }
+  td .num {
+    font-family: "Archivo", sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+  }
+  td .num.flag { color: var(--flag); }
+
+  /* ---------- callout ---------- */
+
+  .callout {
+    background: var(--accent-soft);
+    border-radius: 3px;
+    padding: 1.35rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .callout .label { color: var(--accent); }
+  .callout p { font-size: 1.06rem; line-height: 1.5; }
+
+  /* ---------- steps ---------- */
+
+  ol.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    counter-reset: step;
+  }
+
+  ol.steps li {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 2.6rem 1fr;
+    gap: 0 0.9rem;
+    padding: 1.15rem 0;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  ol.steps li:first-child { border-top: 1px solid var(--ink); }
+
+  ol.steps li::before {
+    content: counter(step);
+    grid-row: 1 / span 3;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+    padding-top: 0.22rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ol.steps .who {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.03em;
+    color: var(--ink-faint);
+    margin-top: 0.32rem;
+  }
+
+  ol.steps p { margin-top: 0.4rem; color: var(--ink-soft); font-size: 1rem; }
+  ol.steps .yours { color: var(--accent); font-weight: 600; }
+
+  /* ---------- decisions ---------- */
+
+  .decision {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 3px;
+    box-shadow: var(--shadow);
+    padding: 1.4rem 1.45rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .decision > .top {
+    display: flex;
+    gap: 0.75rem;
+    align-items: baseline;
+  }
+
+  .decision .id {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--surface);
+    background: var(--accent);
+    padding: 0.2rem 0.42rem;
+    border-radius: 2px;
+    letter-spacing: 0.02em;
+    flex: none;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .options li {
+    display: grid;
+    grid-template-columns: 1.15rem 1fr;
+    gap: 0.6rem;
+    font-size: 0.97rem;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .options li::before {
+    content: "○";
+    color: var(--ink-faint);
+    font-size: 0.85rem;
+    line-height: 1.65;
+  }
+
+  .options li.pick::before { content: "●"; color: var(--accent); }
+  .options li.pick { color: var(--ink); }
+
+  .rec {
+    border-top: 1px solid var(--line-soft);
+    padding-top: 0.85rem;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .rec b {
+    font-family: "Archivo", sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--good);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+
+  /* ---------- assumptions ---------- */
+
+  ul.ledger {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ul.ledger li {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.75rem;
+    padding: 0.8rem 0;
+    border-top: 1px solid var(--line-soft);
+    align-items: start;
+  }
+
+  ul.ledger li:first-child { border-top: 1px solid var(--ink); }
+
+  ul.ledger .aid {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--flag);
+    background: var(--flag-soft);
+    padding: 0.22rem 0;
+    border-radius: 2px;
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  ul.ledger .src {
+    display: block;
+    margin-top: 0.28rem;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--ink-faint);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---------- ask ---------- */
+
+  .ask {
+    background: var(--ink);
+    color: var(--ground);
+    border-radius: 3px;
+    padding: 1.75rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .ask h2 { color: var(--ground); }
+  .ask .label { color: var(--ink-faint); }
+
+  .ask ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    counter-reset: ask;
+  }
+
+  .ask ol li {
+    counter-increment: ask;
+    display: grid;
+    grid-template-columns: 1.5rem 1fr;
+    gap: 0.6rem;
+    font-size: 1.03rem;
+    line-height: 1.5;
+    color: var(--ground);
+  }
+
+  .ask ol li::before {
+    content: counter(ask) ".";
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    padding-top: 0.28rem;
+  }
+
+  .ask .kicker {
+    font-size: 0.95rem;
+    color: var(--ink-faint);
+    border-top: 1px solid rgba(255,255,255,.14);
+    padding-top: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* ---------- footer ---------- */
+
+  footer {
+    margin-top: 3.5rem;
+    padding-top: 1.35rem;
+    border-top: 1px solid var(--line);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    line-height: 1.75;
+    color: var(--ink-faint);
+    letter-spacing: 0.01em;
+  }
+
+  @media (max-width: 34rem) {
+    .wrap { padding: 2.5rem 1.15rem 4rem; }
+    ol.steps li { grid-template-columns: 1.9rem 1fr; }
+    ul.ledger li { grid-template-columns: 2.6rem 1fr; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="meta">
+      <span class="label">Prepared for Serafima Iofina</span>
+      <span class="label">Board Member, CITYarts</span>
+      <span class="label">21 August 2026</span>
+    </div>
+    <h1>The CITYarts Rebuild</h1>
+    <p class="thesis">What the site is actually costing you, what building one really involves, and the three calls only you can make.</p>
+  </header>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">First — the reframe</span>
+      <h2>You didn't ask to learn to code</h2>
+    </div>
+    <blockquote>
+      "Not the specific coding language, but what are the steps to get the website up and running so that I can intellectually talk about it… I want to be able to think through the process, not just ask."
+      <cite>Voice memo, 21 Aug 2026</cite>
+    </blockquote>
+    <p>That is a request for <strong>command of the process</strong>, not for a programming skill. You want to sit in the room where this gets decided and not be the person who has to take someone's word for it.</p>
+    <p>So this document is not a tutorial. It is the map of the build, the vocabulary that goes with each stage, and — most importantly — a clear marking of which stages are <em>yours</em> and which ones you are only supervising. The stages that are yours are the ones that decide whether this works.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">The number everything serves</span>
+      <h2>A $300,000 annual gap, on a deadline</h2>
+    </div>
+    <div class="goal">
+      <div><span class="n">$700K</span><span class="label">Raised now, per year</span></div>
+      <div><span class="n hi">$1M</span><span class="label">Target, per year</span></div>
+      <div><span class="n flag">$300K</span><span class="label">The gap</span></div>
+      <div><span class="n">2027</span><span class="label">By end of</span></div>
+    </div>
+    <p>This is a <strong>run-rate</strong> problem, not a one-off campaign — a million a year, every year, not a million once. That distinction changes the design brief completely: a site built to win a single push is a different object from a site built to compound a donor base year over year. Every recommendation below is judged against the second one.</p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Ground truth — measured on cityarts.org, 21 Aug 2026</span>
+      <h2>Your instincts about the site are right, and here are the numbers</h2>
+    </div>
+    <p>You said the current site is hard to navigate, that it's unclear what CITYarts does, and that the donation experience has friction. Each of those is measurable, and each one measures worse than you described.</p>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr><th>Measured</th><th>What it is</th><th>What it costs</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="num flag">98</span></td>
+            <td>Links in the site navigation.</td>
+            <td>No visitor builds a mental model of 98 things. This is the single clearest cause of "I don't know where to go."</td>
+          </tr>
+          <tr>
+            <td><span class="num flag">0</span></td>
+            <td>Donation forms on the donate page.</td>
+            <td>Giving means leaving your site for a generic PayPal page. Every hand-off loses donors, and you learn nothing about the ones who left.</td>
+          </tr>
+          <tr>
+            <td><span class="num flag">0</span></td>
+            <td>Meta descriptions on the homepage.</td>
+            <td>The sentence Google prints under your search result is scraped at random. You asked for organic search; this is step one and it is unset.</td>
+          </tr>
+          <tr>
+            <td><span class="num flag">Empty</span></td>
+            <td>The homepage's primary heading tag.</td>
+            <td>Search engines read that tag as "what is this page." Yours is blank.</td>
+          </tr>
+          <tr>
+            <td><span class="num">"CITYarts"</span></td>
+            <td>The homepage title, in full.</td>
+            <td>Nobody searches for a name they don't know yet. No mention of youth, murals, public art, or New York.</td>
+          </tr>
+          <tr>
+            <td><span class="num">8</span></td>
+            <td>Giving tiers already written, $10 to $2,000.</td>
+            <td>See below. This one is good news.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <span class="label">The most useful thing found today</span>
+      <p>You said you wanted charity:&#8203;water's donation experience — the tiers, the concrete impact per dollar. <strong>You already have that copy.</strong> It is on your donate page right now: $10 buys a box of colored pencils, $100 a gallon of outdoor mural paint, $250 tiles and grout for a mosaic restoration.</p>
+      <p>It is written as a paragraph of prose, and it is <strong>connected to nothing</strong>. The tiers are not buttons. Choosing "$250 — tiles and grout" does not exist as an action anywhere on the site. The gap between you and charity:water is not writing, and not design taste. It is <em>wiring</em>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Your actual question, answered</span>
+      <h2>What building a website consists of</h2>
+    </div>
+    <p>Seven stages, in order, because the order genuinely matters — each one is expensive to redo once the next has started. The vocabulary in each is what a vendor or developer will use with you.</p>
+    <ol class="steps">
+      <li>
+        <h3>Audience &amp; content map</h3>
+        <div class="who">Yours — about a week — no developer involved</div>
+        <p>Decide who the site talks to and what each of them needs on arrival. You have already done most of this: donors, corporate and foundation partners, artists, educators and regulators. What's missing is the ruthless part — what each one needs to see <em>first</em>, and what gets cut. <span class="yours">This stage decides whether the site works. Everything after it is execution.</span></p>
+      </li>
+      <li>
+        <h3>Information architecture</h3>
+        <div class="who">Yours to approve — the nav, the page list, the URLs</div>
+        <p>Turning the map into a structure: what pages exist, what the menu says, what lives under what. This is where 98 links becomes five. Ask to see it as a plain list before anyone designs anything.</p>
+      </li>
+      <li>
+        <h3>Wireframes</h3>
+        <div class="who">Yours to approve — grey boxes, deliberately ugly</div>
+        <p>Layouts with no color, no photography, no fonts — just what goes where and in what order. They look unfinished on purpose, so the conversation stays on priority instead of taste. <span class="yours">This is the cheapest possible place to be wrong.</span> Insist on it; vendors often skip it and it is the skip that causes expensive redesigns later.</p>
+      </li>
+      <li>
+        <h3>Visual design</h3>
+        <div class="who">Designer — you and the founder approve</div>
+        <p>The look: typography, color, photography treatment, how a mural photograph is cropped and used. This is where the charity:water reference actually applies, and it is the <em>only</em> stage where "make it beautiful" is the right note.</p>
+      </li>
+      <li>
+        <h3>Build</h3>
+        <div class="who">Developer — you set the constraints, not the code</div>
+        <p>Turning designs into a working site. Your Squarespace plan permits custom code and CSS, so a great deal is possible without leaving it. The question you'll be asked is "custom or template" — and the real question underneath is who maintains it after launch. See <strong>D2</strong>.</p>
+      </li>
+      <li>
+        <h3>Content production</h3>
+        <div class="who">Yours — and it is the usual reason launches slip</div>
+        <p>Photography, written copy, the founder's blog posts, project descriptions, impact numbers. Design gets blamed for delays; it is almost always content. Start this at stage 3, not stage 6.</p>
+      </li>
+      <li>
+        <h3>Launch &amp; measurement</h3>
+        <div class="who">Developer — but one item is yours to insist on</div>
+        <p>Analytics, donation tracking, and <strong>redirects</strong>. When page addresses change, every old link — from Google, from press coverage, from years of newsletters — breaks unless each one is pointed at its replacement. <span class="yours">A rebuild without a redirect plan will destroy the organic search you asked for.</span> Ask for the redirect map in writing before launch day.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Three calls only you can make</span>
+      <h2>Decisions</h2>
+    </div>
+
+    <div class="decision">
+      <div class="top">
+        <span class="id">D1</span>
+        <h3>Full overhaul, phased rollout, or just campaign landing pages?</h3>
+      </div>
+      <ul class="options">
+        <li>One single overhaul — slowest to any result, and the whole budget is spent before you learn anything</li>
+        <li class="pick">Phased — but starting with the donation path, <em>not</em> the homepage</li>
+        <li>Landing pages only — traffic still funnels into the same broken PayPal hand-off</li>
+      </ul>
+      <div class="rec">
+        <b>Recommendation</b>
+        Phase one is the giving experience: the eight tiers you already wrote, turned into actual buttons, on your own site, with recurring giving and a way to capture the donor's details. It is the smallest change on the list, the only one that touches the $300K directly, and it is reversible. Your instinct that the whole site needs redesigning is correct — but doing the donation path first means the redesign gets funded by a mechanism that already works, instead of the other way round.
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="top">
+        <span class="id">D2</span>
+        <h3>Stay on Squarespace, or rebuild custom?</h3>
+      </div>
+      <ul class="options">
+        <li class="pick">Stay — treat Squarespace as the shell, add custom code where it earns its place</li>
+        <li>Rebuild custom — more control, and a permanent dependency on whoever wrote it</li>
+      </ul>
+      <div class="rec">
+        <b>Recommendation</b>
+        The binding constraint is not what the code can do — it is who keeps the site alive after the developer's invoice is paid. A custom site with nobody in-house to maintain it decays visibly within a year, and for a nonprofit that decay reads to donors as instability. Squarespace is the unglamorous correct answer here. Spend the freed budget on photography and on the donation mechanism instead. <em>One exception, and it is independent of everything else: move giving off the generic PayPal button and onto a real nonprofit donation platform. That change is worth making this month whatever you decide about the redesign.</em>
+      </div>
+    </div>
+
+    <div class="decision">
+      <div class="top">
+        <span class="id">D3</span>
+        <h3>Who builds it — agency, freelancer, or you with tooling?</h3>
+      </div>
+      <ul class="options">
+        <li>Agency — highest cost, and you'll spend much of it on account management</li>
+        <li class="pick">Freelancer or small studio, with you owning stages 1–3 yourself</li>
+        <li>You alone — the learning is real, but the calendar is 2–3 months</li>
+      </ul>
+      <div class="rec">
+        <b>Recommendation</b>
+        This is the decision your original question was really about. If you personally own the audience map, the architecture and the wireframes — the three stages that don't require code — then you are briefing from a position of authority and any competent freelancer can execute it. That is the cheapest version, the fastest version, and the one where you genuinely learn the thing you said you wanted to learn. <em>Three questions that separate a good vendor from a bad one: Will you show me wireframes before design? What is your redirect plan? Who updates this in six months?</em>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <span class="label">Correct me — reply with the codes</span>
+      <h2>What I assumed, and where I could be wrong</h2>
+    </div>
+    <p>All of the above rests on these. Reading them takes a minute; each one that is wrong changes a recommendation. Reply with just the code and the correction — "A3 wrong, actually…" is a perfect answer.</p>
+    <ul class="ledger">
+      <li><span class="aid">A1</span><span>The $300K gap is <strong>annual and recurring</strong> — a million a year sustained, not a million raised once.<span class="src">from memos 18 Aug &amp; 21 Aug</span></span></li>
+      <li><span class="aid">A2</span><span>The site should be live in <strong>two to three months</strong>; the $1M run rate is the end-of-2027 target. Two different clocks.<span class="src">from memo 18 Aug</span></span></li>
+      <li><span class="aid">A3</span><span>You do not intend to write production code yourself. You intend to <strong>direct and evaluate</strong> the people who do.<span class="src">from memo 21 Aug</span></span></li>
+      <li><span class="aid">A4</span><span>The founder has final say on look and tone, and long-form blogging is a firm requirement, not a nice-to-have.<span class="src">from memo 18 Aug</span></span></li>
+      <li><span class="aid">A5</span><span>The Squarespace plan is one that permits code injection and custom CSS.<span class="src">stated in memo 18 Aug — worth confirming with whoever holds the account</span></span></li>
+      <li><span class="aid">A6</span><span>There is <strong>no in-house developer or full-time web person</strong> at CITYarts. This assumption alone drives D2.<span class="src">inferred, not stated — please confirm</span></span></li>
+      <li><span class="aid">A7</span><span>Donations run through PayPal only, with no separate donor management system behind it.<span class="src">observed on cityarts.org — please confirm</span></span></li>
+      <li><span class="aid">A8</span><span>You have authority as a board member to change the donation mechanism without a full board vote.<span class="src">inferred, not stated — please confirm</span></span></li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="ask">
+      <span class="label">Three things, and they should take ten minutes</span>
+      <h2>What would help most today</h2>
+      <ol>
+        <li>Which of <strong>D1, D2, D3</strong> do you disagree with? Disagreement is more useful than agreement here — it tells me what I've misread.</li>
+        <li>Which <strong>assumption codes</strong> are wrong? Especially A6, A7 and A8, which are inferences rather than things you said.</li>
+        <li>One sentence: <strong>other than dollars raised, what would make you say this worked?</strong> You started to answer this — "more people interested in supporting this organization financially <em>and non-financially</em>" — and that second half is the part no one has defined yet. It may well be the more important half.</li>
+      </ol>
+      <p class="kicker">Once those three come back, the next thing you get is stage 1 as a real document — the audience map, drafted, for you to cut.</p>
+    </div>
+  </section>
+
+  <footer>
+    Sources — four voice recordings, 18 and 21 August 2026, transcribed on-device; measurements taken live from cityarts.org on 21 August 2026.<br>
+    Transcript coverage 81–94% per recording; quoted passages verified against audio. Figures for the funding gap appear consistently in two independent recordings.
+  </footer>
+
+</div>

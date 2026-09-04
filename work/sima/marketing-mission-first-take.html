@@ -1,0 +1,456 @@
+<title>Sima's Marketing Mission</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+
+<style>
+:root{
+  --paper:#F2F3F6;
+  --surface:#FFFFFF;
+  --sunk:#E7E9EF;
+  --ink:#14161D;
+  --ink-2:#3A3F4E;
+  --muted:#6B7183;
+  --rule:#D3D7E0;
+  --rule-soft:#E3E6EC;
+  --accent:#2347C7;
+  --accent-soft:#DDE3FA;
+  --known:#2F6B48;
+  --known-soft:#DDEDE2;
+  --gap:#A83C22;
+  --gap-soft:#F6DFD8;
+  --shadow:0 1px 2px rgba(20,22,29,.06),0 8px 24px -14px rgba(20,22,29,.22);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0F1116;
+    --surface:#171A22;
+    --sunk:#1E2230;
+    --ink:#E9EBF1;
+    --ink-2:#BFC4D2;
+    --muted:#8A91A4;
+    --rule:#2C3140;
+    --rule-soft:#232734;
+    --accent:#8AA3FF;
+    --accent-soft:#1E2745;
+    --known:#7FC79B;
+    --known-soft:#172A20;
+    --gap:#E48A6E;
+    --gap-soft:#33190F;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0F1116;
+  --surface:#171A22;
+  --sunk:#1E2230;
+  --ink:#E9EBF1;
+  --ink-2:#BFC4D2;
+  --muted:#8A91A4;
+  --rule:#2C3140;
+  --rule-soft:#232734;
+  --accent:#8AA3FF;
+  --accent-soft:#1E2745;
+  --known:#7FC79B;
+  --known-soft:#172A20;
+  --gap:#E48A6E;
+  --gap-soft:#33190F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:16px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px 96px}
+
+/* ---------- masthead ---------- */
+.mast{padding:56px 0 28px;border-bottom:1px solid var(--rule)}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 18px;
+  display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;
+}
+.eyebrow b{color:var(--accent);font-weight:500}
+h1{
+  font-family:Newsreader,Georgia,serif;
+  font-weight:500;font-size:clamp(34px,5.2vw,54px);line-height:1.06;
+  letter-spacing:-.015em;margin:0 0 16px;text-wrap:balance;
+}
+.dek{
+  font-family:Newsreader,Georgia,serif;font-size:clamp(18px,2.2vw,21px);
+  line-height:1.45;color:var(--ink-2);max-width:62ch;margin:0;
+}
+.dek em{font-style:italic;color:var(--ink)}
+
+/* ---------- verdict ---------- */
+.verdict{
+  margin:28px 0 0;padding:20px 22px;background:var(--surface);
+  border:1px solid var(--rule);border-left:3px solid var(--accent);
+  border-radius:2px;box-shadow:var(--shadow);
+  display:grid;gap:10px;
+}
+.verdict p{margin:0;max-width:70ch}
+.verdict .lede{font-weight:600}
+.stamp{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+}
+
+/* ---------- sections ---------- */
+section{padding-top:52px}
+h2{
+  font-family:Newsreader,Georgia,serif;font-weight:500;
+  font-size:clamp(24px,3vw,31px);line-height:1.15;letter-spacing:-.01em;
+  margin:0 0 6px;text-wrap:balance;
+}
+.sub{color:var(--muted);margin:0 0 22px;max-width:66ch;font-size:15px}
+h3{
+  font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:16.5px;
+  margin:0 0 8px;letter-spacing:-.005em;
+}
+p{max-width:68ch}
+
+/* the tape rail: every claim is anchored to a timecode */
+.tape{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.tape li{
+  display:grid;grid-template-columns:62px 1fr;gap:16px;
+  padding:11px 0;border-top:1px solid var(--rule-soft);align-items:baseline;
+}
+.tape li:first-child{border-top:1px solid var(--rule)}
+.tc{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:12px;
+  color:var(--accent);font-variant-numeric:tabular-nums;padding-top:2px;
+}
+.tape p{margin:0}
+.q{font-family:Newsreader,Georgia,serif;font-style:italic;font-size:17px;color:var(--ink)}
+
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card{
+  background:var(--surface);border:1px solid var(--rule);border-radius:2px;
+  padding:22px;box-shadow:var(--shadow);
+}
+.card .num{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  display:block;margin-bottom:10px;
+}
+.card ul{margin:12px 0 0;padding-left:18px;display:grid;gap:6px}
+.card li{font-size:14.5px;color:var(--ink-2)}
+
+.band{
+  background:var(--sunk);border:1px solid var(--rule);border-radius:2px;
+  padding:22px;margin-top:22px;
+}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:2px;background:var(--surface);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;min-width:660px;font-size:14px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+thead th{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  border-bottom:1px solid var(--rule);font-weight:400;white-space:nowrap;
+}
+tbody tr:last-child td{border-bottom:none}
+td.who{white-space:nowrap;font-weight:500}
+.pill{
+  display:inline-block;font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 7px;border-radius:2px;white-space:nowrap;
+}
+.pill.none{background:var(--gap-soft);color:var(--gap)}
+.pill.some{background:var(--known-soft);color:var(--known)}
+.pill.act{background:var(--accent-soft);color:var(--accent)}
+
+figure{margin:0}
+figcaption{font-size:13px;color:var(--muted);margin-top:10px;max-width:66ch}
+svg{display:block;width:100%;height:auto}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--rule);border-radius:2px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
+.split > div{padding:22px}
+.split > div:first-child{border-right:1px solid var(--rule)}
+.who-said{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;
+}
+.split p{margin:0 0 10px;font-size:15px}
+.split p:last-child{margin-bottom:0}
+
+.foot{
+  margin-top:64px;padding-top:22px;border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;
+  color:var(--muted);line-height:1.9;
+}
+.foot b{color:var(--ink-2);font-weight:500}
+
+@media (max-width:760px){
+  .cols,.split{grid-template-columns:1fr}
+  .split > div:first-child{border-right:none;border-bottom:1px solid var(--rule)}
+  .tape li{grid-template-columns:54px 1fr;gap:12px}
+}
+</style>
+
+<div class="wrap">
+
+<header class="mast">
+  <p class="eyebrow"><span>Sima · CITYarts</span><span>Recording 08 · 21 Aug 2026, 23:14</span><span>19 min 37 s</span><span><b>First take</b></span></p>
+  <h1>Sima's Marketing Mission</h1>
+  <p class="dek">Two initiatives, one metric, and one unresolved fight about evidence. She stopped at 18:24 because she was tired and owes the end-to-end walkthrough <em>today</em>.</p>
+
+  <div class="verdict">
+    <p class="lede">The transcript landed overnight. The analysis did not — this is it, written now.</p>
+    <p>The Cloud Run lane transcribed the recording at 02:57 EDT and it was committed to ground truth at 05:40. Nothing read it after that: no first take existed in either repo when this session opened at 16:14 EDT today. The site track kept shipping all day against the <em>old</em> brief.</p>
+    <p>One correction to the framing: this is not a memo she sent. It is a recorded interview — she states the ask for the first five minutes, then you interrogate it for fourteen. Roughly half the substance below is what your pressure surfaced, not what she prepared.</p>
+    <p class="stamp">Observed 2026-08-22 16:14 EDT · transcript coverage 95.6% · one 6.1 s gap at 8:24</p>
+  </div>
+</header>
+
+<section>
+  <h2>The rule this whole memo reduces to</h2>
+  <p class="sub">If you keep one sentence, keep this one.</p>
+  <div class="band">
+    <p style="font-family:Newsreader,Georgia,serif;font-size:clamp(19px,2.6vw,24px);line-height:1.4;margin:0;max-width:60ch">Both initiatives are audience-modelling problems wearing marketing clothes — and both stall on the same missing asset: <strong>CITYarts' own donor and reach data, which nobody has confirmed exists.</strong></p>
+  </div>
+  <p style="margin-top:18px">She asked for campaign concepts and a CRM programme. Neither can be specified before the four audiences have defined targeting characteristics, and the characteristics come from records only CITYarts holds. She conceded this herself at 12:57 — <em>"I don't think they collect any data right now"</em> — and again at 13:17 about the 200,000 figure. The fastest useful move is therefore not a campaign concept. It is a data request.</p>
+</section>
+
+<section>
+  <h2>What she asked for</h2>
+  <p class="sub">Both initiatives are explicitly post-website. She is not asking to change what is being built — she is asking what it has to support.</p>
+
+  <div class="cols">
+    <div class="card">
+      <span class="num">Initiative A · 0:27 – 2:29</span>
+      <h3>A social activation per project</h3>
+      <p style="font-size:14.5px;color:var(--ink-2);margin:0">Every project done in a community gets its own campaign, activating local businesses, families and organisations to attend, participate and give whatever they can.</p>
+      <ul>
+        <li><strong>QR codes</strong> posted around the site or the wall being decorated (0:58)</li>
+        <li><strong>Student volunteers as influencers</strong>, spreading it through their own channels (1:07)</li>
+        <li><strong>Ribbon-cutting VIPs</strong> — political figures, business leaders — and the mentoring artists as amplifiers (1:19)</li>
+        <li>Mostly <strong>organic and word-of-mouth</strong>, with a little paid social: interactive and video ads (1:52)</li>
+        <li>Deliverable she named: audience → core message per audience → assets → <strong>impact measurement</strong> (2:18)</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <span class="num">Initiative B · 2:31 – 3:30</span>
+      <h3>Donor outreach and development</h3>
+      <p style="font-size:14.5px;color:var(--ink-2);margin:0">Start from the historical donation data, then build both halves of the funnel — keep the donors who exist, find the ones who don't yet.</p>
+      <ul>
+        <li>Read the <strong>history</strong>: who gave, attrition, repeat contributors versus fallout (2:37)</li>
+        <li>Derive the <strong>donor lifecycle</strong> (2:45)</li>
+        <li>A <strong>CRM programme</strong> cultivating past and repeat donors toward additional gifts (2:54)</li>
+        <li>A <strong>new-donor acquisition programme</strong>: channels, assets, messaging (3:07)</li>
+        <li>Timed to the fundraising calendar — <strong>auctions, holiday parties, the year-end gala</strong> (3:22)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="band">
+    <span class="num" style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px">Still open in her own head · 4:10 – 5:17</span>
+    <h3>The value story and the impact story</h3>
+    <p style="margin-bottom:12px">Defined once at organisation level <em>and</em> once per individual project and programme, so the same project stops being described three different ways and every message ladders up to the mission statement.</p>
+    <ul class="tape" style="margin-top:14px">
+      <li><span class="tc">4:39</span><p class="q">"I want to make the story really tight… very focused, very punchy, very structured and very consistent."</p></li>
+      <li><span class="tc">4:50</span><p>Against what it is now: <em>"a lot of words, a lot of this emotional content — which is great, but what really works with people is brevity."</em></p></li>
+      <li><span class="tc">5:14</span><p>And personalised — the core mission rendered so it resonates differently for each audience.</p></li>
+    </ul>
+  </div>
+
+  <p style="margin-top:22px"><strong>Her stake, stated plainly at 3:33:</strong> <em>"That is my main responsibility, that is what I'm going to be ultimately judged on. I really want to shine, I really want to show that I can bring in money."</em></p>
+</section>
+
+<section>
+  <h2>The metric she chose — and the join that does not exist</h2>
+  <p class="sub">You asked for an objective and a way to know you're getting closer (5:47). She answered with three quantities, and the one she actually wants is a ratio across a boundary nothing currently crosses.</p>
+
+  <figure>
+    <svg viewBox="0 0 900 260" role="img" aria-label="Measurement chain: reach flows to engagement, then a broken link to donation. The ratio Sima wants spans the break.">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor"/>
+        </marker>
+      </defs>
+
+      <g font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1.2" fill="var(--muted)">
+        <text x="20" y="26">HER METRIC 2 · 6:53</text>
+        <text x="330" y="26">HER METRIC 2b · 7:05</text>
+        <text x="660" y="26">HER METRIC 1 · 6:03</text>
+      </g>
+
+      <g>
+        <rect x="20" y="40" width="240" height="76" rx="2" fill="var(--surface)" stroke="var(--rule)"/>
+        <rect x="330" y="40" width="240" height="76" rx="2" fill="var(--surface)" stroke="var(--rule)"/>
+        <rect x="640" y="40" width="240" height="76" rx="2" fill="var(--surface)" stroke="var(--accent)" stroke-width="1.6"/>
+      </g>
+
+      <g font-family="IBM Plex Sans, sans-serif" fill="var(--ink)">
+        <text x="40" y="70" font-size="17" font-weight="600">Reach / impressions</text>
+        <text x="40" y="94" font-size="13" fill="var(--muted)">how many saw the post</text>
+        <text x="350" y="70" font-size="17" font-weight="600">Engagement</text>
+        <text x="350" y="94" font-size="13" fill="var(--muted)">clicks, reshares, likes, comments</text>
+        <text x="660" y="70" font-size="17" font-weight="600">Donation</text>
+        <text x="660" y="94" font-size="13" fill="var(--muted)">any amount — "even a dollar" (6:15)</text>
+      </g>
+
+      <g color="var(--ink-2)" stroke="currentColor" stroke-width="1.4" fill="none">
+        <line x1="262" y1="78" x2="322" y2="78" marker-end="url(#ar)"/>
+      </g>
+
+      <g color="var(--gap)" stroke="currentColor" stroke-width="1.4" fill="none" stroke-dasharray="5 5">
+        <line x1="572" y1="78" x2="632" y2="78" marker-end="url(#ar)"/>
+      </g>
+      <g color="var(--gap)">
+        <line x1="602" y1="46" x2="602" y2="110" stroke="var(--gap)" stroke-width="2"/>
+        <text x="602" y="132" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1" fill="var(--gap)">NO JOIN EXISTS</text>
+      </g>
+
+      <path d="M 140 150 L 140 196 L 760 196 L 760 150" fill="none" stroke="var(--accent)" stroke-width="1.6"/>
+      <rect x="316" y="176" width="268" height="40" rx="2" fill="var(--accent-soft)" stroke="var(--accent)"/>
+      <text x="450" y="201" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="14" font-weight="600" fill="var(--accent)">exposed → donated, maximised (7:27)</text>
+
+      <text x="450" y="243" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-size="13.5" fill="var(--ink-2)">The number she is actually chasing is the one quantity the current stack cannot produce.</text>
+    </svg>
+    <figcaption>Instagram reports the left two boxes. The donation form reports the right one. Nothing carries an identifier across the break, so the ratio she named as her real objective is not measurable today — by anyone, at any budget.</figcaption>
+  </figure>
+
+  <p style="margin-top:24px">She also named a <strong>non-donation outcome she counts as success</strong> (7:43 – 8:17): people who become advocates and peer-to-peer activators — bringing in participants, volunteers and artists, and unlocking relationships with foundations and corporations. That is a second, slower funnel and it does not share the first one's metric.</p>
+</section>
+
+<section>
+  <h2>The four audiences, and what is known about each</h2>
+  <p class="sub">She named them at 11:58 and said the website already reflects them. The middle column is the finding: it is empty for all four.</p>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr><th>Audience</th><th>What she can state</th><th>Data held today</th><th>What the roadmap must define (12:37)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="who">Educators &amp; regulators</td>
+          <td>Reached through the schools CITYarts partners with</td>
+          <td><span class="pill none">unknown</span></td>
+          <td>Drivers, barriers, touchpoints</td>
+        </tr>
+        <tr>
+          <td class="who">Individual donors</td>
+          <td>Skew older; concentrate around ~3 events a year; give on the site or mail a cheque (16:19)</td>
+          <td><span class="pill none">not retrieved</span> — the historical donation file is the whole basis of Initiative B and has not been requested</td>
+          <td>Lifecycle, attrition, repeat rate</td>
+        </tr>
+        <tr>
+          <td class="who">Corporations &amp; foundations</td>
+          <td>Unlocked through advocates and board relationships, not campaigns</td>
+          <td><span class="pill none">unknown</span></td>
+          <td>Which relationships exist already</td>
+        </tr>
+        <tr>
+          <td class="who">Participating youth</td>
+          <td>On social, not on websites (15:41). Before/after surveys exist for participants (11:00)</td>
+          <td><span class="pill some">surveys only</span> — never matched to demographics (11:14)</td>
+          <td>Geo, age, household, media consumption</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="margin-top:20px">The method she wants applied is her own from work (14:17 – 15:05): start with high-level targeting definitions — the kinds of schools CITYarts goes after, therefore the students in those catchments — then model outward on geo, age and household and buy media data against it. That method needs the school list and the project locations. Both are obtainable. Neither has been asked for.</p>
+</section>
+
+<section>
+  <h2>The 200,000 figure did not survive the recording</h2>
+  <p class="sub">This is the sharpest exchange in the tape, and it has a direct consequence for the site that is shipping today.</p>
+  <ul class="tape">
+    <li><span class="tc">10:26</span><p>She illustrates the beneficiary as a story: a kid in the Bronx, one-parent household, a school whose art budget was cut.</p></li>
+    <li><span class="tc">10:45</span><p>You ask for confidence, then evidence, then how many such people are in the data.</p></li>
+    <li><span class="tc">10:50</span><p>She cites <strong>200,000 people reached</strong> through the programme.</p></li>
+    <li><span class="tc">13:17</span><p class="q">"I don't know what the evidence for 200,000 people is… I think they added up a bunch of people who participated."</p></li>
+    <li><span class="tc">13:24</span><p>Your test, unanswered: <em>"Maybe it's 20 people. How do you know that?"</em> — <em>"No idea."</em></p></li>
+    <li><span class="tc">13:46</span><p>Where you both landed: for campaigns you do not need precision on population <em>size</em>, you need precision on <strong>targeting characteristics</strong>. That is the workable version of her ask.</p></li>
+  </ul>
+  <div class="band" style="margin-top:24px">
+    <h3>Consequence for the build</h3>
+    <p style="margin:0"><strong>200,000 is now a disputed figure by her own account</strong> and belongs on the same denylist as the project count and the country count. The gate already exists — <code style="font-family:'IBM Plex Mono',monospace;font-size:13px">.github/workflows/lanes.yml:75</code> in <code style="font-family:'IBM Plex Mono',monospace;font-size:13px">cityarts-site</code>, the banned-strings check that currently fails the build on "124 countries" and "35 years". Adding the reach figure is a two-line change and it should go in before any campaign copy is drafted around it.</p>
+  </div>
+</section>
+
+<section>
+  <h2>One disagreement you did not settle</h2>
+  <p class="sub">It ran from 15:41 to 16:31 and it is not a misunderstanding — it is two different jobs for two different channels. Leaving it open is fine; leaving it unnamed is not.</p>
+  <div class="split">
+    <div>
+      <p class="who-said">Your position · 16:08</p>
+      <p>The website is a limited channel — older philanthropists. The biggest individual donors cluster around roughly three events a year and give on the site or mail a cheque.</p>
+      <p>So: <em>"Then why are you wasting time on Instagram? Those people aren't going to donate."</em></p>
+    </div>
+    <div>
+      <p class="who-said">Her position · 15:41, 16:31</p>
+      <p>Instagram is not the donation channel. It is the word-of-mouth channel — <em>"Instagram creates the oomph… you want to be known."</em></p>
+      <p>And the youth audience is not reachable any other way: <em>"These kids are on social. Website is useless for them."</em></p>
+      <p>At 15:52 she corrects the framing outright: she was <strong>not</strong> describing an initiative that drives traffic to the site. An activation or a donation campaign can live entirely inside Instagram.</p>
+    </div>
+  </div>
+  <p style="margin-top:20px">Both hold, because they are about different audiences — and that is the resolution, not a compromise. It does reframe the site for the build track: <strong>the website is the donor-conversion and institutional-credibility surface; it is not the youth-reach surface.</strong> Variant selection should be judged on that basis.</p>
+</section>
+
+<section>
+  <h2>The example she started and could not finish</h2>
+  <p class="sub">You asked for an end-to-end walkthrough at 16:44. She got about ninety seconds in.</p>
+  <ul class="tape">
+    <li><span class="tc">16:57</span><p><strong>The Shakespeare Steps</strong> — the Bronx staircase made famous by <em>Joker</em>; she recalls the film mid-sentence and moves on.</p></li>
+    <li><span class="tc">17:40</span><p>A mural decorating the steps. Every project needs money <em>up front</em> — art supplies and the rest — before it can happen.</p></li>
+    <li><span class="tc">17:55</span><p>And an "after" worth showing once it is complete.</p></li>
+    <li><span class="tc">18:06</span><p>So she wants a campaign for <strong>both halves</strong>: local businesses funding the work beforehand, and the completed wall as the showcase afterwards.</p></li>
+    <li><span class="tc">18:24</span><p>She stops. <em>"I'm tired… I'd like to describe that tomorrow."</em></p></li>
+  </ul>
+  <p style="margin-top:20px"><strong>Flagging a possible mismatch:</strong> she says "they did this whole mural, whatever, decorating of the steps" without saying it was a CITYarts project. It may be a real one, or an illustrative site she reached for. Confirm before anything is built on it — the two-phase structure it demonstrates (fund the wall, then showcase the wall) is the reusable part either way.</p>
+</section>
+
+<section>
+  <h2>What is owed, and by whom</h2>
+  <p class="sub">Split by who can actually answer. Nothing here can be resolved by thinking harder about it.</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Owner</th><th>Item</th><th>Blocks</th><th>State</th></tr></thead>
+      <tbody>
+        <tr><td class="who">Sima</td><td>The end-to-end campaign walkthrough she deferred at 18:52</td><td>Any concrete campaign concept</td><td><span class="pill act">promised today</span></td></tr>
+        <tr><td class="who">Sima</td><td>Budget — asked at 8:40, and the recording has its only gap right there</td><td>Paid-social scope; whether media data can be bought at all</td><td><span class="pill none">unanswered</span></td></tr>
+        <tr><td class="who">Sima → CITYarts</td><td>The historical donation records</td><td>All of Initiative B — attrition, lifecycle, repeat rate, CRM</td><td><span class="pill none">not requested</span></td></tr>
+        <tr><td class="who">Sima → CITYarts</td><td>Whether any contact data is collected or stored today, and in what system</td><td>Whether a CRM programme is even startable</td><td><span class="pill none">she believes not</span></td></tr>
+        <tr><td class="who">Sima → CITYarts</td><td>The partner-school list and project locations</td><td>The audience modelling she described at 14:56</td><td><span class="pill none">obtainable, unasked</span></td></tr>
+        <tr><td class="who">Sima → CITYarts</td><td>Provenance of the 200,000 reach figure</td><td>Every impact claim built on it</td><td><span class="pill none">disclaimed by her</span></td></tr>
+        <tr><td class="who">Us / build track</td><td>Campaign attribution on the donate path, and per-campaign landing pages (3:48)</td><td>Her primary metric — the exposed→donated ratio</td><td><span class="pill act">actionable now</span></td></tr>
+        <tr><td class="who">Us / build track</td><td>Add "200,000" to the disputed-figures gate</td><td>Publishing a number she cannot source</td><td><span class="pill act">two-line change</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <h2>What I would propose she aims at</h2>
+  <p class="sub">You pressed twice for a target she could hit inside a month (5:47, 6:03). She gave metrics, not a target — reasonably, because there is no baseline to beat.</p>
+  <div class="band">
+    <p style="margin:0 0 12px"><strong>The first objective is not a number. It is the first measured ratio of any size.</strong></p>
+    <p style="margin:0">One project. One campaign, run end-to-end. Exposure tagged, donations attributed, and a real fraction at the end of it — even if it is three donors on eight hundred impressions. That fraction becomes the denominator every later campaign is judged against, and producing it forces exactly the four things she says are missing: a defined audience, a single message, a tagged asset, and a donation path that remembers where the donor came from.</p>
+  </div>
+  <p style="margin-top:20px">The Shakespeare Steps is the natural candidate <em>if</em> it turns out to be a CITYarts project, because she has already thought about its two halves. If it is not, the same shape works on whichever project is next to break ground.</p>
+</section>
+
+<footer class="foot">
+  <div><b>Source</b> · <code>sources/raw/08-Strategy interview 23-14.m4a</code> — 59.1 MB, Voice Memos, created 2026-08-21 23:14 EDT, 19 min 37 s</div>
+  <div><b>Transcript</b> · <code>sources/derived/08-Strategy interview 23-14.transcript.json</code> — Whisper large-v3 on Cloud Run, run <code>cityarts-transcribe-f316a6f9a10a</code>, completed 2026-08-22 02:57 EDT</div>
+  <div><b>Quality</b> · coverage 95.6% · one gap over 5 s: 6.1 s at 8:24, landing on the "what are the constraints / is there budget" turn — the budget answer may be partly inside it</div>
+  <div><b>Speakers</b> · not diarised. Attribution above is inferred from content and address; the recording opens with you framing the mission and handing over</div>
+  <div><b>Every timecode</b> · is a real offset into that file — nothing above is paraphrased from memory</div>
+  <div><b>Quotes</b> · verbatim apart from removed disfluencies and false starts; ellipses mark elision, nothing else is altered</div>
+  <div><b>Written</b> · 2026-08-22 16:14–16:40 EDT · first take, per the instruction at 19:09</div>
+</footer>
+
+</div>

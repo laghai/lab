@@ -1,0 +1,251 @@
+<title>Buy the Bambu Lab H2S</title>
+<style>
+:root{
+  --paper:#F1F3F0; --panel:#FFFFFF; --ink:#171A19; --muted:#5F6764;
+  --rule:#D5DAD5; --rule-soft:#E4E8E3; --accent:#0B6E6B; --accent-soft:#DCECEA;
+  --amber:#8A5A00; --amber-soft:#F2E9D6;
+  --face-top:#E9EDE9; --face-lft:#D3DAD6; --face-rgt:#C1CAC5;
+  --face-top-b:#CFE4E1; --face-lft-b:#A8CFCB; --face-rgt-b:#8CBDB8;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#121514; --panel:#191D1C; --ink:#E7EBE8; --muted:#949D99;
+    --rule:#2B312F; --rule-soft:#222826; --accent:#57C2BA; --accent-soft:#17302F;
+    --amber:#D6A44B; --amber-soft:#2A2416;
+    --face-top:#272E2C; --face-lft:#1F2523; --face-rgt:#191E1D;
+    --face-top-b:#2E4E4B; --face-lft-b:#22403E; --face-rgt-b:#1A3331;
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F1F3F0; --panel:#FFFFFF; --ink:#171A19; --muted:#5F6764;
+  --rule:#D5DAD5; --rule-soft:#E4E8E3; --accent:#0B6E6B; --accent-soft:#DCECEA;
+  --amber:#8A5A00; --amber-soft:#F2E9D6;
+  --face-top:#E9EDE9; --face-lft:#D3DAD6; --face-rgt:#C1CAC5;
+  --face-top-b:#CFE4E1; --face-lft-b:#A8CFCB; --face-rgt-b:#8CBDB8;
+}
+:root[data-theme="dark"]{
+  --paper:#121514; --panel:#191D1C; --ink:#E7EBE8; --muted:#949D99;
+  --rule:#2B312F; --rule-soft:#222826; --accent:#57C2BA; --accent-soft:#17302F;
+  --amber:#D6A44B; --amber-soft:#2A2416;
+  --face-top:#272E2C; --face-lft:#1F2523; --face-rgt:#191E1D;
+  --face-top-b:#2E4E4B; --face-lft-b:#22403E; --face-rgt-b:#1A3331;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Iowan Old Style","Charter","Palatino Linotype",Palatino,Georgia,serif;
+  font-size:17px; line-height:1.62; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:44rem; margin:0 auto; padding:3.5rem 1.5rem 4.5rem; display:flex; flex-direction:column; gap:2.6rem}
+h1,h2,h3,.mono,.eyebrow,th,.stat b{font-family:"Avenir Next Condensed","Helvetica Neue Condensed","Roboto Condensed","Avenir Next",Avenir,"Helvetica Neue",sans-serif}
+.mono,.eyebrow,.dimtext,.tag{font-family:ui-monospace,Menlo,Consolas,"SF Mono",monospace}
+.eyebrow{font-size:.68rem; letter-spacing:.16em; text-transform:uppercase; color:var(--muted)}
+h1{font-size:clamp(2.3rem,7vw,3.4rem); line-height:1.03; margin:.5rem 0 0; font-weight:600; letter-spacing:-.01em; text-wrap:balance}
+h2{font-size:1.35rem; font-weight:600; margin:0 0 .1rem; letter-spacing:.005em; text-wrap:balance}
+p{margin:0}
+section{display:flex; flex-direction:column; gap:.9rem}
+a{color:var(--accent); text-underline-offset:3px; text-decoration-thickness:1px}
+a:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:2px}
+.lede{font-size:1.15rem; line-height:1.55}
+hr{border:0; border-top:1px solid var(--rule); margin:0}
+
+/* verdict */
+.verdict{background:var(--panel); border:1px solid var(--rule); border-left:3px solid var(--accent); padding:1.4rem 1.5rem; display:flex; flex-direction:column; gap:1.1rem}
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr)); gap:1.1rem}
+.stat{display:flex; flex-direction:column; gap:.15rem}
+.stat span{font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-family:ui-monospace,Menlo,monospace}
+.stat b{font-size:1.5rem; font-weight:600; font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+.stat small{font-size:.9rem; color:var(--muted)}
+
+/* figure */
+figure{margin:0; display:flex; flex-direction:column; gap:.75rem}
+.figbox{background:var(--panel); border:1px solid var(--rule); padding:1.1rem .6rem .4rem; overflow-x:auto}
+svg{display:block; width:100%; height:auto; min-width:19rem}
+.face{stroke:none}
+.top.small{fill:var(--face-top)} .lft.small{fill:var(--face-lft)} .rgt.small{fill:var(--face-rgt)}
+.top.big{fill:var(--face-top-b)} .lft.big{fill:var(--face-lft-b)} .rgt.big{fill:var(--face-rgt-b)}
+.edge{stroke:var(--ink); stroke-width:1.1; fill:none; opacity:.7}
+.hidden{stroke:var(--muted); stroke-width:.7; stroke-dasharray:4 4; opacity:.45}
+.dim{stroke:var(--muted); stroke-width:.8}
+.dimtext{fill:var(--muted); font-size:15px}
+.boxname{fill:var(--ink); font-size:19px; font-weight:600; font-family:"Avenir Next Condensed","Helvetica Neue Condensed",sans-serif}
+.boxvol{fill:var(--muted); font-size:15px; font-family:ui-monospace,Menlo,monospace}
+.boxname.big{fill:var(--accent)}
+figcaption{font-size:.92rem; color:var(--muted); line-height:1.5}
+
+/* table */
+.tablewrap{overflow-x:auto; border:1px solid var(--rule); background:var(--panel)}
+table{border-collapse:collapse; width:100%; min-width:33rem; font-size:.94rem}
+th,td{text-align:left; padding:.7rem .85rem; border-bottom:1px solid var(--rule-soft); vertical-align:top}
+thead th{font-size:.66rem; letter-spacing:.13em; text-transform:uppercase; color:var(--muted); font-weight:600; border-bottom:1px solid var(--rule)}
+td.num{text-align:right; font-family:ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr.pick td{background:var(--accent-soft)}
+tr.pick td:first-child{font-weight:600}
+.tag{font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); border:1px solid var(--accent); padding:.1rem .35rem; margin-left:.4rem; white-space:nowrap}
+
+/* order list */
+ul.order{list-style:none; margin:0; padding:0; border-top:1px solid var(--rule)}
+ul.order li{display:flex; justify-content:space-between; gap:1rem; padding:.6rem 0; border-bottom:1px solid var(--rule-soft)}
+ul.order li.total{border-bottom:none; border-top:1px solid var(--rule); font-weight:600; padding-top:.7rem}
+ul.order .why{color:var(--muted); font-size:.9rem; display:block}
+ul.order .amt{font-family:ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums; white-space:nowrap}
+
+/* open questions */
+.open{border-left:3px solid var(--amber); background:var(--amber-soft); padding:1.1rem 1.3rem; display:flex; flex-direction:column; gap:.7rem}
+.open h2{color:var(--amber)}
+.open ol{margin:0; padding-left:1.2rem; display:flex; flex-direction:column; gap:.55rem}
+
+/* ask */
+.ask{border:1px solid var(--ink); padding:1.5rem; display:flex; flex-direction:column; gap:.9rem}
+.ask h2{font-size:1.15rem}
+.ask ol{margin:0; padding-left:1.3rem; display:flex; flex-direction:column; gap:.7rem; font-size:1.05rem}
+footer{color:var(--muted); font-size:.87rem; display:flex; flex-direction:column; gap:.4rem}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">garage-fab · decision memo · 29 August 2026</p>
+  <h1>Buy the Bambu&nbsp;Lab H2S</h1>
+</header>
+
+<div class="verdict">
+  <div class="stats">
+    <div class="stat"><span>Machine</span><b>H2S</b><small>+ AMS 2 Pro</small></div>
+    <div class="stat"><span>Printer + AMS</span><b>$1,548</b><small>before tax</small></div>
+    <div class="stat"><span>With day-one kit</span><b>~$1,900</b><small>filament, dryer, nozzles</small></div>
+  </div>
+  <p>Direct from <a href="https://us.store.bambulab.com/products/h2s">Bambu's US store</a>, not Best Buy — the $1,399 in the screenshot Peter forwarded is above Bambu's own price today.</p>
+</div>
+
+<section>
+  <p class="lede">Peter is right about the market and right to flag the cloud. He never named a model, though — the H2S in that thread came from another assistant's screenshot, not from him. So the machine is our call, and here is the argument.</p>
+  <p>Every price below was read off the live store this afternoon by parsing the product pages, not copied from a review site. The 3D printing web is thick with pages that restate each other and get a build volume wrong on the way through.</p>
+</section>
+
+<hr>
+
+<figure>
+  <h2>What the extra $600 actually buys</h2>
+  <p>The real contest is against the <strong>X2D</strong> at $649 — newer, two nozzles, the same actively heated chamber, a third of the money. It loses on the one specification you can never add later. Both boxes below are drawn to the same scale, standing on the same floor.</p>
+  <div class="figbox">
+<svg viewBox="0 0 599 459" role="img" aria-label="Two build volumes drawn to scale: the Bambu X2D at 256 by 256 by 260 millimetres, and the Bambu H2S at 340 by 320 by 340 millimetres, which is 2.17 times the volume.">
+  <polygon class="face top small" points="170.9,124.4 271.7,182.6 170.9,240.9 70.0,182.6"/>
+  <polygon class="face rgt small" points="271.7,300.9 170.9,359.2 170.9,240.9 271.7,182.6"/>
+  <polygon class="face lft small" points="70.0,300.9 170.9,359.2 170.9,240.9 70.0,182.6"/>
+  <line class="edge" x1="170.9" y1="124.4" x2="271.7" y2="182.6"/>
+  <line class="edge" x1="271.7" y1="182.6" x2="170.9" y2="240.9"/>
+  <line class="edge" x1="170.9" y1="240.9" x2="70.0" y2="182.6"/>
+  <line class="edge" x1="70.0" y1="182.6" x2="170.9" y2="124.4"/>
+  <line class="edge" x1="271.7" y1="300.9" x2="170.9" y2="359.2"/>
+  <line class="edge" x1="170.9" y1="359.2" x2="70.0" y2="300.9"/>
+  <line class="edge" x1="271.7" y1="300.9" x2="271.7" y2="182.6"/>
+  <line class="edge" x1="170.9" y1="359.2" x2="170.9" y2="240.9"/>
+  <line class="edge" x1="70.0" y1="300.9" x2="70.0" y2="182.6"/>
+  <line class="hidden" x1="170.9" y1="242.7" x2="271.7" y2="300.9"/>
+  <line class="hidden" x1="170.9" y1="242.7" x2="70.0" y2="300.9"/>
+  <line class="hidden" x1="170.9" y1="242.7" x2="170.9" y2="124.4"/>
+  <polygon class="face top big" points="430.9,88.0 564.9,165.4 438.8,238.2 304.8,160.8"/>
+  <polygon class="face rgt big" points="564.9,320.1 438.8,392.9 438.8,238.2 564.9,165.4"/>
+  <polygon class="face lft big" points="304.8,315.5 438.8,392.9 438.8,238.2 304.8,160.8"/>
+  <line class="edge" x1="430.9" y1="88.0" x2="564.9" y2="165.4"/>
+  <line class="edge" x1="564.9" y1="165.4" x2="438.8" y2="238.2"/>
+  <line class="edge" x1="438.8" y1="238.2" x2="304.8" y2="160.8"/>
+  <line class="edge" x1="304.8" y1="160.8" x2="430.9" y2="88.0"/>
+  <line class="edge" x1="564.9" y1="320.1" x2="438.8" y2="392.9"/>
+  <line class="edge" x1="438.8" y1="392.9" x2="304.8" y2="315.5"/>
+  <line class="edge" x1="564.9" y1="320.1" x2="564.9" y2="165.4"/>
+  <line class="edge" x1="438.8" y1="392.9" x2="438.8" y2="238.2"/>
+  <line class="edge" x1="304.8" y1="315.5" x2="304.8" y2="160.8"/>
+  <line class="hidden" x1="430.9" y1="242.7" x2="564.9" y2="320.1"/>
+  <line class="hidden" x1="430.9" y1="242.7" x2="304.8" y2="315.5"/>
+  <line class="hidden" x1="430.9" y1="242.7" x2="430.9" y2="88.0"/>
+  <line class="dim" x1="50.0" y1="300.9" x2="50.0" y2="182.6"/>
+  <line class="dim" x1="45.0" y1="300.9" x2="55.0" y2="300.9"/>
+  <line class="dim" x1="45.0" y1="182.6" x2="55.0" y2="182.6"/>
+  <text class="dimtext" transform="translate(41.0,241.8) rotate(-90)" text-anchor="middle">260</text>
+  <text class="dimtext" x="106.4" y="354.1" text-anchor="middle">256</text>
+  <text class="dimtext" x="245.3" y="350.1" text-anchor="middle">256</text>
+  <line class="dim" x1="284.8" y1="315.5" x2="284.8" y2="160.8"/>
+  <line class="dim" x1="279.8" y1="315.5" x2="289.8" y2="315.5"/>
+  <line class="dim" x1="279.8" y1="160.8" x2="289.8" y2="160.8"/>
+  <text class="dimtext" transform="translate(275.8,238.2) rotate(-90)" text-anchor="middle">340</text>
+  <text class="dimtext" x="357.8" y="378.2" text-anchor="middle">340</text>
+  <text class="dimtext" x="525.9" y="376.5" text-anchor="middle">320</text>
+  <text class="boxname small" x="170.9" y="82.4" text-anchor="middle">Bambu X2D · $649</text>
+  <text class="boxvol small" x="170.9" y="104.4" text-anchor="middle">17.0 L of build volume</text>
+  <text class="boxname big" x="430.9" y="46.0" text-anchor="middle">Bambu H2S · $1,249</text>
+  <text class="boxvol big" x="430.9" y="68.0" text-anchor="middle">37.0 L of build volume</text>
+</svg>
+  </div>
+  <figcaption>Build volumes to scale, millimetres. The H2S holds <strong>2.17×</strong> the X2D's volume — 37.0 litres against 17.0. Everything else about the two machines is close; this is the gap that decides it, because "the part doesn't fit the printer" is the failure that quietly ends projects.</figcaption>
+</figure>
+
+<hr>
+
+<section>
+  <h2>The six machines, and why five lost</h2>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Machine</th><th class="num">Price</th><th>Why not</th></tr></thead>
+    <tbody>
+      <tr><td>Bambu P2S</td><td class="num">$549</td><td>256&nbsp;mm cube, no 350&nbsp;°C hotend, no active chamber. Wrong side of the engineering-material line.</td></tr>
+      <tr><td>Bambu X2D</td><td class="num">$649</td><td>The value pick and genuinely close. Loses on build volume, and it is four months old against a platform with a year of firmware behind it.</td></tr>
+      <tr class="pick"><td>Bambu H2S<span class="tag">buy</span></td><td class="num">$1,249</td><td>350&nbsp;°C hotend, 65&nbsp;°C actively heated chamber, 340×320×340&nbsp;mm, one hotend, under 50&nbsp;dB, enclosed.</td></tr>
+      <tr><td>Bambu H2D</td><td class="num">$1,749</td><td>Two independent heads and a 40&nbsp;W laser. Buy this <em>only</em> if you want laser cutting — that is a different capability and deserves its own decision, not a checkbox at checkout.</td></tr>
+      <tr><td>Bambu H2C</td><td class="num">$2,399</td><td>Six swappable hotends, 24 filaments. Built for production multi-material. Complexity with no job to do in a garage.</td></tr>
+      <tr><td>Prusa Core One</td><td class="num">~$999</td><td>The open, serviceable, sovereign machine — the one you would want to like. Passive 55&nbsp;°C chamber, one nozzle, smaller and slower than a printer costing $350 less. Peter is right on the merits.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>One hotend is a deliberate subtraction, not a compromise. The AMS still gives you four colours; what you give up is dissolvable support material and purge-free swapping, and neither matters for functional parts — which is what a garage makes. Tom's Hardware titled its H2S review <em>"The One We Wanted"</em> for exactly that reason.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>"Everything you print auto goes to China"</h2>
+  <p>Peter is describing a real default and calling it a property. It is a default.</p>
+  <p>Out of the box the printer registers to a Bambu account and jobs, models, and the chamber camera route through their servers. <strong>LAN-only mode ends that</strong>: the slicer talks to the printer directly over the local network, no print data touches Bambu, and the camera stays local too. It is one toggle on the touchscreen. Slicing was always local anyway.</p>
+  <p>What it costs: registration still needs a one-time cloud account, firmware and diagnostic checks still call home, and you lose watching a print from your phone at the office. What it does not do is make the firmware auditable — so the honest statement is that this is a managed constraint, not a guarantee. If provable isolation were the requirement, the answer would be a Prusa and a different budget.</p>
+  <p>Bambu tried to close this hatch once, in January 2025, and reversed after the community revolt. Worth knowing: the escape exists at the vendor's discretion, and they have reached for it.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>The order</h2>
+  <ul class="order">
+    <li><span>Bambu Lab H2S<span class="why">The machine.</span></span><span class="amt">$1,249</span></li>
+    <li><span>AMS 2 Pro<span class="why">Four spools, sealed and dried, swapped automatically.</span></span><span class="amt">$299</span></li>
+    <li><span>AMS HT<span class="why">Single-spool dryer for nylon and polycarbonate. Wet nylon is not a printing problem, it's a physics problem.</span></span><span class="amt">$139</span></li>
+    <li><span>Hardened nozzle set + engineering plate<span class="why">Carbon-filled filament eats a brass nozzle. Buy it before the first CF print, not after.</span></span><span class="amt">~$120</span></li>
+    <li><span>PLA and PETG, a few spools<span class="why">One material at a time. ASA comes later, once the machine is boring.</span></span><span class="amt">~$100</span></li>
+    <li class="total"><span>Total, before tax</span><span class="amt">~$1,907</span></li>
+  </ul>
+</section>
+
+<div class="open">
+  <h2>Three things to settle, none of which block the purchase</h2>
+  <ol>
+    <li><strong>Does the garage drop below 10&nbsp;°C in winter?</strong> Below that, these printers throw calibration errors and the filament system stops connecting — a hard failure, not a quality gradient. A $15 logging thermometer on the bench for a week answers it, and it changes where the machine lives, not which machine it is.</li>
+    <li><strong>What do you want to model in?</strong> Onshape, Fusion, FreeCAD, OpenSCAD. This becomes the real bottleneck about a week after delivery, and you draw for a living, which changes the answer.</li>
+    <li><strong>Does the house network have a guest or IoT VLAN?</strong> If so the printer goes on it and the sovereignty question closes properly.</li>
+  </ol>
+</div>
+
+<div class="ask">
+  <h2>What needs you</h2>
+  <ol>
+    <li><strong>Buy it, or tell me to buy it.</strong> H2S + AMS 2 Pro, ~$1,900 with the day-one kit. Money is yours; everything after the payment — unboxing, LAN mode, network, profiles, first prints — is mine.</li>
+    <li><strong>If you want laser cutting, say so now.</strong> That is the H2D and $500 more, and it is the only answer that changes the machine.</li>
+  </ol>
+</div>
+
+<footer>
+  <p>Project, knowledge base, and the full decision record: <a href="https://github.com/laghai/garage-fab">github.com/laghai/garage-fab</a> — constitution, market note with the price-reading method, data-sovereignty note, garage siting, material ladder, ADR-0001, and spec 001.</p>
+  <p>Prices read from the Bambu Lab US store, 29 August 2026, afternoon Pacific. Ambient-temperature limits from the Bambu wiki; cold-garage failures from owner reports on the Bambu forum.</p>
+</footer>
+
+</div>

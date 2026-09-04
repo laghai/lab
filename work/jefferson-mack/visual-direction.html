@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Anvil — visual direction for jeffersonmack.art</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..800,0..100,0..1&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ───────────────────────────────────────────────────────────────
+   ANVIL — one token set, two designed schemes.
+   Dark is the default because that is the ground his material needs.
+   Light is the reading scheme, not an inversion.
+   ─────────────────────────────────────────────────────────────── */
+
+:root {
+  --ground:  #0D0D0C;
+  --plinth:  #141513;
+  --panel:   #1C1D1A;
+  --scale:   #2A2E33;
+  --sand:    #8A8880;
+  --brush:   #D8D4C9;
+  --struck:  #F4F1E8;
+  --forge:   #C2551C;
+  --brass:   #8A6A34;
+}
+:root[data-theme="light"] {
+  --ground:  #EFEBE3;
+  --plinth:  #E4DED3;
+  --panel:   #F6F3ED;
+  --scale:   #CFC8BB;
+  --sand:    #75736A;
+  --brush:   #3B3A34;
+  --struck:  #171712;
+  --forge:   #A8410F;
+  --brass:   #6E5227;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --ground:  #EFEBE3;
+    --plinth:  #E4DED3;
+    --panel:   #F6F3ED;
+    --scale:   #CFC8BB;
+    --sand:    #75736A;
+    --brush:   #3B3A34;
+    --struck:  #171712;
+    --forge:   #A8410F;
+    --brass:   #6E5227;
+  }
+}
+
+:root {
+  --sans: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --disp: "Fraunces", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --measure: 34rem;
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--brush);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* No radius, no shadow, anywhere. The page obeys S10 and S11. */
+
+.wrap { max-width: 76rem; margin: 0 auto; padding: 0 var(--gutter); }
+
+/* ── type scale ───────────────────────────────────────────────── */
+.d1 { font-family: var(--disp); font-optical-sizing: auto;
+      font-variation-settings: "SOFT" 20, "WONK" 1;
+      font-weight: 400; font-size: clamp(2.6rem, 7vw, 5.2rem);
+      line-height: 1.02; letter-spacing: -0.015em; color: var(--struck); margin: 0; }
+.d2 { font-family: var(--disp); font-optical-sizing: auto;
+      font-variation-settings: "SOFT" 20, "WONK" 1;
+      font-weight: 400; font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.08; letter-spacing: -0.01em; color: var(--struck); margin: 0; }
+.d3 { font-family: var(--disp); font-optical-sizing: auto; font-weight: 400;
+      font-size: clamp(1.35rem, 2.4vw, 1.9rem); line-height: 1.2;
+      color: var(--struck); margin: 0; }
+.lede { font-size: clamp(1.05rem, 1.6vw, 1.25rem); line-height: 1.5;
+        max-width: var(--measure); color: var(--brush); }
+p { max-width: var(--measure); }
+.cap { font-size: 0.8125rem; line-height: 1.45; color: var(--sand); max-width: 30rem; }
+.eyebrow { font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.14em;
+           text-transform: uppercase; color: var(--sand); margin: 0 0 0.9rem; }
+.spec { font-family: var(--mono); font-size: 0.8125rem; letter-spacing: 0.01em; color: var(--sand); }
+a { color: var(--forge); text-decoration: none; border-bottom: 1px solid currentColor; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--forge); outline-offset: 3px; }
+
+/* ── structure ────────────────────────────────────────────────── */
+header.top { border-bottom: 1px solid var(--scale); padding: clamp(3rem, 8vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem); }
+section { border-bottom: 1px solid var(--scale); padding: clamp(3rem, 7vw, 5.5rem) 0; }
+section:last-of-type { border-bottom: 0; }
+.sechead { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+           gap: 1.25rem clamp(2rem, 5vw, 4rem); align-items: end; margin-bottom: 2.75rem; }
+.sechead .cap { max-width: 26rem; }
+@media (max-width: 52rem) { .sechead { grid-template-columns: 1fr; align-items: start; } }
+
+.bar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-top: 2rem; }
+button.toggle {
+  font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+  background: transparent; color: var(--brush); border: 1px solid var(--scale);
+  padding: 0.55rem 1rem; cursor: pointer;
+}
+button.toggle:hover { border-color: var(--forge); color: var(--forge); }
+
+/* ── swatches ─────────────────────────────────────────────────── */
+/* gap:1px over the ground + a 1px outline per cell gives clean shared hairlines
+   without a border-collapse hack — and without a box-shadow, which this page bans. */
+.swatches { display: grid; gap: 1px; background: var(--ground);
+            grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); }
+.sw { background: var(--panel); padding: 0; outline: 1px solid var(--scale); }
+.sw .chip { height: 5.5rem; display: block; }
+.sw .meta { display: block; padding: 0.7rem 0.8rem 0.9rem; }
+.sw .hex { font-family: var(--mono); font-size: 0.75rem; color: var(--struck); display: block; }
+.sw .tok { font-family: var(--mono); font-size: 0.6875rem; color: var(--sand); display: block; margin-top: 0.15rem; }
+.sw .why { font-size: 0.75rem; color: var(--sand); display: block; margin-top: 0.4rem; line-height: 1.35; }
+
+/* ── placeholders (no photograph is embedded anywhere on this page) ── */
+.ph {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--plinth);
+  border: 1px solid var(--scale);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.ph::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(to top right, transparent calc(50% - 0.5px), var(--scale) 50%, transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--scale) 50%, transparent calc(50% + 0.5px));
+  opacity: 0.55;
+}
+.ph .phlabel {
+  position: relative; font-family: var(--mono); font-size: 0.625rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--sand); text-align: center; line-height: 1.6;
+  background: var(--ground); padding: 0.4rem 0.6rem; border: 1px solid var(--scale);
+  max-width: 86%;
+}
+.ph.wide { aspect-ratio: 3 / 2; }
+
+/* ── the mock piece-detail layout ─────────────────────────────── */
+.room { margin-bottom: clamp(2.5rem, 6vw, 4rem); }
+.roomstrip { display: grid; grid-template-columns: 1.15fr 0.85fr 0.85fr; gap: clamp(0.75rem, 2vw, 1.5rem); align-items: end; }
+.detail { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.focus { position: relative; }
+.zoomhint {
+  position: absolute; left: 0; bottom: 0; transform: translateY(calc(100% + 0.6rem));
+  font-family: var(--mono); font-size: 0.6875rem; letter-spacing: 0.09em;
+  text-transform: uppercase; color: var(--sand);
+}
+.zoomhint b { color: var(--forge); font-weight: 500; }
+.specblock { border-top: 1px solid var(--scale); margin-top: 1.75rem; }
+.specrow { display: flex; gap: 1.25rem; justify-content: space-between;
+           border-bottom: 1px solid var(--scale); padding: 0.6rem 0; font-family: var(--mono); font-size: 0.8125rem; }
+.specrow dt { color: var(--sand); margin: 0; }
+.specrow dd { color: var(--brush); margin: 0; text-align: right; }
+.slotgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.75rem; }
+.audiobar { display: flex; align-items: center; gap: 0.75rem; border: 1px solid var(--scale);
+            padding: 0.65rem 0.85rem; margin-top: 1.75rem; }
+.audiobar .dot { width: 0.5rem; height: 0.5rem; background: var(--forge); flex: none; }
+.audiobar .txt { font-family: var(--mono); font-size: 0.75rem; color: var(--sand); }
+
+.note { border-left: 2px solid var(--forge); padding-left: 1rem; margin: 2rem 0 0; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: clamp(1.5rem, 4vw, 3rem); }
+.stack > * + * { margin-top: 1rem; }
+footer { padding: clamp(2.5rem, 6vw, 4rem) 0 5rem; }
+
+@media (max-width: 46rem) {
+  .detail { grid-template-columns: 1fr; }
+  .roomstrip { grid-template-columns: 1fr 1fr; }
+  .roomstrip > :first-child { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="eyebrow">Visual direction · jeffersonmack.art · 2026-08-31</p>
+    <h1 class="d1">Anvil</h1>
+    <p class="lede" style="margin-top:1.25rem">
+      The page is the anvil face. The work is the only thing on it that catches light.
+      One token set, two designed schemes — near&#8209;black by default because that is the ground
+      blackened steel needs, warm paper for reading.
+    </p>
+    <p class="cap" style="margin-top:1.5rem">
+      This page shows the recommendation. The argument is in
+      <span class="spec">docs/visual-direction.md</span>. Nothing here is decorative: no gradient,
+      no drop shadow, no rounded corner, no scroll animation — the page obeys the anti&#8209;slop
+      rules it is arguing for.
+    </p>
+    <div class="bar">
+      <button class="toggle" id="t" type="button" aria-pressed="true">Scheme: dark</button>
+      <span class="spec">default is dark · light is the reading scheme</span>
+    </div>
+  </div>
+</header>
+
+<!-- ── PALETTE ─────────────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="sechead">
+      <div>
+        <p class="eyebrow">01 — Palette</p>
+        <h2 class="d2">Derived from the metal, not from a mood board</h2>
+      </div>
+      <p class="cap">
+        Every value below is named for a process Jefferson describes on tape — blackened,
+        sandblasted, wire&#8209;brushed, oiled. These are a defensible starting point, <em>not</em>
+        sampled from his photographs; sampling the five confirmed originals is an open task.
+      </p>
+    </div>
+
+    <p class="eyebrow">Dark scheme — the default</p>
+    <div class="swatches">
+      <div class="sw"><span class="chip" style="background:#0D0D0C"></span><span class="meta">
+        <span class="hex">#0D0D0C</span><span class="tok">--ground</span>
+        <span class="why">The anvil face in shadow. One step off black, warm-neutral.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#141513"></span><span class="meta">
+        <span class="hex">#141513</span><span class="tok">--plinth</span>
+        <span class="why">What a piece is set down on.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#1C1D1A"></span><span class="meta">
+        <span class="hex">#1C1D1A</span><span class="tok">--panel</span>
+        <span class="why">A raised surface. Used sparingly.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#2A2E33"></span><span class="meta">
+        <span class="hex">#2A2E33</span><span class="tok">--scale</span>
+        <span class="why">Mill scale — the one cool value in the set. Hairlines and rules.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#8A8880"></span><span class="meta">
+        <span class="hex">#8A8880</span><span class="tok">--sand</span>
+        <span class="why">Sandblasted steel. Captions, labels, specifications.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#D8D4C9"></span><span class="meta">
+        <span class="hex">#D8D4C9</span><span class="tok">--brush</span>
+        <span class="why">Wire-brushed steel. Body text.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#F4F1E8"></span><span class="meta">
+        <span class="hex">#F4F1E8</span><span class="tok">--struck</span>
+        <span class="why">A freshly struck highlight. Headlines only.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#C2551C"></span><span class="meta">
+        <span class="hex">#C2551C</span><span class="tok">--forge</span>
+        <span class="why">Metal at forging heat. Interaction only — never decoration.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#8A6A34"></span><span class="meta">
+        <span class="hex">#8A6A34</span><span class="tok">--brass</span>
+        <span class="why">Oiled brass. One secondary accent, rare.</span></span></div>
+    </div>
+
+    <p class="eyebrow" style="margin-top:2.5rem">Light scheme — the reading scheme</p>
+    <div class="swatches">
+      <div class="sw"><span class="chip" style="background:#EFEBE3"></span><span class="meta">
+        <span class="hex">#EFEBE3</span><span class="tok">--ground</span>
+        <span class="why">Warm paper. Compare Rijksstudio's own light theme, #efeae7.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#E4DED3"></span><span class="meta">
+        <span class="hex">#E4DED3</span><span class="tok">--plinth</span></span></div>
+      <div class="sw"><span class="chip" style="background:#F6F3ED"></span><span class="meta">
+        <span class="hex">#F6F3ED</span><span class="tok">--panel</span></span></div>
+      <div class="sw"><span class="chip" style="background:#CFC8BB"></span><span class="meta">
+        <span class="hex">#CFC8BB</span><span class="tok">--scale</span></span></div>
+      <div class="sw"><span class="chip" style="background:#75736A"></span><span class="meta">
+        <span class="hex">#75736A</span><span class="tok">--sand</span></span></div>
+      <div class="sw"><span class="chip" style="background:#3B3A34"></span><span class="meta">
+        <span class="hex">#3B3A34</span><span class="tok">--brush</span></span></div>
+      <div class="sw"><span class="chip" style="background:#171712"></span><span class="meta">
+        <span class="hex">#171712</span><span class="tok">--struck</span>
+        <span class="why">Never #000. No measured gallery uses pure black as ink.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#A8410F"></span><span class="meta">
+        <span class="hex">#A8410F</span><span class="tok">--forge</span>
+        <span class="why">Darkened to hold contrast on paper.</span></span></div>
+      <div class="sw"><span class="chip" style="background:#6E5227"></span><span class="meta">
+        <span class="hex">#6E5227</span><span class="tok">--brass</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TYPE ────────────────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="sechead">
+      <div>
+        <p class="eyebrow">02 — Type, set in real type</p>
+        <h2 class="d2">Fraunces · Archivo · IBM Plex Mono</h2>
+      </div>
+      <p class="cap">
+        The tension has to sit <em>between</em> the photograph and the page, not inside each of
+        them. The photograph carries the hammered half. The type carries the contemporary half.
+        That rules out every forge&#8209;flavoured typeface: if the lettering is also hammered,
+        the tension collapses into a theme restaurant.
+      </p>
+    </div>
+
+    <div class="stack" style="border-top:1px solid var(--scale); padding-top:2rem">
+      <p class="spec">Fraunces · variable · opsz 9–144 · SOFT 20 · WONK 1 · display only</p>
+      <p class="d1" style="margin:0">An antique from the future</p>
+      <p class="cap">
+        Fraunces is a variable revival of nineteenth&#8209;century display type with SOFT and WONK
+        axes — an antique letterform that can only exist because of a modern font format. It is
+        his thesis, in type. Its real optical-size axis means captions and headlines are drawn
+        differently rather than scaled, which is the lesson measured off White Cube's three cuts
+        of Beausite.
+      </p>
+    </div>
+
+    <div class="stack" style="border-top:1px solid var(--scale); padding-top:2rem; margin-top:2.5rem">
+      <p class="spec">Fraunces · 3rem · section heads</p>
+      <p class="d2" style="margin:0">Things you can't find in the catalog</p>
+      <p class="spec" style="margin-top:1.5rem">Fraunces · 1.9rem · piece titles</p>
+      <p class="d3" style="margin:0">Wall piece, blackened mild steel</p>
+    </div>
+
+    <div class="stack" style="border-top:1px solid var(--scale); padding-top:2rem; margin-top:2.5rem">
+      <p class="spec">Archivo · 400 · one weight for running text</p>
+      <p style="font-size:1.0625rem; line-height:1.6; margin:0">
+        A grotesque drawn for signage and print — American industrial vernacular, no costume. One
+        weight, so hierarchy has to be built from size, position and space rather than from
+        boldness. Bold text is the cheapest hierarchy there is, and it is the first thing that
+        makes a page look generated. Michael Anastassiades ships his entire site in one weight of
+        one family; the restraint is the point.
+      </p>
+      <p class="cap" style="margin-top:1.25rem">Archivo · 0.8125rem · captions and secondary text, set in --sand.</p>
+    </div>
+
+    <div class="stack" style="border-top:1px solid var(--scale); padding-top:2rem; margin-top:2.5rem">
+      <p class="spec">IBM Plex Mono · 400 · every number, dimension and label</p>
+      <p class="spec" style="font-size:1rem; color:var(--brush)">
+        MILD STEEL · BLACKENED, WIRE-BRUSHED, OILED<br>
+        1220 × 915 × 90 MM &nbsp;|&nbsp; 48 × 36 × 3½ IN
+      </p>
+      <p class="cap" style="margin-top:1.25rem">
+        Dimensions in mono read as a <em>specification</em>. That is his own argument, point four:
+        he is selling legible making to people surrounded by objects whose workings cannot be read.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE MOCK LAYOUT ─────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="sechead">
+      <div>
+        <p class="eyebrow">03 — Piece detail, mocked</p>
+        <h2 class="d2">Never alone. Always walked into.</h2>
+      </div>
+      <p class="cap">
+        Two of his own lines govern this layout, and both of them overturned an earlier draft.
+        <em>“These need to be in a gallery because they give themselves context; one of them
+        doesn't.”</em> — so a piece is introduced in adjacency, never as an isolated hero.
+        <em>“It's not even three different images… you just slide your finger up and it's going to
+        zoom right in.”</em> — so the deep view is a continuous zoom, not a sequence of frames and
+        not a lightbox.
+      </p>
+    </div>
+
+    <div class="room">
+      <p class="eyebrow">The room — you arrive here, among siblings, and walk in from inside it</p>
+      <div class="roomstrip">
+        <div><div class="ph"><span class="phlabel">Placeholder<br>3 : 4<br>focus piece</span></div></div>
+        <div><div class="ph"><span class="phlabel">Placeholder<br>3 : 4<br>sibling</span></div></div>
+        <div><div class="ph"><span class="phlabel">Placeholder<br>3 : 4<br>sibling</span></div></div>
+      </div>
+      <p class="cap" style="margin-top:0.9rem">
+        Unequal sizing on purpose. Equal sizing is what turns a room into an inventory, and the
+        inventory grid is the flatness he is already complaining about.
+      </p>
+    </div>
+
+    <div class="detail">
+      <div class="focus">
+        <div class="ph"><span class="phlabel">Placeholder · 3 : 4<br>all five confirmed originals are<br>3024×4032 · 4947×6597 · 5274×7034 · 3072×4096<br>— no photograph is embedded on this page</span></div>
+        <p class="zoomhint">Drag up to walk in &nbsp;·&nbsp; <b>resolution rises continuously</b> &nbsp;·&nbsp; no modal, no carousel, no dots</p>
+      </div>
+
+      <div>
+        <p class="eyebrow">Piece</p>
+        <h3 class="d3">Placeholder title</h3>
+        <p class="cap" style="margin-top:0.75rem">
+          His caption, verbatim from the image's IPTC description. Never rewritten, never
+          summarised, never “polished”.
+        </p>
+
+        <dl class="specblock">
+          <div class="specrow"><dt>Material</dt><dd>Mild steel</dd></div>
+          <div class="specrow"><dt>Process</dt><dd>Forged, eight faces</dd></div>
+          <div class="specrow"><dt>Finish</dt><dd>Blackened, wire-brushed, oiled</dd></div>
+          <div class="specrow"><dt>Dimensions</dt><dd>REPLACE</dd></div>
+          <div class="specrow"><dt>Weight</dt><dd>REPLACE</dd></div>
+        </dl>
+        <p class="cap" style="margin-top:0.75rem">
+          <span class="spec" style="color:var(--forge)">REPLACE</span> is left in deliberately. Per
+          <span class="spec">CLAUDE.md</span>, a guessed value must never fill one of these — an
+          invented credential is worse than a blank, and the content gate fails on the token.
+        </p>
+
+        <p class="eyebrow" style="margin-top:2rem">Scale — three cues, three reserved slots</p>
+        <div class="slotgrid">
+          <div class="ph wide"><span class="phlabel">Slot 1 · his hand in frame<br>“your hand is your scale”</span></div>
+          <div class="ph wide"><span class="phlabel">Slot 2 · the piece in a room<br>“right now they're just floating”</span></div>
+        </div>
+        <p class="cap" style="margin-top:0.75rem">
+          Slot 3 is the dimension line above. An empty labelled slot is correct; an omitted slot is
+          not. A missing scale cue has to be visible as a hole so that it gets filled.
+        </p>
+
+        <div class="audiobar">
+          <span class="dot" aria-hidden="true"></span>
+          <span class="txt">Jefferson on this piece · 1:40 · arms on scroll, never overlays the work</span>
+        </div>
+        <p class="cap" style="margin-top:0.75rem">
+          Provisional. The audio-guide idea and the phrase “not obscuring the thing” are Dmitry's,
+          proposed to Jefferson on tape — not Jefferson's request. Built as a slot until his assent
+          is located at source.
+        </p>
+      </div>
+    </div>
+
+    <div class="note">
+      <p class="cap" style="max-width:44rem">
+        <strong style="color:var(--struck)">Note what is absent.</strong> No drop shadow under any
+        image — depth comes from four dark values in the ground and from the raking light inside
+        the photograph, never from CSS. No rounded corners. No hover&#8209;scale. No fade&#8209;up
+        on scroll. No parallax. No “view gallery” lightbox. Each of those substitutes an interface
+        event for the walk toward an object, and the walk is the entire brief.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── ALTERNATIVES ────────────────────────────────────────────── -->
+<section>
+  <div class="wrap">
+    <div class="sechead">
+      <div>
+        <p class="eyebrow">04 — The two directions not recommended</p>
+        <h2 class="d2">Kept, because parts of them ship</h2>
+      </div>
+      <p class="cap">
+        These are not three rival tastes. Direction 2's warm paper became Anvil's light scheme;
+        Direction 3's specification block became the piece-detail component above. What is shown
+        here is what remains distinct.
+      </p>
+    </div>
+
+    <div class="two">
+      <div>
+        <p class="eyebrow">Direction 2 — Paper &amp; Iron · Newsreader + Libre Franklin</p>
+        <div class="swatches">
+          <div class="sw"><span class="chip" style="background:#F2EEE7"></span><span class="meta"><span class="hex">#F2EEE7</span><span class="tok">--paper</span></span></div>
+          <div class="sw"><span class="chip" style="background:#E6E0D6"></span><span class="meta"><span class="hex">#E6E0D6</span><span class="tok">--paper-deep</span></span></div>
+          <div class="sw"><span class="chip" style="background:#1A1A16"></span><span class="meta"><span class="hex">#1A1A16</span><span class="tok">--ink</span></span></div>
+          <div class="sw"><span class="chip" style="background:#40403A"></span><span class="meta"><span class="hex">#40403A</span><span class="tok">--iron</span></span></div>
+          <div class="sw"><span class="chip" style="background:#79766D"></span><span class="meta"><span class="hex">#79766D</span><span class="tok">--sand</span></span></div>
+          <div class="sw"><span class="chip" style="background:#D2CABC"></span><span class="meta"><span class="hex">#D2CABC</span><span class="tok">--rule</span></span></div>
+          <div class="sw"><span class="chip" style="background:#7A5C2E"></span><span class="meta"><span class="hex">#7A5C2E</span><span class="tok">--brass</span></span></div>
+        </div>
+        <p class="cap" style="margin-top:0.9rem">
+          <strong style="color:var(--struck)">Why not:</strong> blackened steel on warm paper reads
+          as a silhouette. Holding interior detail would impose a lighting constraint on a man who
+          is already tired.
+        </p>
+      </div>
+
+      <div>
+        <p class="eyebrow">Direction 3 — Mill Certificate · Space Grotesk + Space Mono</p>
+        <div class="swatches">
+          <div class="sw"><span class="chip" style="background:#17191A"></span><span class="meta"><span class="hex">#17191A</span><span class="tok">--field</span></span></div>
+          <div class="sw"><span class="chip" style="background:#1F2325"></span><span class="meta"><span class="hex">#1F2325</span><span class="tok">--panel</span></span></div>
+          <div class="sw"><span class="chip" style="background:#384043"></span><span class="meta"><span class="hex">#384043</span><span class="tok">--rule</span></span></div>
+          <div class="sw"><span class="chip" style="background:#DCE0DE"></span><span class="meta"><span class="hex">#DCE0DE</span><span class="tok">--chalk</span></span></div>
+          <div class="sw"><span class="chip" style="background:#7E8688"></span><span class="meta"><span class="hex">#7E8688</span><span class="tok">--graphite</span></span></div>
+          <div class="sw"><span class="chip" style="background:#5B7F8C"></span><span class="meta"><span class="hex">#5B7F8C</span><span class="tok">--layout</span></span></div>
+        </div>
+        <p class="cap" style="margin-top:0.9rem">
+          <strong style="color:var(--struck)">Why not:</strong> it answers his fourth argument and
+          fights his thesis. “Wake people up to the beauty of a simply formed object” is not an
+          engineering sentiment. Adopted as a component, rejected as a system.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="spec">
+      Lead, Visual Direction · 2026-08-31 · companion to
+      <span style="color:var(--brush)">docs/visual-direction.md</span>
+    </p>
+    <p class="cap" style="margin-top:0.9rem">
+      No photograph of Jefferson's work appears on this page. Every frame is a labelled
+      placeholder at the confirmed 3:4 ratio of his originals. Palette values are derived from the
+      material processes he names on tape, not sampled from his photographs — sampling is an open
+      task. Typefaces verified available on Google Fonts, 2026-08-31.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var root = document.documentElement, btn = document.getElementById('t');
+  function paint() {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    btn.textContent = 'Scheme: ' + (dark ? 'dark' : 'light');
+    btn.setAttribute('aria-pressed', String(dark));
+  }
+  btn.addEventListener('click', function () {
+    root.setAttribute('data-theme', root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+    paint();
+  });
+  paint();
+})();
+</script>
+</body>
+</html>

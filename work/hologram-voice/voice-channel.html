@@ -1,0 +1,443 @@
+<title>Fedor's Voice Channel</title>
+<style>
+  :root{
+    /* Neutrals carry a slight blue bias -- optical glass, not office grey. */
+    --paper:#f6f7f9; --panel:#ffffff; --sunk:#eef0f4;
+    --ink:#14171d; --ink-2:#454c59; --ink-3:#79808f;
+    --rule:#dde1e8; --rule-2:#c8cdd7;
+    /* The severity scale IS Fedor's three laser lines. 647 krypton red, 532 doubled
+       Nd:YAG green, 450 blue. Nothing decorative -- these are the wavelengths in his lab. */
+    --l647:#d33c26; --l532:#12a05a; --l450:#3f7fe0;
+    --l647-bg:#fbecea; --l532-bg:#e7f6ee; --l450-bg:#eaf1fc;
+    --accent:var(--l532);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0d1014; --panel:#151920; --sunk:#1c212a;
+      --ink:#e8ebf0; --ink-2:#a8b0bd; --ink-3:#727a88;
+      --rule:#252b35; --rule-2:#333b47;
+      --l647:#ff6a53; --l532:#3ad98a; --l450:#6ea8ff;
+      --l647-bg:#2a1512; --l532-bg:#0f2a1d; --l450-bg:#111f33;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0d1014; --panel:#151920; --sunk:#1c212a;
+    --ink:#e8ebf0; --ink-2:#a8b0bd; --ink-3:#727a88;
+    --rule:#252b35; --rule-2:#333b47;
+    --l647:#ff6a53; --l532:#3ad98a; --l450:#6ea8ff;
+    --l647-bg:#2a1512; --l532-bg:#0f2a1d; --l450-bg:#111f33;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:Charter,"Iowan Old Style",Georgia,serif;
+    font-size:17px; line-height:1.62;
+    margin:0; padding:0 20px 96px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:760px; margin:0 auto}
+  .mono{font-family:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace}
+
+  h1,h2,h3,.eyebrow,th,.lbl{
+    font-family:"Helvetica Neue",Inter,system-ui,sans-serif;
+    text-wrap:balance;
+  }
+  .eyebrow{
+    font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink-3); margin:0;
+  }
+  h1{font-size:clamp(34px,6vw,50px); line-height:1.04; letter-spacing:-.025em;
+     font-weight:700; margin:14px 0 0}
+  .deck{font-size:20px; line-height:1.5; color:var(--ink-2); margin:18px 0 0; max-width:62ch}
+  h2{font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase;
+     margin:0; color:var(--ink-3)}
+  h3{font-size:21px; letter-spacing:-.01em; margin:0 0 6px; font-weight:650}
+  p{margin:0 0 16px; max-width:66ch}
+
+  header{padding:64px 0 30px; border-bottom:2px solid var(--ink)}
+  section{padding:46px 0; border-bottom:1px solid var(--rule);
+          display:flex; flex-direction:column; gap:22px}
+  .stack{display:flex; flex-direction:column; gap:16px}
+
+  /* instrument readout ------------------------------------------------- */
+  .readout{
+    background:var(--panel); border:1px solid var(--rule); border-radius:3px;
+    overflow-x:auto;
+  }
+  table{border-collapse:collapse; width:100%; font-size:14px}
+  th{
+    font-size:10.5px; letter-spacing:.11em; text-transform:uppercase; font-weight:700;
+    color:var(--ink-3); text-align:left; padding:11px 14px;
+    border-bottom:1px solid var(--rule-2); white-space:nowrap;
+  }
+  td{padding:10px 14px; border-bottom:1px solid var(--rule); vertical-align:baseline}
+  tr:last-child td{border-bottom:none}
+  td.num{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+         font-variant-numeric:tabular-nums; white-space:nowrap}
+  .who{font-size:12px; color:var(--ink-3); display:block}
+
+  .bad{color:var(--l647); font-weight:600}
+  .good{color:var(--l532); font-weight:600}
+  .mid{color:var(--l450); font-weight:600}
+
+  /* finding cards ------------------------------------------------------ */
+  .find{
+    display:grid; grid-template-columns:auto 1fr; gap:0 20px;
+    padding:22px 24px; border:1px solid var(--rule); border-radius:3px;
+    background:var(--panel); border-left:4px solid var(--rank);
+  }
+  .rank{
+    font-family:ui-monospace,Menlo,monospace; font-size:26px; font-weight:700;
+    color:var(--rank); line-height:1; font-variant-numeric:tabular-nums;
+  }
+  .find > div{min-width:0}
+  .find p:last-child{margin-bottom:0}
+  .r1{--rank:var(--l647)} .r2{--rank:var(--l647)} .r3{--rank:var(--l450)}
+  .r4{--rank:var(--l450)} .r5{--rank:var(--ink-3)} .r6{--rank:var(--ink-3)}
+
+  .evid{
+    font-size:14px; line-height:1.5; color:var(--ink-2);
+    background:var(--sunk); border-radius:3px; padding:12px 14px; margin-top:12px;
+  }
+  .evid b{color:var(--ink); font-weight:650}
+
+  /* transcription comparison ------------------------------------------- */
+  .cmp{display:grid; gap:1px; background:var(--rule); border:1px solid var(--rule);
+       border-radius:3px; overflow:hidden}
+  @media(min-width:620px){ .cmp{grid-template-columns:1fr 1fr} }
+  .cmp > div{background:var(--panel); padding:14px 16px}
+  .lbl{font-size:10.5px; letter-spacing:.11em; text-transform:uppercase;
+       font-weight:700; color:var(--ink-3); margin-bottom:7px}
+  .said{font-size:14.5px; line-height:1.55}
+  s{text-decoration-color:var(--l647); text-decoration-thickness:1.5px}
+
+  .pull{
+    border-left:3px solid var(--accent); padding:4px 0 4px 20px;
+    font-size:19px; line-height:1.5; color:var(--ink); margin:4px 0;
+  }
+  ul{margin:0; padding-left:22px; max-width:66ch}
+  li{margin-bottom:9px}
+  code{font-family:ui-monospace,Menlo,monospace; font-size:.88em;
+       background:var(--sunk); padding:1.5px 5px; border-radius:3px}
+  .foot{padding-top:34px; font-size:13.5px; color:var(--ink-3); line-height:1.6}
+  a{color:var(--accent)}
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">Hologram mission &middot; voice channel diagnostic &middot; 15 Aug 2026</p>
+  <h1>What the microphone is losing</h1>
+  <p class="deck">Four recordings measured end to end. The transcripts read as clean, continuous prose —
+  and they are missing entire passages, disagreeing with themselves about laser wavelengths, and
+  spelling Fedor's name five different ways.</p>
+</header>
+
+<section>
+  <h2>The finding that matters most</h2>
+  <p class="pull">Two transcription runs of the same twenty seconds of audio returned
+  <b>green 532&nbsp;nm</b> and <b>green 530&nbsp;nm</b>. Nothing in either transcript indicates which
+  one Fedor said.</p>
+  <p>This is the failure mode to design against. A garbled word announces itself — you read
+  <i>"Ray-Trade Stimulation"</i> and know something went wrong. A wrong number does not. It arrives
+  in fluent, well-punctuated English at a confidence score of 0.76, and it silently becomes a
+  constraint in an optical design.</p>
+  <p>Isolating that moment to a 20-second clip and running it three times settled it: <b>red 647&nbsp;nm,
+  green 532&nbsp;nm, Verdi 5&nbsp;W</b>, identical all three times. Those are the real krypton and
+  frequency-doubled Nd:YAG lines, so they are physically right. <code>530</code> appeared in one
+  windowing of the same audio and not in others — which is the point. The number is not stable across
+  runs, and nothing in the output tells you that.</p>
+</section>
+
+<section>
+  <h2>What was measured</h2>
+  <div class="readout">
+    <table>
+      <thead><tr>
+        <th>Recording</th><th>Length</th><th>Mean conf.</th><th>Weak words</th><th>Speech dropped</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td>hologram-1<span class="who">Fedor, English (tagged <code>ru</code>)</span></td>
+          <td class="num">22.6 min</td><td class="num">0.734</td>
+          <td class="num bad">21.0%</td><td class="num bad">245.6 s</td>
+        </tr>
+        <tr>
+          <td>display-ru<span class="who">Fedor, Russian</span></td>
+          <td class="num">11.5 min</td><td class="num">0.749</td>
+          <td class="num bad">19.1%</td><td class="num bad">32.2 s</td>
+        </tr>
+        <tr>
+          <td>hologram-2<span class="who">Fedor, English (tagged <code>ru</code>)</span></td>
+          <td class="num">14.0 min</td><td class="num">0.750</td>
+          <td class="num bad">19.6%</td><td class="num bad">104.4 s</td>
+        </tr>
+        <tr>
+          <td>hologram-3<span class="who">Dmitry, English</span></td>
+          <td class="num">6.8 min</td><td class="num good">0.903</td>
+          <td class="num good">6.0%</td><td class="num good">none</td>
+        </tr>
+        <tr>
+          <td>bilingual test<span class="who">both, 47 s</span></td>
+          <td class="num">0.8 min</td><td class="num">0.823</td>
+          <td class="num mid">11.6%</td><td class="num good">none</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Fedor's recordings fail roughly <b>three times more often per word</b> than Dmitry's. Almost none
+  of that gap is his articulation. It is take length, a language mis-detection, and a vocabulary file
+  belonging to a different project.</p>
+  <div class="find r1" style="--rank:var(--l647); margin:4px 0">
+    <div class="rank">!</div>
+    <div>
+      <h3>Correction, same day</h3>
+      <p>This report originally read the column below as a dose response to <b>take length</b>, and
+      told Fedor to record in five-minute takes. That was wrong, and a peer session flagged it. My
+      isolation test had changed two variables at once: when I cut a dropped window out and
+      re-transcribed it, I also dropped the vocabulary flag.</p>
+      <p>Re-run properly on the same 11.5-minute file, with the vocabulary as the <i>only</i>
+      variable:</p>
+      <div class="evid">wrong-domain vocabulary (64 terms) &nbsp;<b>104.3 s lost</b>, 9 gaps &nbsp;&middot;&nbsp;
+      no vocabulary &nbsp;<b>56.5 s lost</b>, 5 gaps &nbsp;&middot;&nbsp;
+      holography vocabulary (144 terms) &nbsp;<b>39.5 s lost</b>, 4 gaps</div>
+      <p style="margin-top:14px">The 32-second RGB-laser passage <b>comes back in full at the
+      original 11.5-minute length</b> once the vocabulary is right. The loss was our
+      misconfiguration, not his take length. The rule has been withdrawn from his handout.</p>
+      <p>Note also what this says about the mechanism: <b>more</b> hotwords gave the <b>best</b>
+      coverage. It is not the count that breaks decoding, it is biasing toward terms that never occur
+      in the audio.</p>
+    </div>
+  </div>
+  <p>The length column below still shows a real correlation, but length is now the confound rather
+  than the cause — every one of these files was transcribed against the same wrong vocabulary, and a
+  longer file simply contains more windows for it to damage:</p>
+  <div class="readout">
+    <table>
+      <thead><tr><th>Take length</th><th>Speech dropped</th><th>Share of the take lost</th></tr></thead>
+      <tbody>
+        <tr><td class="num">6.8 min</td><td class="num good">none</td><td class="num good">0%</td></tr>
+        <tr><td class="num">11.5 min</td><td class="num mid">32 s</td><td class="num mid">4.7%</td></tr>
+        <tr><td class="num">14.0 min</td><td class="num bad">104 s</td><td class="num bad">12.4%</td></tr>
+        <tr><td class="num">22.6 min</td><td class="num bad">246 s</td><td class="num bad">18.1%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Nearly <b>a fifth</b> of the longest recording never reached the page. That single column is the
+  argument for everything in the ranked list below.</p>
+</section>
+
+<section>
+  <h2>Speech that was never written down</h2>
+  <p>Every silence longer than three seconds was cross-checked against waveform energy, then the
+  largest gaps were cut out and re-transcribed alone. One 32-second window in <code>display-ru</code>
+  contains this, and it appears nowhere in the finished transcript:</p>
+  <div class="evid mono">
+    “ты мне просто дай, как лучи будут распространяться. Во-первых, во время записи, когда мы
+    используем <b>красный, синий, зелёный лазер</b> с нужными длин[ами волн]. И [во] время
+    воспроизведения…”
+  </div>
+  <p>The proof that it is absent rather than relocated: <code>красн</code>, <code>син</code> and
+  <code>зелен</code> each return <b>zero hits</b> across the full 655-word transcript. The RGB
+  recording-wavelength explanation — a hard design constraint — is simply gone, with no marker where
+  it used to be.</p>
+  <p>In <code>hologram-2</code> the same defect appears twice as holes of <b>exactly 30.0 seconds</b>.
+  That is precisely Whisper's decode window, which tells us the mechanism: on long files the decoder
+  occasionally emits nothing at all for one entire chunk. Short takes do not do this.</p>
+</section>
+
+<section>
+  <h2>Three causes, and only two are Fedor's</h2>
+  <p>Sorting every weak word by cause changes who has to act. The largest single category is not
+  pronunciation at all.</p>
+  <div class="cmp">
+    <div>
+      <p class="lbl" style="color:var(--l450)">Ours to fix — configuration</p>
+      <p class="said">The vocabulary file loaded for every run was 81 lines of Decentrix, Databricks,
+      Snowflake and DISH. Zero holography terms. Fedor's name absent. He can articulate perfectly and
+      still lose every one of these.</p>
+    </div>
+    <div>
+      <p class="lbl" style="color:var(--l647)">Fedor's to fix — take structure</p>
+      <p class="said">Length of take, which language he opens in, whether numbers are spoken once or
+      twice, how far the microphone sits, and whether anyone else is talking in the room.</p>
+    </div>
+  </div>
+  <p>Here is what the wrong vocabulary cost, term by term. Left is what the transcript said; right is
+  what he actually said:</p>
+  <div class="readout">
+    <table>
+      <thead><tr><th>Transcribed</th><th>Actual</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td class="mono bad">geographical screen</td><td class="mono good">holographic screen</td><td>the central noun of the project</td></tr>
+        <tr><td class="mono bad">дефрагирует</td><td class="mono good">дифрагирует</td><td>“defragments” for “diffracts”, 5&times;</td></tr>
+        <tr><td class="mono bad">детракционной эффективность</td><td class="mono good">дифракционной эффективности</td><td>names a parameter he is scoping <i>out</i></td></tr>
+        <tr><td class="mono bad">Ray-Trade Stimulation</td><td class="mono good">ray trace simulation</td><td>the actual deliverable requested</td></tr>
+        <tr><td class="mono bad">Optical Rated Assimilation</td><td class="mono good">optical design simulation</td><td>3 of 4 words wrong, all real English</td></tr>
+        <tr><td class="mono bad">минимальные операции</td><td class="mono good">минимальные аберрации</td><td>turns an optical spec into nonsense</td></tr>
+        <tr><td class="mono bad">условием брега</td><td class="mono good">условие Брэгга</td><td>the physics the display runs on</td></tr>
+        <tr><td class="mono bad">пландырский айл</td><td class="mono good">aisle</td><td>the cabin layout</td></tr>
+        <tr><td class="mono bad">Друзья и Макс</td><td class="mono good">Zemax</td><td>six spellings in one recording</td></tr>
+        <tr><td class="mono bad">Fielder / Fjodor / filter</td><td class="mono good">Fedor</td><td>five spellings in one recording</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>A controlled A/B on the same 120-second slice — identical audio, only the vocabulary changed —
+  fixed <code>голограммы</code>, <code>дифракционной</code> and <code>длинными волнами</code>
+  outright. Worth knowing: <b>mean confidence did not move</b> (0.800 → 0.796). The model was just as
+  sure of the wrong word as the right one, which is why a confidence score alone is not a quality
+  check.</p>
+</section>
+
+<section>
+  <h2>What Fedor should change, in order</h2>
+  <p>Ranked by how much content each one saves, divided by how much effort it costs him. The first two
+  recover material that is otherwise lost completely; the rest improve material that merely arrives
+  damaged.</p>
+
+  <div class="stack">
+    <div class="find" style="--rank:var(--ink-3); opacity:.72">
+      <div class="rank" style="text-decoration:line-through">1</div>
+      <div>
+        <h3 style="text-decoration:line-through">Record in takes of about five minutes</h3>
+        <p><b>Withdrawn.</b> The content loss this rule was built on came from the wrong vocabulary
+        file, not from take length — see the correction above. He can keep recording at whatever
+        length suits his thinking.</p>
+      </div>
+    </div>
+
+    <div class="find r2">
+      <div class="rank">1</div>
+      <div>
+        <h3>Say numbers twice, and write them down as well</h3>
+        <p>“Green, five three two nanometres — 532.” Then put the wavelengths, powers and dimensions in
+        a text message or a photo of a notebook page.</p>
+        <div class="evid">The numbers are the one thing voice cannot be trusted with. Two runs of the
+        same audio returned <b>532</b> and <b>530</b>. Eleven of forty numbers in
+        <code>hologram-2</code> came back uncertain, including <span class="mono bad">"4x4"</span> at
+        confidence <b>0.16</b>. The mirror is also described as <b>45&times;50</b> inches in one place
+        and <b>45&times;55</b> in another — unresolved, and it needs to be.</div>
+      </div>
+    </div>
+
+    <div class="find r3">
+      <div class="rank">2</div>
+      <div>
+        <h3>Don't put a Russian lead-in on an English recording</h3>
+        <p>This one is Dmitry's, not Fedor's. Record the framing comment as its own separate file.</p>
+        <div class="evid"><code>hologram-2</code> is <b>97% English</b> by word count, but the opening
+        “Продолжай” caused Whisper to tag the whole file <code>ru</code> and decode fourteen minutes of
+        English through a Russian-primed decoder. The wreckage lands on the laser specs:
+        <span class="mono">eigentlich</span>, <span class="mono">В fait</span>,
+        <span class="mono">Boxes R</span>, <span class="mono">coagulated</span> for “coherent”.</div>
+      </div>
+    </div>
+
+    <div class="find r4">
+      <div class="rank">3</div>
+      <div>
+        <h3>Move the microphone to about 20 cm</h3>
+        <p>Closer mic, quieter room, door shut, fan off. A one-time fix with no ongoing effort.</p>
+        <div class="evid">Consonant energy above 4 kHz measured <b>2.9%</b> in
+        <code>hologram-2</code> and <b>6.7%</b> in <code>display-ru</code>; healthy close-mic speech
+        runs above 12%. Consonants are exactly what separates similar words. <code>display-ru</code>
+        also peaked at <b>0.0 dBFS</b> with 18 clipped samples over a <b>24 dB</b> noise
+        margin.</div>
+      </div>
+    </div>
+
+    <div class="find r5">
+      <div class="rank">4</div>
+      <div>
+        <h3>Spell a product name once, the first time you use it</h3>
+        <p>“Zemax — Z, E, M, A, X.” Once per recording is enough.</p>
+        <div class="evid">Zemax produced <span class="mono">Зимокс</span>,
+        <span class="mono">Дзимокс</span>, <span class="mono">ZIMAX</span>,
+        <span class="mono">Vimux</span>, <span class="mono">ZMAX</span> and
+        <span class="mono">Друзья и Макс</span>. It is the one term that <b>resisted the vocabulary
+        fix entirely</b> — biasing both Latin and Cyrillic spellings in did not recover it.</div>
+      </div>
+    </div>
+
+    <div class="find r6">
+      <div class="rank">5</div>
+      <div>
+        <h3>Pause the recording for side conversations</h3>
+        <p>If someone comes into the room, stop the take.</p>
+        <div class="evid">A domestic exchange — <span class="mono">“пойдем сюда, нам некогда… просто
+        завтраку”</span> — sits in the middle of the mission transcript, formatted exactly like
+        engineering content.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>The loop that keeps this from drifting back</h2>
+  <p>Advice decays. A check does not. Two commands, both running fully on-device, so Fedor gets a
+  verdict without anyone reading a transcript.</p>
+
+  <div class="cmp">
+    <div>
+      <p class="lbl" style="color:var(--l532)">Before recording &mdash; 30 seconds</p>
+      <p class="said mono" style="font-size:13px">fedor-check mic clip.m4a</p>
+      <p class="said">Scores level, headroom, room noise, consonant energy and bandwidth, then prints
+      <b>GO</b>, <b>USABLE</b> or <b>FIX FIRST</b>. Catches a bad mic position <i>before</i> twenty
+      minutes are spent on it, which is the whole point — the room is the one problem you cannot
+      repair afterwards.</p>
+    </div>
+    <div>
+      <p class="lbl" style="color:var(--l450)">After recording</p>
+      <p class="said mono" style="font-size:13px">fedor-check take &lt;dir&gt;</p>
+      <p class="said">Five measures — take length, dropped speech, language, numbers at risk, room —
+      each with a threshold drawn from his own recordings. It ends by naming <b>one</b> thing to change
+      next time, not six.</p>
+    </div>
+  </div>
+  <p>The thresholds are not general advice about diction. Every one was set from a measurement of
+  Fedor's own audio, and the tool says which recording each came from. When a new term comes back
+  mangled it goes into the vocabulary the same day, with the mangling recorded next to it — that is
+  what keeps the fix from rotting.</p>
+</section>
+
+<section>
+  <h2>Fixed on our side, no action needed from Fedor</h2>
+  <ul>
+    <li>A holography vocabulary in Russian and English — 180 terms, each annotated with the actual
+    corruption that motivated it, including every English term he code-switches into mid-sentence.</li>
+    <li>A deterministic glossary for the terms that biasing cannot reach, so
+    <span class="mono">Друзья и Макс</span> becomes <b>Zemax</b> by rewrite rather than by luck.</li>
+    <li>Fedor's name, in Latin and Cyrillic, so it stops arriving as an unknown instruction.</li>
+    <li>Ambiguities deliberately left alone rather than auto-corrected:
+    <span class="mono">операции</span> is almost certainly <b>аберрации</b>, but it is a real word, so
+    it is flagged for a human instead of silently rewritten.</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Still open — verify against the audio before building on it</h2>
+  <ul>
+    <li><b>Mirror dimensions.</b> 45&times;50 inches and 45&times;55 inches both appear. One is wrong.</li>
+    <li><b>Exposure figure.</b> <span class="mono">"4x4 time"</span> at confidence 0.16, in the middle
+    of the exposure-time discussion. Unrecovered.</li>
+    <li><b>Vehicle type.</b> <span class="mono">"бирусчивого транспорта"</span> — unrecovered. Worth
+    asking rather than guessing.</li>
+    <li><b>The 32 dropped seconds</b> should be re-transcribed as a clip and folded back into the
+    record, since the RGB recording wavelengths are stated there and nowhere else.</li>
+    <li><b>Hologram 1</b> (22.6 min) was still transcribing when this was written, against the wrong
+    vocabulary and at a length that has dropped content in every other file.</li>
+  </ul>
+</section>
+
+<p class="foot">
+  Measured 15 Aug 2026 on four recordings in <code>~/prosodykit-archive</code>, transcribed on-device
+  with whisper-small via CTranslate2. Every number here comes from <code>transcript.json</code>,
+  <code>prosody.json</code> or the decoded waveform — none is inferred. Dropped-speech claims were
+  each confirmed by cutting the window out and re-transcribing it alone.<br><br>
+  Vocabulary <code>~/projects/hologram-voice/vocab/holography.ru-en.txt</code> &middot;
+  glossary <code>vocab/glossary.holography.json</code> &middot;
+  tool <code>tools/fedor-check</code>
+</p>
+
+</div>
