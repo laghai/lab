@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+</head>
+<body>
+<title>Cloud Olympics — Catalog</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --paper:#f1f3f5; --card:#fff; --ink:#16202a; --dim:#93a0ac; --muted:#5d6b78;
+    --rule:#e2e7ec; --band:#1c2b38; --band2:#16232e; --bandtx:#cfd9e2;
+    --gcp:#3367D6; --aws:#D97706; --az:#0067B8; --live:#188038;
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --paper:#0c141c; --card:#141f2a; --ink:#e9eff5; --dim:#66757f; --muted:#94a3b0;
+    --rule:#24313d; --band:#18242f; --band2:#121c25; --bandtx:#c6d2dc;
+    --gcp:#8AB4F8; --aws:#FFB020; --az:#4FA8E8; --live:#5bc47a;}}
+  :root[data-theme="dark"]{
+    --paper:#0c141c; --card:#141f2a; --ink:#e9eff5; --dim:#66757f; --muted:#94a3b0;
+    --rule:#24313d; --band:#18242f; --band2:#121c25; --bandtx:#c6d2dc;
+    --gcp:#8AB4F8; --aws:#FFB020; --az:#4FA8E8; --live:#5bc47a;}
+  *{box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);margin:0;
+    font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    padding:clamp(.8rem,2.5vw,2rem) .8rem 3rem;-webkit-font-smoothing:antialiased}
+  .board{max-width:64rem;margin:0 auto;background:var(--card);
+    border:1px solid var(--rule);border-radius:10px;overflow:hidden;
+    box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 26px rgba(0,0,0,.06)}
+
+  .hd{background:var(--band);color:var(--bandtx);padding:1.15rem 1.3rem 1.05rem}
+  .hd h1{margin:0;font-size:clamp(1.35rem,3.6vw,1.75rem);font-weight:700;letter-spacing:-.02em;color:#fff}
+  .hd .sub{margin:.2rem 0 0;font-size:.9rem;opacity:.8}
+  .hd .back{color:var(--bandtx);opacity:.85;text-decoration:none;font-size:.82rem;
+    border:1px solid rgba(255,255,255,.25);border-radius:5px;padding:.15rem .55rem;margin-left:.6rem}
+  .hd .back:hover{opacity:1;border-color:rgba(255,255,255,.5)}
+
+  .intro{padding:.9rem 1.3rem;font-size:.88rem;color:var(--muted);border-bottom:1px solid var(--rule)}
+  .intro b{color:var(--ink)}
+
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(23rem,1fr))}
+  /* A tile whose hero IS the point spans the gallery. MEASURED 09-02: four 512px
+     images across one 23rem column rendered at 107px each, and a moody photo at
+     107px reads as a black square -- the hero was there and invisible. */
+  .tile.wide{grid-column:1/-1}
+  .tile{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:1rem 1.1rem 1.1rem;
+    scroll-margin-top:1rem}
+  .thd{display:flex;align-items:center;gap:.45rem;margin-bottom:.6rem}
+  .thd .mglyph{width:22px;height:22px;flex:none;color:var(--muted)}
+  .thd h2{margin:0;font-size:1rem;font-weight:600;color:var(--ink);flex:1}
+  .thd .onboard{font-size:.72rem;color:var(--muted);text-decoration:none;
+    border:1px solid var(--rule);border-radius:4px;padding:.1rem .45rem;white-space:nowrap}
+  .thd .onboard:hover{color:var(--ink);border-color:var(--dim)}
+
+  /* hero media */
+  .hero{border-radius:8px;overflow:hidden;background:var(--paper);border:1px solid var(--rule)}
+  .hero.split{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+  .cloudpane{background:var(--card);padding:.55rem .6rem .6rem;margin:0}
+  .cloudpane .pair{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+  .cloudpane img{width:100%;display:block;border-radius:3px;aspect-ratio:1;object-fit:cover;background:#111}
+  .cloudpane figcaption{margin-top:.4rem;font-size:.68rem;line-height:1.35;color:var(--dim)}
+  .cloudpane.az figcaption b, .cloudpane.gcp figcaption b{color:var(--ink)}
+
+  .hero.frame{padding:0}
+  .hero.frame iframe{display:block;width:100%;height:16rem;border:0}
+  .hero.frame.tall iframe{height:30rem}
+  .hero.frame.mid iframe{height:22rem}
+  .hero.frame.short iframe{height:15rem}
+  .hero.single{padding:0}
+  .hero.single img{width:100%;display:block;background:#000}
+  .xcut{border-top:1px solid var(--rule);padding:1rem 1.3rem 1.2rem}
+  .xcut h2{margin:0 0 .5rem;font-size:.94rem;font-weight:600;color:var(--ink)}
+  .xcut .hero.frame{border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+  .xcut .prov{margin-top:.6rem}
+
+  .hero.placeholder{border-style:dashed;padding:1.5rem 1rem;text-align:center}
+  .ph-badge{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.09em;
+    color:var(--dim);text-transform:uppercase;font-weight:600}
+  .ph-run{margin-top:.5rem;font-size:.8rem;color:var(--muted);line-height:1.5}
+  .ph-run code{font-family:"IBM Plex Mono",monospace;font-size:.74rem;background:var(--rule);
+    padding:.05rem .32rem;border-radius:3px;color:var(--ink)}
+  .ph-meta{margin-top:.35rem;font-size:.7rem;color:var(--dim)}
+
+  .seealso{font-size:.76rem;color:var(--muted);margin:.55rem 0 0;line-height:1.5}
+  .seealso a{color:var(--az)}
+
+  /* per-cloud comparison rows, same classes bin/board-verify already reads */
+  .cmp{margin-top:.7rem}
+  .row{display:flex;align-items:center;gap:.55rem;padding:.26rem 0}
+  .bar{width:4px;height:1.25rem;border-radius:2px;flex:none}
+  .meter{width:100%;max-width:8rem;height:.38rem;border-radius:3px;background:var(--rule);overflow:hidden;margin-top:.15rem}
+  .meter i{display:block;height:100%;border-radius:3px}
+  .cost{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--dim);
+    min-width:3.1rem;text-align:right;font-variant-numeric:tabular-nums}
+  .win .cost{color:var(--muted)}
+  .nm{font-size:.92rem;font-weight:400;color:var(--dim);flex:1;line-height:1.2;display:flex;flex-direction:column;gap:.1rem}
+  .nm small{display:block;font-size:.68rem;color:var(--dim);font-weight:400;margin-top:.03rem}
+  .sc{font-family:"IBM Plex Mono",monospace;font-size:1rem;color:var(--dim);
+    font-weight:600;min-width:5.4rem;text-align:right;font-variant-numeric:tabular-nums;line-height:1.1}
+  .sc small{display:block;font-size:.66rem;font-weight:400;color:var(--dim);margin-top:.03rem}
+  .win .nm,.win .sc{color:var(--ink);font-weight:700}
+  .win .nm small,.win .sc small{color:var(--muted)}
+
+  .prov{margin-top:.65rem;padding-top:.5rem;border-top:1px solid var(--rule);
+    font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--dim);line-height:1.6}
+  .prov b{color:var(--muted);font-weight:600}
+
+  .foot{padding:.9rem 1.1rem 1.1rem;font-size:.8rem;color:var(--muted)}
+  .foot a{color:var(--az)}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="g-speech" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none">
+    <path d="M3 12h2M7 7v10M11 4v16M15 8v8M19 11h2"/></g>
+  <g id="g-cold" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M13 2L5 13h6l-2 9 8-11h-6z"/></g>
+  <g id="g-vision" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="2" y="5" width="14" height="14" rx="1.5"/><path d="M2 9h14M2 15h14M6 5v14M12 5v14"/>
+    <path d="M16 12l6-4v8z"/></g>
+  <g id="g-embed" stroke="currentColor" stroke-width="2" fill="none">
+    <circle cx="6" cy="7" r="2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="6" r="2"/>
+    <circle cx="18" cy="16" r="2"/><circle cx="12" cy="11.5" r="2"/>
+    <path d="M8 7.6l2.2 2.6M8.6 15.7l2.2-2.6M15.1 6.9l-1.5 3.1M16.3 15.1l-2.6-2.2" stroke-opacity=".55"/></g>
+  <g id="g-photon" stroke="currentColor" stroke-width="1.7" fill="none">
+    <circle cx="6" cy="6" r="1.9"/><circle cx="12" cy="6" r="1.9"/><circle cx="18" cy="6" r="1.9"/>
+    <circle cx="9" cy="12" r="1.9"/><circle cx="15" cy="12" r="1.9"/>
+    <circle cx="6" cy="18" r="1.9"/><circle cx="12" cy="18" r="1.9"/><circle cx="18" cy="18" r="1.9"/>
+    <path d="M2 12h3M19 12h3" stroke-opacity=".55"/></g>
+  <g id="g-gen" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.6"/>
+    <path d="M3 17l5-5 4 4 3-3 6 6"/></g>
+  <g id="g-splat" stroke="currentColor" stroke-width="2" fill="none">
+    <ellipse cx="9" cy="10" rx="5" ry="3" transform="rotate(-25 9 10)"/>
+    <ellipse cx="15" cy="14" rx="4" ry="2.4" transform="rotate(20 15 14)"/>
+    <ellipse cx="12" cy="7" rx="2.5" ry="1.6"/></g>
+  <g id="g-fluid" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none">
+    <path d="M4 7c3-3 5 3 8 0s5-3 8 0"/><path d="M4 12c3-3 5 3 8 0s5-3 8 0"/><path d="M4 17c3-3 5 3 8 0s5-3 8 0"/></g>
+  <g id="g-blender" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none">
+    <circle cx="13" cy="13" r="5"/><circle cx="13" cy="13" r="1.6"/><path d="M8 13 3 7M11 8.5 5 4M8 17 4 20"/></g>
+  <g id="g-llm" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x="7" y="7" width="10" height="10" rx="1.5"/>
+    <path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></g>
+  <g id="g-store" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></g>
+  <g id="g-optics" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M12 4L4 19h16z"/><path d="M2 13h6M15 12l6-3M16 15l6 1M17 18l5 3"/></g>
+  <g id="g-idle" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <path d="M9 3h6M12 3v4M7 7h10l-1.5 6a4 4 0 0 1-7 0z"/><path d="M12 17v4"/>
+    <circle cx="12" cy="22" r=".6" fill="currentColor"/></g>
+</defs></svg>
+
+<div class="board">
+  <div class="hd">
+    <h1>Cloud Olympics — Catalog</h1>
+    <p class="sub">The hero artifacts behind the scores &#183; one tile per event &#183; provenance-gated
+      <a class="back" href="https://claude.ai/code/artifact/0d53a52c-581c-4408-b772-75b472ad7738">&#8592; the board</a></p>
+  </div>
+
+  <div class="intro">In actual Olympics there are photos and videos of the accomplishments. This is that:
+    the <b>actual output</b> of each scored run — images, a 3-D viewer, a transcript, generated text —
+    never just a number about it. Every hero names its run; every figure here is in
+    <a href="https://github.com/laghai/cloud-platform/blob/cloud/gpu-lane-eu/docs/measured.md" style="color:var(--az)">docs/measured.md</a>.
+    A tile with no hero yet says so, with the run that is waiting to be published.
+  </div>
+
+  <div class="gallery">
+
+    <div class="tile wide" id="splat">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="gaussian splatting"><use href="#g-splat"/></svg>
+        <h2>Gaussian splatting</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#splat">on the board &#8594;</a></div>
+      <div class="hero split">
+        <figure class="cloudpane az">
+          <div class="pair">
+            <img src="https://cloudupart90685.z13.web.core.windows.net/olympics/splat/target.png" alt="target lighthouse image" loading="lazy">
+            <img src="https://cloudupart90685.z13.web.core.windows.net/olympics/splat/azure-fit.png" alt="Azure T4 20,000-Gaussian fit" loading="lazy">
+          </div>
+          <figcaption><b>Azure Tesla T4</b> &#183; target (left) vs the 20,000-Gaussian fit (right) &#183; PSNR 39.45 dB, 1,500 steps, 120.3 s</figcaption>
+        </figure>
+        <figure class="cloudpane gcp">
+          <div class="pair">
+            <img src="https://cloudupart90685.z13.web.core.windows.net/olympics/splat/target.png" alt="target lighthouse image" loading="lazy">
+            <img src="https://cloudupart90685.z13.web.core.windows.net/olympics/splat/gcp-fit.png" alt="GCP L4 20,000-Gaussian fit" loading="lazy">
+          </div>
+          <figcaption><b>GCP NVIDIA L4</b> &#183; same target, same steps &#183; PSNR 39.12 dB, 140.9 s &#183; launch-bound, not FLOP-bound</figcaption>
+        </figure>
+      </div>
+      <p class="seealso">See also: <a href="https://cloudupart90685.z13.web.core.windows.net/venus/">the Venus de Milo</a> &#8212;
+        a real captured 3-D Gaussian splat (Louvre, via superspl.at) at gallery fidelity, the same technique this event scores
+        a 2-D optimisation core of. The Aphrodite is one example; this fit is ours, end to end.</p>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4 &#183; 20,000 anisotropic Gaussians &#183; 512&#178;</small>
+            <span class="meter"><i style="width:100%;background:var(--az)"></i></span></span>
+          <span class="sc">249,353<small>Gaussian-steps/s</small></span><span class="cost">$0.0028</span></div>
+        <div class="row"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4</small>
+            <span class="meter"><i style="width:85%;background:var(--gcp)"></i></span></span>
+          <span class="sc">212,843<small>Gaussian-steps/s</small></span><span class="cost">$0.0037</span></div>
+      </div>
+      <div class="prov"><b>Azure</b> &#183; splat-gpu &#183; <code>splat-gpu-kluf6fo</code> &#183; 2026-09-02 &#183; ff09f71<br>
+        <b>GCP</b> &#183; splat-gpu (europe-west4) &#183; <code>splat-gpu-49vxc</code> &#183; 2026-09-02 &#183; ff09f71</div>
+    </div>
+
+    <div class="tile wide" id="fluid">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="lattice-boltzmann fluid"><use href="#g-fluid"/></svg>
+        <h2>FluidX3D lattice-Boltzmann CFD</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#fluid">on the board &#8594;</a></div>
+      <div class="hero frame">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/fluid/" title="Von Karman vortex street, FluidX3D headless GRAPHICS export" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4 &#183; D3Q19 FP16S</small>
+            <span class="meter"><i style="width:100%;background:var(--gcp)"></i></span></span>
+          <span class="sc">2,834<small>MLUPs/s</small></span><span class="cost">$0.199</span></div>
+        <div class="row"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4, Container Apps</small>
+            <span class="meter"><i style="width:98%;background:var(--az)"></i></span></span>
+          <span class="sc">2,787<small>MLUPs/s</small></span><span class="cost">$0.285</span></div>
+      </div>
+      <div class="prov"><b>Azure</b> &#183; fluidx3d &#183; <code>fluidx3d-doj9kj5</code> &#183; 2026-09-02 &#183; 706dd79 (hero pending)<br>
+        <b>GCP</b> &#183; fluidx3d (europe-west4) &#183; <code>fluidx3d-zvmnf</code> &#183; 2026-09-02 &#183; 706dd79 (hero pending)</div>
+    </div>
+
+    <div class="tile wide" id="blender">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="blender open data"><use href="#g-blender"/></svg>
+        <h2>Blender Open Data</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#blender">on the board &#8594;</a></div>
+      <div class="hero" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule)">
+        <figure class="cloudpane" style="margin:0"><img src="https://cloudupart90685.z13.web.core.windows.net/olympics/blender/monster.png" alt="Blender Open Data, monster scene, GPU render" loading="lazy" style="aspect-ratio:16/9;object-fit:cover">
+          <figcaption><b>monster</b> &#183; 1,313.5 samples/min (bench)</figcaption></figure>
+        <figure class="cloudpane" style="margin:0"><img src="https://cloudupart90685.z13.web.core.windows.net/olympics/blender/junkshop.png" alt="Blender Open Data, junkshop scene, GPU render" loading="lazy" style="aspect-ratio:16/9;object-fit:cover">
+          <figcaption><b>junkshop</b> &#183; 664.6 samples/min (bench)</figcaption></figure>
+        <figure class="cloudpane" style="margin:0"><img src="https://cloudupart90685.z13.web.core.windows.net/olympics/blender/classroom.png" alt="Blender Open Data, classroom scene, GPU render" loading="lazy" style="aspect-ratio:16/9;object-fit:cover">
+          <figcaption><b>classroom</b> &#183; 581.0 samples/min (bench)</figcaption></figure>
+      </div>
+      <p class="seealso">Same baked Blender 4.5.0 scene bundles the benchmark runs &#8212; the benchmark scores samples/min and never rendered a picture; this does.</p>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4 &#183; official launcher, 4.5.0</small>
+            <span class="meter"><i style="width:100%;background:var(--gcp)"></i></span></span>
+          <span class="sc">2,559.1<small>samples/min</small></span><span class="cost">$0.025</span></div>
+        <div class="row"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4, Container Apps &#183; same launcher and scenes</small>
+            <span class="meter"><i style="width:42%;background:var(--az)"></i></span></span>
+          <span class="sc">1,085.5<small>samples/min</small></span><span class="cost">$0.021</span></div>
+      </div>
+      <div class="prov"><b>rates</b> &#183; blender-bench &#183; Azure <code>blender-bench-nftsn14</code> &#183; GCP <code>blender-bench-r2gpz</code> &#183; 2026-09-02<br>
+        <b>stills</b> &#183; blender-stills (GCP L4, europe-west4) &#183; <code>blender-stills-9pnzg</code> &#183; 2026-09-02 &#183; hero built by the Visuals Lead</div>
+    </div>
+
+    <div class="tile wide" id="vision">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="vision"><use href="#g-vision"/></svg>
+        <h2>Vision &#8212; structure from motion</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#vision">on the board &#8594;</a></div>
+      <div class="hero frame tall">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/vision/" title="COLMAP sparse point-cloud viewer, drag to orbit" loading="lazy"></iframe>
+      </div>
+      <p class="seealso">Drag to orbit, scroll to zoom &#8212; two tabs: the 1fps sequence (all 22 fragments) and the 4096-word loop-detection run (its largest component only; the job archives only the largest component's points).</p>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>COLMAP &#183; 8 vCPU &#183; 510 of 1,600 registered, 22 disconnected components</small>
+            <span class="meter"><i style="width:100%;background:var(--gcp)"></i></span></span>
+          <span class="sc">26.1<small>31.9% registered</small></span><span class="cost">$0.59</span></div>
+        <div class="row"><span class="bar" style="background:var(--gcp);opacity:.55"></span>
+          <span class="nm">loop detection<small>4096-word vocab tree &#183; 547 of 1,600 registered, 19 components</small>
+            <span class="meter"><i style="width:14%;background:var(--gcp);opacity:.55"></i></span></span>
+          <span class="sc">3.7<small>34.2% registered</small></span><span class="cost">$3.52</span></div>
+      </div>
+      <div class="prov"><b>GCP</b> &#183; reconstruct &#183; <code>reconstruct-9clrb</code> &#183; 2026-08-29 &#183; 944773b<br>
+        <b>GCP</b> &#183; reconstruct (loop detection) &#183; <code>reconstruct-jpvzg</code> &#183; 2026-09-02 &#183; 944773b &#183; hero built by the Viewers Lead</div>
+    </div>
+
+    <div class="tile wide" id="render">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="render"><use href="#g-optics"/></svg>
+        <h2>Frame rendering</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#render">on the board &#8594;</a></div>
+      <div class="hero single">
+        <img src="https://cloudupart90685.z13.web.core.windows.net/olympics/render/contact_sheet.png" alt="8 rendered frames, camera orbiting a ring of 60 coloured solids, 4x2 contact sheet" loading="lazy">
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4 &#183; identical scene, samples, size</small>
+            <span class="meter"><i style="width:100%;background:var(--gcp)"></i></span></span>
+          <span class="sc">95.0<small>frames/min</small></span><span class="cost">$1.21</span></div>
+        <div class="row"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4 &#183; Cycles &#183; 128 samples &#183; 480&#178; &#183; no denoise</small>
+            <span class="meter"><i style="width:69%;background:var(--az)"></i></span></span>
+          <span class="sc">65.8<small>frames/min</small></span><span class="cost">$3.70</span></div>
+      </div>
+      <div class="prov"><b>rates</b> &#183; render-gpu &#183; Azure <code>render-gpu-i0w27lh</code> (65.8/min) &#183; GCP <code>render-gpu-hdfj2</code> (95.0/min)<br>
+        <b>frames</b> &#183; render-gpu (GCP L4, europe-west4) &#183; <code>render-gpu-g6c8w</code> &#183; 2026-09-02, 90.99/min this rerun &#183; hero built by the Visuals Lead</div>
+    </div>
+
+    <div class="tile wide" id="imagegen">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="image generation"><use href="#g-gen"/></svg>
+        <h2>Image generation</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#imagegen">on the board &#8594;</a></div>
+      <div class="hero frame tall">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/imagegen/" title="24 SDXL-Turbo images per cloud, contact sheet" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4 &#183; SDXL-Turbo &#183; 4 steps &#183; 512&#215;512 &#183; 24 images</small>
+            <span class="meter"><i style="width:100%;background:var(--gcp)"></i></span></span>
+          <span class="sc">66.0<small>images/min</small></span><span class="cost">$1.68</span></div>
+        <div class="row"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4 &#183; SDXL-Turbo &#183; 4 steps &#183; 512&#215;512 &#183; 24 images</small>
+            <span class="meter"><i style="width:93%;background:var(--az)"></i></span></span>
+          <span class="sc">61.1<small>images/min</small></span><span class="cost">$1.83</span></div>
+      </div>
+      <div class="prov"><b>Azure</b> &#183; imagegen-gpu &#183; <code>imagegen-gpu-mbtpb3s</code> &#183; 2026-08-29 &#183; commit ae44d36<br>
+        <b>GCP</b> &#183; imagegen-gpu (europe-west4) &#183; <code>imagegen-gpu-7xckj</code> &#183; 2026-09-02 &#183; commit ae44d36 &#183; hero built by the Viewers Lead</div>
+    </div>
+
+    <div class="tile" id="llm">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="self-hosted inference"><use href="#g-llm"/></svg>
+        <h2>Self-hosted LLM inference</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#llm">on the board &#8594;</a></div>
+      <div class="hero frame mid">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/llm/" title="LLM decode, generated text excerpt, both clouds" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4 &#183; Qwen2.5-1.5B &#183; fp16</small>
+            <span class="meter"><i style="width:100%;background:var(--az)"></i></span></span>
+          <span class="sc">36.1<small>tok/s</small></span><span class="cost">$52.4</span></div>
+        <div class="row"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4 &#183; same model, fp16</small>
+            <span class="meter"><i style="width:82%;background:var(--gcp)"></i></span></span>
+          <span class="sc">29.7<small>tok/s</small></span><span class="cost">$41.3</span></div>
+      </div>
+      <div class="prov"><b>Azure</b> &#183; llm-gpu &#183; <code>llm-gpu-0dn96x9</code> &#183; 2026-08-29 &#183; commit bf8a95f<br>
+        <b>GCP</b> &#183; llm-gpu (europe-west4) &#183; <code>llm-gpu-jnktw</code> &#183; 2026-09-02 &#183; commit bf8a95f &#183; hero built by the Viewers Lead</div>
+    </div>
+
+    <div class="tile" id="photonics">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="photonics sweep"><use href="#g-photon"/></svg>
+        <h2>Photonics cavity sweep</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#photonics">on the board &#8594;</a></div>
+      <div class="hero frame short">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/photonics/" title="Concurrency vs. the incumbent's licence ceiling" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>Legume GME &#183; 2,000 geometries &#183; 0 failed</small>
+            <span class="meter"><i style="width:100%;background:var(--gcp)"></i></span></span>
+          <span class="sc">197<small>at once, 514/min</small></span><span class="cost">$0.51</span></div>
+      </div>
+      <div class="prov"><b>GCP</b> &#183; photonics (CPU, 200 tasks) &#183; <code>photonics-fldzd</code> &#183; 2026-08-29 &#183; hero built by the Visuals Lead</div>
+    </div>
+
+    <div class="tile" id="speech">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="speech to text"><use href="#g-speech"/></svg>
+        <h2>Speech to text</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#speech">on the board &#8594;</a></div>
+      <div class="hero frame short">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/speech/" title="Speech transcript review decision" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4 &#183; float16</small>
+            <span class="meter"><i style="width:100%;background:var(--az)"></i></span></span>
+          <span class="sc">14.3<small>min of audio/min</small></span><span class="cost">&#8212;</span></div>
+      </div>
+      <div class="prov"><b>GCP</b> &#183; source gs://cloudup-artifacts-1003714208400/asr-mission-v2/transcript.txt &#183; reviewed 2026-09-02 by the Viewers Lead &#183; 773 words, withheld (personal/client content, per specs/009) &#183; docs/measured.md: &#8220;Speech is NOT costed&#8221;</div>
+    </div>
+
+    <div class="tile" id="cold-start">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="cold start"><use href="#g-cold"/></svg>
+        <h2>Cold start</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#cold-start">on the board &#8594;</a></div>
+      <div class="hero frame short">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/cold-start/" title="GPU job cold start, two runs per cloud" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--aws)"></span>
+          <span class="nm">AWS<small>EC2 t3.micro</small>
+            <span class="meter"><i style="width:100%;background:var(--aws)"></i></span></span>
+          <span class="sc">2.9<small>per minute</small></span><span class="cost">&#8776;$0</span></div>
+        <div class="row"><span class="bar" style="background:var(--az);opacity:.6"></span>
+          <span class="nm">Azure<small>Container Apps</small>
+            <span class="meter"><i style="width:63%;background:var(--az);opacity:.7"></i></span></span>
+          <span class="sc">2.5<small>per minute</small></span><span class="cost">&#8776;$0</span></div>
+      </div>
+      <div class="prov"><b>multi-cloud</b> &#183; cold-start probes &#183; docs/measured.md &#8220;cold start, 2026-08-29&#8221; &#183; hero built by the Visuals Lead</div>
+    </div>
+
+    <div class="tile" id="storage">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="storage throughput"><use href="#g-store"/></svg>
+        <h2>Storage throughput</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#storage">on the board &#8594;</a></div>
+      <div class="hero frame short">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/storage/" title="Storage read throughput, three clouds" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--aws)"></span>
+          <span class="nm">AWS<small>S3 &#183; 256 MiB &#183; best of 2, both orders</small>
+            <span class="meter"><i style="width:100%;background:var(--aws)"></i></span></span>
+          <span class="sc">43.0<small>MB/s down</small></span><span class="cost">2 runs</span></div>
+        <div class="row"><span class="bar" style="background:var(--gcp);opacity:.6"></span>
+          <span class="nm">GCP<small>GCS &#183; identical object and method</small>
+            <span class="meter"><i style="width:63%;background:var(--gcp);opacity:.7"></i></span></span>
+          <span class="sc">27.2<small>MB/s down</small></span><span class="cost">2 runs</span></div>
+      </div>
+      <div class="prov"><b>multi-cloud</b> &#183; bin/storage-bench &#183; docs/measured.md &#8220;storage, 2026-08-29&#8221; &#183; hero built by the Visuals Lead</div>
+    </div>
+
+    <div class="tile" id="idle">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="cost of idle"><use href="#g-idle"/></svg>
+        <h2>Cost of idle</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#idle">on the board &#8594;</a></div>
+      <div class="hero frame short">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/idle/" title="Idle cost per lane" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--aws)"></span>
+          <span class="nm"><span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);margin-right:.3rem">TIE</span>AWS<small>0 instances running</small></span>
+          <span class="sc">$0<small>true zero</small></span><span class="cost">0</span></div>
+        <div class="row win"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm"><span style="font-family:'IBM Plex Mono',monospace;font-size:.6rem;color:var(--muted);margin-right:.3rem">TIE</span>Azure<small>3 jobs, all scale-to-zero</small></span>
+          <span class="sc">$0<small>true zero</small></span><span class="cost">0</span></div>
+      </div>
+      <div class="prov"><b>multi-cloud</b> &#183; config read-back, no single execution (hero pending)</div>
+    </div>
+
+    <div class="tile" id="embed">
+      <div class="thd"><svg class="mglyph" viewBox="0 0 24 24" role="img" aria-label="embeddings"><use href="#g-embed"/></svg>
+        <h2>Embeddings</h2><a class="onboard" href="https://cloudupart90685.z13.web.core.windows.net/board/#embed">on the board &#8594;</a></div>
+      <div class="hero frame short">
+        <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/embed/" title="602 embedded chunks projected to two dimensions, coloured by source document" loading="lazy"></iframe>
+      </div>
+      <div class="cmp">
+        <div class="row win"><span class="bar" style="background:var(--az)"></span>
+          <span class="nm">Azure<small>Tesla T4 &#183; MiniLM-L6 &#183; 602 chunks</small>
+            <span class="meter"><i style="width:100%;background:var(--az)"></i></span></span>
+          <span class="sc">59,513<small>chunks/min</small></span><span class="cost">$0.071</span></div>
+        <div class="row"><span class="bar" style="background:var(--gcp)"></span>
+          <span class="nm">GCP<small>NVIDIA L4, Cloud Run europe-west4 &#183; same model, 602 chunks</small>
+            <span class="meter"><i style="width:33%;background:var(--gcp)"></i></span></span>
+          <span class="sc">19,799<small>chunks/min</small></span><span class="cost">$0.029</span></div>
+      </div>
+      <div class="prov"><b>Azure</b> &#183; embed-gpu &#183; <code>embed-gpu-xid2d67</code> &#183; 2026-08-29 (hero pending)<br>
+        <b>GCP</b> &#183; embed-gpu (europe-west4) &#183; <code>embed-gpu-6s7fh</code> &#183; 2026-09-02 (hero pending)</div>
+    </div>
+
+  </div>
+
+  <div class="xcut">
+    <h2>Across events &#8212; GPU speedup, four ways</h2>
+    <div class="hero frame short">
+      <iframe src="https://cloudupart90685.z13.web.core.windows.net/olympics/throughput/" title="GPU speedup by event: imagegen, llm, embed, render" loading="lazy"></iframe>
+    </div>
+    <div class="prov">events: imagegen &#183; llm &#183; embed &#183; render &#183; sourced from each event's own RESULT payload
+      already in docs/measured.md (imagegen-gpu-*, llm-gpu-*, embed-gpu-*, render-gpu-* and their CPU counterparts)
+      &#183; hero built 2026-09-02 by the Visuals Lead &#183; not one of the 13 board events, so not counted as a tile</div>
+  </div>
+
+  <div class="foot">10 of 13 heroes published: splat (both clouds, plus the Venus de Milo bonus viewer), blender,
+    imagegen, render, vision, llm, photonics, cold-start, storage &#8212; speech is published too, as an honest
+    withholding decision, not an excerpt (personal/client content, per specs/009). Still placeholders: fluid,
+    embed, idle. <code>bin/catalog-verify</code> refuses any hero whose execution id is not in docs/measured.md,
+    any hero URL that does not answer 200, or a tile count that does not match the board strip's 13 events.</div>
+</div>
+
+</body>
+</html>
