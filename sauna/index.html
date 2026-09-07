@@ -158,9 +158,10 @@ footer .mono{font-size:12.5px; line-height:1.9}
       measured, sourced, or marked as an open question.</b></p>
     </div>
     <figure>
-      <img src="assets/sketch.jpg" alt="Hand sketch of the basement showing the sauna on the left, the hall or predbannik on the right, benches along two walls, the heater in a niche, and the basement entrance at the bottom.">
-      <figcaption>The owner's sketch, 7 Sep 2026 — the drawing this whole page is squared against.
-      SAUNA / БАНЯ at left, HALL / ПРЕДБАННИК at right, benches on two walls, heater in a niche.</figcaption>
+      <img src="assets/sketch-r2.jpg" alt="Revised hand sketch showing the sauna at left with benches on three walls, a heater against the partition, a cold air intake vent low beside it, a hot air exhaust vent on the opposite wall with an airflow arc between them, the fully finished hall at right with its own bench, storage shelves in the unfinished basement, and a double door to the basement.">
+      <figcaption><b style="color:var(--cedar)">Revision 2</b> — the owner's revised sketch, 7 Sep 2026, and the
+      definitive layout. Benches now wrap three walls, ventilation is drawn, and the sauna entrance has moved
+      away from the cold basement door.</figcaption>
     </figure>
   </div>
 
@@ -187,14 +188,19 @@ footer .mono{font-size:12.5px; line-height:1.9}
 
   <div class="cards">
     <div class="card"><h3>Two rooms</h3><p>You enter the basement into the <b>hall — предбанник</b>.
-      The <b>sauna — баня</b> is to your left. <b>6 ft and 7 ft</b> are the widths across.</p></div>
-    <div class="card"><h3>Cedar, and an L of benches</h3><p>Benches run the L along the sauna's
-      left wall and its top wall. Glass door in, <b>no window</b>.</p></div>
+      The <b>sauna — баня</b> is to your left. The sauna entrance sits <b>as far from the cold
+      basement door as it can</b> — the owner's call, and the reason the layout was flipped.</p></div>
+    <div class="card"><h3>Cedar, benches on three walls</h3><p>Revision 2 wraps the benches around
+      <b>three walls</b> of the hot room, and gives the hall <b>its own bench</b>. Glass door in,
+      <b>no window</b>.</p></div>
     <div class="card"><h3 class="ember">The heater goes in the floor</h3><p>Recessed about
       <b>10 inches</b> below finished floor. The owner's call, and it turns out to be the right
       one — for a reason he did not state.</p></div>
     <div class="card"><h3>No concrete</h3><p><i>«Не надо бетон»</i> — compacted sand, a membrane,
       concrete pads, joists, subfloor. Finishing <b>flush with the existing threshold</b>.</p></div>
+    <div class="card"><h3 class="steam">Passive ventilation, no fans</h3><p>Cold air in low beside
+      the heater, drawn <b>from the hall</b>. Hot air out high on the far wall — <i>«где-то над
+      головой»</i>. Their decision, explicitly not mechanical.</p></div>
     <div class="card"><h3 class="steam">Pros do the dangerous parts</h3><p>Licensed trades take
       the electrical, the gas move and the HVAC reroute. <b>We frame, clad, and build the benches.</b></p></div>
     <div class="card"><h3>The acceptance test</h3><p>Stated through the owner, from the household:
@@ -342,88 +348,261 @@ footer .mono{font-size:12.5px; line-height:1.9}
 <!-- ==================== DESIGN ==================== -->
 <section id="design"><div class="wrap">
   <div class="sechead"><span class="n">04</span><h2>The plan</h2></div>
-  <p class="lede">Redrawn from the owner's sketch. <b>Widths are his; depths are not yet
-  established</b> — the recording gives 6 ft and 7 ft across, and nothing along.</p>
+  <p class="lede">Redrawn from the owner's revision-2 sketch. <b>Widths are spoken; depths never
+  have been.</b> Benches wrap three walls, the entrance has moved away from the cold basement door,
+  and the ventilation path is now drawn end to end.</p>
 
   <div class="svgbox scroller">
-    <svg viewBox="0 0 1060 700" role="img" aria-labelledby="plnT">
-      <title id="plnT">Plan of the basement showing the sauna at left, the hall at right, benches, heater niche and entrance</title>
-      <defs><pattern id="hatch2" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0" x2="0" y2="9" stroke="var(--rule)" stroke-width="1.6"/></pattern></defs>
+<svg viewBox="0 0 1400 1000" role="img" aria-labelledby="ttl desc" font-family="'IBM Plex Mono', ui-monospace, monospace">
+<title id="ttl">Tahoe sauna — plan, revision 2</title>
+<desc id="desc">Plan of the basement sauna and hall. The sauna occupies the left bay against the existing house wall, with benches wrapping three walls, a heater against the partition, a cold air intake beside the heater and a hot air exhaust on the opposite wall. The fully finished hall lies to the right with its own bench, the basement entrance at the bottom and a double door to the unfinished basement at the top.</desc>
 
-      <!-- outer -->
-      <rect x="70" y="150" width="880" height="470" fill="none" stroke="var(--sand)" stroke-width="1.4" stroke-dasharray="8 6"/>
-      <text x="82" y="140" font-family="'Saira Condensed',sans-serif" font-size="20" fill="var(--ink3)" letter-spacing="2">BASEMENT</text>
+<defs>
+  <pattern id="wallhatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="7" stroke="var(--ink3,#7A7365)" stroke-width="1.5"/>
+  </pattern>
+  <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+    <path d="M0,1 L8,4.5 L0,8 z" fill="var(--steam,#255F86)"/>
+  </marker>
+  <marker id="arrowE" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+    <path d="M0,1 L8,4.5 L0,8 z" fill="var(--ember,#A83A12)"/>
+  </marker>
+  <marker id="tick" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
+    <line x1="3" y1="9" x2="9" y2="3" stroke="var(--ink2,#4C473E)" stroke-width="1.5"/>
+  </marker>
+</defs>
 
-      <!-- house wall left -->
-      <rect x="112" y="185" width="16" height="400" fill="var(--surface2)"/>
-      <rect x="112" y="185" width="16" height="400" fill="url(#hatch2)"/>
-      <text x="104" y="390" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--ink3)" transform="rotate(-90 104 390)">EXISTING HOUSE WALL</text>
+<rect width="1400" height="1000" fill="var(--surface,#FFFDF9)"/>
 
-      <!-- top wall -->
-      <rect x="112" y="185" width="700" height="14" fill="var(--surface2)"/>
-      <rect x="112" y="185" width="700" height="14" fill="url(#hatch2)"/>
+<!-- ============ context labels ============ -->
+<g fill="var(--ink3,#7A7365)" font-size="17" letter-spacing="2.5">
+  <text x="150" y="70">UNFINISHED BASEMENT</text>
+  <text x="700" y="70">UNFINISHED</text>
+</g>
 
-      <!-- posts -->
-      <g stroke="var(--ink3)" stroke-width="2" fill="none">
-        <rect x="150" y="158" width="26" height="26"/><line x1="150" y1="158" x2="176" y2="184"/><line x1="176" y1="158" x2="150" y2="184"/>
-        <rect x="474" y="158" width="26" height="26"/><line x1="474" y1="158" x2="500" y2="184"/><line x1="500" y1="158" x2="474" y2="184"/>
-        <rect x="786" y="158" width="26" height="26"/><line x1="786" y1="158" x2="812" y2="184"/><line x1="812" y1="158" x2="786" y2="184"/>
-      </g>
-      <text x="500" y="150" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="var(--ink3)">POSTS</text>
+<!-- ============ storage shelves (dashed, outside the sauna) ============ -->
+<g stroke="var(--ink3,#7A7365)" stroke-width="1.6" stroke-dasharray="9 6" fill="none">
+  <rect x="286" y="128" width="380" height="56"/>
+  <rect x="96" y="300" width="72" height="190"/>
+</g>
+<g fill="var(--ink3,#7A7365)" font-size="14" letter-spacing="1.6">
+  <text x="476" y="163" text-anchor="middle">STORAGE SHELVES</text>
+  <text x="132" y="390" text-anchor="middle" transform="rotate(-90 132 390)">STORAGE SHELVES</text>
+</g>
 
-      <!-- sauna -->
-      <rect x="128" y="199" width="360" height="386" fill="var(--timber)" stroke="var(--cedar)" stroke-width="2.5"/>
-      <!-- benches L -->
-      <rect x="132" y="203" width="66" height="378" fill="var(--cedar)" opacity=".16" stroke="var(--cedar)" stroke-width="1.4"/>
-      <rect x="198" y="203" width="286" height="62" fill="var(--cedar)" opacity=".16" stroke="var(--cedar)" stroke-width="1.4"/>
-      <text x="165" y="420" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="19" fill="var(--cedar)" letter-spacing="3" transform="rotate(-90 165 420)">BENCHES</text>
-      <text x="341" y="240" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="19" fill="var(--cedar)" letter-spacing="3">BENCHES</text>
+<!-- ============ WALLS ============ -->
+<!-- existing house wall, left -->
+<g>
+  <rect x="172" y="200" width="20" height="600" fill="var(--surface2,#EDE7DC)" stroke="var(--ink,#191713)" stroke-width="2.4"/>
+  <rect x="172" y="200" width="20" height="600" fill="url(#wallhatch)"/>
+</g>
+<!-- top wall -->
+<g>
+  <rect x="172" y="200" width="960" height="18" fill="var(--surface2,#EDE7DC)" stroke="var(--ink,#191713)" stroke-width="2.4"/>
+  <rect x="172" y="200" width="960" height="18" fill="url(#wallhatch)"/>
+</g>
+<!-- bottom wall -->
+<g>
+  <rect x="172" y="782" width="960" height="18" fill="var(--surface2,#EDE7DC)" stroke="var(--ink,#191713)" stroke-width="2.4"/>
+  <rect x="172" y="782" width="960" height="18" fill="url(#wallhatch)"/>
+</g>
+<!-- right wall of hall -->
+<g>
+  <rect x="1114" y="200" width="18" height="600" fill="var(--surface2,#EDE7DC)" stroke="var(--ink,#191713)" stroke-width="2.4"/>
+  <rect x="1114" y="200" width="18" height="600" fill="url(#wallhatch)"/>
+</g>
+<!-- sauna / hall partition, NEW framing -->
+<g>
+  <rect x="654" y="218" width="14" height="88"  fill="var(--cedar,#9C560F)" opacity=".22"/>
+  <rect x="654" y="218" width="14" height="88"  fill="none" stroke="var(--cedar,#9C560F)" stroke-width="2.2"/>
+  <rect x="654" y="430" width="14" height="352" fill="var(--cedar,#9C560F)" opacity=".22"/>
+  <rect x="654" y="430" width="14" height="352" fill="none" stroke="var(--cedar,#9C560F)" stroke-width="2.2"/>
+</g>
 
-      <text x="320" y="455" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="46" fill="var(--ink)" letter-spacing="3">SAUNA</text>
-      <text x="320" y="492" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="30" fill="var(--ink3)" letter-spacing="4">БАНЯ</text>
+<!-- ============ posts ============ -->
+<g stroke="var(--ink2,#4C473E)" stroke-width="2.2" fill="var(--surface,#FFFDF9)">
+  <rect x="646" y="174" width="30" height="30"/><line x1="646" y1="174" x2="676" y2="204"/><line x1="676" y1="174" x2="646" y2="204"/>
+  <rect x="1102" y="174" width="30" height="30"/><line x1="1102" y1="174" x2="1132" y2="204"/><line x1="1132" y1="174" x2="1102" y2="204"/>
+</g>
+<text x="661" y="166" text-anchor="middle" font-size="12.5" fill="var(--ink3,#7A7365)" letter-spacing="1.2">POST</text>
 
-      <!-- heater niche -->
-      <rect x="440" y="300" width="48" height="66" fill="var(--ember)" opacity=".2" stroke="var(--ember)" stroke-width="2"/>
-      <text x="464" y="340" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="17" font-weight="600" fill="var(--ember)">H</text>
-      <text x="464" y="288" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="var(--ember)">HEATER NICHE</text>
+<!-- ============ SAUNA ============ -->
+<rect x="192" y="218" width="462" height="564" fill="var(--cedar,#9C560F)" opacity=".05"/>
 
-      <!-- sauna door -->
-      <line x1="488" y1="430" x2="488" y2="520" stroke="var(--steam)" stroke-width="4"/>
-      <path d="M488,520 A90,90 0 0,0 578,430" fill="none" stroke="var(--steam)" stroke-width="1.4" stroke-dasharray="5 4"/>
-      <text x="512" y="548" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--steam)">GLASS DOOR</text>
+<!-- benches, three walls -->
+<g fill="var(--cedar,#9C560F)" fill-opacity=".2" stroke="var(--cedar,#9C560F)" stroke-width="1.8">
+  <rect x="192" y="218" width="462" height="62"/>
+  <rect x="192" y="218" width="62"  height="564"/>
+  <rect x="192" y="720" width="462" height="62"/>
+</g>
+<g fill="var(--cedar,#9C560F)" font-size="16" letter-spacing="3.5">
+  <text x="454" y="257" text-anchor="middle">BENCH</text>
+  <text x="223" y="500" text-anchor="middle" transform="rotate(-90 223 500)">BENCH</text>
+  <text x="454" y="759" text-anchor="middle">BENCH</text>
+</g>
 
-      <!-- hall -->
-      <rect x="488" y="199" width="324" height="386" fill="var(--surface)" stroke="var(--ink3)" stroke-width="1.8"/>
-      <text x="650" y="300" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="34" fill="var(--ink)" letter-spacing="3">HALL</text>
-      <text x="650" y="334" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="23" fill="var(--ink3)" letter-spacing="3">ПРЕДБАННИК</text>
+<!-- heater -->
+<g>
+  <rect x="590" y="540" width="58" height="96" fill="var(--ember,#A83A12)" fill-opacity=".18" stroke="var(--ember,#A83A12)" stroke-width="2.4"/>
+  <g stroke="var(--ember,#A83A12)" stroke-width="2" fill="none">
+    <path d="M602,562 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M602,588 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M602,614 q8,-10 16,0 q8,10 16,0"/>
+  </g>
+</g>
+<text x="576" y="596" text-anchor="end" font-size="16" fill="var(--ember,#A83A12)" letter-spacing="2">HEATER</text>
 
-      <!-- entrance -->
-      <line x1="596" y1="585" x2="700" y2="585" stroke="var(--cedar)" stroke-width="4"/>
-      <path d="M596,585 A104,104 0 0,1 700,481" fill="none" stroke="var(--cedar)" stroke-width="1.4" stroke-dasharray="5 4"/>
-      <text x="648" y="614" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="17" fill="var(--cedar)" letter-spacing="2">BASEMENT ENTRANCE</text>
+<!-- sauna room label -->
+<text x="420" y="470" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="58" fill="var(--ink,#191713)" letter-spacing="4">SAUNA</text>
+<text x="420" y="512" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="34" fill="var(--ink3,#7A7365)" letter-spacing="6">БАНЯ</text>
 
-      <!-- dims -->
-      <g stroke="var(--steam)" stroke-width="1.4" fill="none">
-        <line x1="128" y1="656" x2="488" y2="656"/>
-        <path d="M132,652 L126,656 L132,660"/><path d="M484,652 L490,656 L484,660"/>
-        <line x1="488" y1="656" x2="812" y2="656"/>
-        <path d="M492,652 L486,656 L492,660"/><path d="M808,652 L814,656 L808,660"/>
-        <line x1="128" y1="592" x2="128" y2="662" stroke-dasharray="3 3" opacity=".55"/>
-        <line x1="488" y1="592" x2="488" y2="662" stroke-dasharray="3 3" opacity=".55"/>
-        <line x1="812" y1="592" x2="812" y2="662" stroke-dasharray="3 3" opacity=".55"/>
-      </g>
-      <text x="308" y="648" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="var(--steam)">7 ft</text>
-      <text x="650" y="648" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="var(--steam)">6 ft</text>
+<!-- ============ VENTILATION ============ -->
+<!-- cold air intake, in the partition beside the heater -->
+<g>
+  <rect x="650" y="646" width="22" height="52" fill="var(--steam,#255F86)" fill-opacity=".3" stroke="var(--steam,#255F86)" stroke-width="2.2"/>
+  <line x1="700" y1="672" x2="676" y2="672" stroke="var(--steam,#255F86)" stroke-width="2.4" marker-end="url(#arrow)"/>
+</g>
+<g fill="var(--steam,#255F86)" font-size="14" letter-spacing="1.4">
+  <text x="712" y="662">COLD AIR</text><text x="712" y="680">INTAKE VENT</text>
+  <text x="712" y="698" font-size="12" fill="var(--ink3,#7A7365)">low, beside the heater</text>
+</g>
 
-      <g stroke="var(--ember)" stroke-width="1.6" fill="none">
-        <line x1="880" y1="199" x2="880" y2="585"/>
-        <path d="M876,203 L880,197 L884,203"/><path d="M876,581 L880,587 L884,581"/>
-      </g>
-      <text x="896" y="386" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="var(--ember)">DEPTH ?</text>
-      <text x="896" y="406" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--ink3)">never stated</text>
-      <text x="70" y="686" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--ink3)">WIDTHS FROM THE RECORDING · DEPTHS AND THE BEAM POSITION STILL OPEN · NOT TO SCALE</text>
-    </svg>
+<!-- hot air exhaust, opposite wall -->
+<g>
+  <rect x="170" y="392" width="24" height="52" fill="var(--ember,#A83A12)" fill-opacity=".3" stroke="var(--ember,#A83A12)" stroke-width="2.2"/>
+  <line x1="164" y1="418" x2="122" y2="418" stroke="var(--ember,#A83A12)" stroke-width="2.4" marker-end="url(#arrowE)"/>
+</g>
+<g fill="var(--ember,#A83A12)" font-size="14" letter-spacing="1.4" text-anchor="end">
+  <text x="112" y="404">HOT AIR</text><text x="112" y="422">EXHAUST VENT</text>
+</g>
+
+<!-- airflow arc -->
+<path d="M636,650 C600,430 420,330 250,404" fill="none" stroke="var(--steam,#255F86)"
+      stroke-width="2.4" stroke-dasharray="12 7" marker-end="url(#arrow)"/>
+<text x="430" y="368" text-anchor="middle" font-size="15" fill="var(--steam,#255F86)" letter-spacing="2.5">AIR FLOW</text>
+
+<!-- ============ sauna entrance ============ -->
+<g>
+  <line x1="661" y1="306" x2="661" y2="430" stroke="var(--steam,#255F86)" stroke-width="5"/>
+  <path d="M661,430 A124,124 0 0,0 785,306" fill="none" stroke="var(--steam,#255F86)" stroke-width="1.6" stroke-dasharray="7 5"/>
+</g>
+<g fill="var(--steam,#255F86)" font-size="15" letter-spacing="2">
+  <text x="690" y="386" transform="rotate(-90 690 386)" text-anchor="middle">SAUNA ENTRANCE</text>
+</g>
+
+<!-- ============ HALL ============ -->
+<text x="890" y="292" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="38" fill="var(--ink,#191713)" letter-spacing="3">FULLY FINISHED</text>
+<text x="890" y="336" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="38" fill="var(--ink,#191713)" letter-spacing="3">HALL</text>
+<text x="890" y="372" text-anchor="middle" font-size="19" fill="var(--ink3,#7A7365)" letter-spacing="5">ПРЕДБАННИК</text>
+
+<!-- hall bench -->
+<g>
+  <rect x="1052" y="392" width="62" height="330" fill="var(--cedar,#9C560F)" fill-opacity=".2" stroke="var(--cedar,#9C560F)" stroke-width="1.8"/>
+  <text x="1083" y="557" text-anchor="middle" font-size="16" fill="var(--cedar,#9C560F)" letter-spacing="3.5" transform="rotate(-90 1083 557)">BENCH</text>
+</g>
+
+<!-- double door to unfinished basement -->
+<g stroke="var(--ink2,#4C473E)">
+  <line x1="880" y1="207" x2="990" y2="207" stroke-width="5"/>
+  <line x1="990" y1="207" x2="1100" y2="207" stroke-width="5"/>
+  <path d="M880,207 A110,110 0 0,1 990,97"  fill="none" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <path d="M1100,207 A110,110 0 0,0 990,97" fill="none" stroke-width="1.6" stroke-dasharray="7 5"/>
+</g>
+<text x="990" y="82" text-anchor="middle" font-size="15" fill="var(--ink2,#4C473E)" letter-spacing="2">DOOR TO BASEMENT · DOUBLE</text>
+
+<!-- basement entrance -->
+<g stroke="var(--cedar,#9C560F)">
+  <line x1="800" y1="791" x2="908" y2="791" stroke-width="5"/>
+  <path d="M800,791 A108,108 0 0,1 908,683" fill="none" stroke-width="1.6" stroke-dasharray="7 5"/>
+</g>
+<text x="854" y="856" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="21" fill="var(--cedar,#9C560F)" letter-spacing="2.5">BASEMENT ENTRANCE</text>
+
+<!-- ============ DIMENSIONS ============ -->
+<g stroke="var(--ink2,#4C473E)" stroke-width="1.3" fill="none">
+  <!-- 36 in door -->
+  <line x1="800" y1="826" x2="908" y2="826" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="800" y1="800" x2="800" y2="832" stroke-dasharray="3 3" opacity=".55"/>
+  <line x1="908" y1="800" x2="908" y2="832" stroke-dasharray="3 3" opacity=".55"/>
+  <!-- ~18 in -->
+  <line x1="908" y1="826" x2="962" y2="826" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="962" y1="800" x2="962" y2="832" stroke-dasharray="3 3" opacity=".55"/>
+</g>
+<text x="854" y="818" text-anchor="middle" font-size="15" font-weight="600" fill="var(--ink2,#4C473E)">36"</text>
+<text x="935" y="818" text-anchor="middle" font-size="14" font-weight="600" fill="var(--ink2,#4C473E)">~18"</text>
+
+<!-- widths -->
+<g stroke="var(--steam,#255F86)" stroke-width="1.4" fill="none">
+  <line x1="192" y1="906" x2="654" y2="906" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="668" y1="906" x2="1114" y2="906" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="192" y1="884" x2="192" y2="912" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="654" y1="884" x2="654" y2="912" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="1114" y1="884" x2="1114" y2="912" stroke-dasharray="3 3" opacity=".5"/>
+</g>
+<text x="423" y="898" text-anchor="middle" font-size="17" font-weight="600" fill="var(--steam,#255F86)">7 ft</text>
+<text x="891" y="898" text-anchor="middle" font-size="17" font-weight="600" fill="var(--steam,#255F86)">6 ft</text>
+<text x="423" y="932" text-anchor="middle" font-size="12.5" fill="var(--ink3,#7A7365)" letter-spacing="1.2">SPOKEN WIDTH</text>
+<text x="891" y="932" text-anchor="middle" font-size="12.5" fill="var(--ink3,#7A7365)" letter-spacing="1.2">SPOKEN WIDTH</text>
+
+<!-- depth, unknown -->
+<g stroke="var(--ember,#A83A12)" stroke-width="1.5" fill="none">
+  <line x1="1206" y1="218" x2="1206" y2="782" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="1132" y1="218" x2="1212" y2="218" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="1132" y1="782" x2="1212" y2="782" stroke-dasharray="3 3" opacity=".5"/>
+</g>
+<text x="1228" y="494" font-size="17" font-weight="600" fill="var(--ember,#A83A12)">DEPTH</text>
+<text x="1228" y="516" font-size="15" font-weight="600" fill="var(--ember,#A83A12)">NOT SET</text>
+<text x="1228" y="538" font-size="12" fill="var(--ink3,#7A7365)">never spoken</text>
+
+<!-- ============ legend / title block ============ -->
+<g>
+  <line x1="96" y1="952" x2="1304" y2="952" stroke="var(--ink,#191713)" stroke-width="2"/>
+  <text x="96" y="978" font-size="14" fill="var(--ink,#191713)" letter-spacing="2.2">TAHOE SAUNA · PLAN · REVISION 2 · 7 SEP 2026</text>
+  <text x="1304" y="978" font-size="12.5" fill="var(--ink3,#7A7365)" letter-spacing="1.4" text-anchor="end">REDRAWN FROM THE OWNER'S SKETCH · WIDTHS SPOKEN · DEPTHS AND BEAM UNRESOLVED · NOT TO SCALE</text>
+</g>
+<g font-size="13" letter-spacing="1.4">
+  <rect x="96" y="880" width="26" height="13" fill="var(--cedar,#9C560F)" fill-opacity=".2" stroke="var(--cedar,#9C560F)" stroke-width="1.5"/>
+  <text x="132" y="891" fill="var(--ink2,#4C473E)">BENCH</text>
+  <rect x="96" y="904" width="26" height="13" fill="none" stroke="var(--cedar,#9C560F)" stroke-width="2"/>
+  <text x="132" y="915" fill="var(--ink2,#4C473E)">NEW FRAMING</text>
+  <rect x="96" y="928" width="26" height="13" fill="url(#wallhatch)" stroke="var(--ink,#191713)" stroke-width="1.5"/>
+  <text x="132" y="939" fill="var(--ink2,#4C473E)">EXISTING</text>
+</g>
+</svg>
+
+  </div>
+
+  <div class="call ember">
+    <h3 style="color:var(--ember)">The one thing on this drawing I would not build as drawn</h3>
+    <p><b>The hot exhaust is shown discharging into the unfinished basement.</b> A hot room vents
+    air at 90–110 °C carrying the water you just threw on the stones. Put that into an unheated
+    basement and it condenses — <b>on the cold framing directly under the floor of the house</b>.
+    Not once: every session, for years. It is the classic way a beautifully built sauna quietly
+    rots the building around it.</p>
+    <p>The design research reached the same conclusion from the code independently: <b>IRC M1501.1
+    and CMC 504.1.1 require exhaust to terminate outdoors.</b> The drawing's logic is right — low
+    intake beside the heater, high exhaust on the far wall, air sweeping across. <b>Only the
+    destination is wrong</b>, and the wall it is drawn on is an exterior foundation wall, which is
+    the easy case. Duct it to daylight.</p>
+  </div>
+
+  <div class="cards" style="margin-top:36px">
+    <div class="card"><h3 class="ember">Three things you two have not agreed on</h3>
+      <p><b>Where the door goes.</b> One of you wants it with the heater centred; the other says it
+      sits too close to the cold basement entrance and wants the layout flipped. <b>The revised
+      sketch implements the flip</b> — but the memo never shows the other agreeing.</p></div>
+    <div class="card"><h3 class="ember">Heater centred, or on the partition?</h3>
+      <p><i>«печка, я думаю, лучше всего будет по центру»</i>. The sketch puts it against the
+      partition instead. Centring it moves the bench geometry, the clearances and the intake —
+      <b>not a cosmetic choice</b>.</p></div>
+    <div class="card"><h3 class="ember">A U of benches in a small room</h3>
+      <p>Revision 2 wraps three walls. The design research is explicit against it: <b>avoid U-shaped
+      arrangements in small rooms</b> — an L is right at this size. A U also eats the floor the löyly
+      needs and puts a bench across the exhaust wall.</p></div>
+    <div class="card"><h3 class="steam">Passive, but rough in for assist</h3>
+      <p>They chose passive, deliberately. The research says an electric heater is a weak convective
+      pump and a basement has no stack — measured, gravity flow <b>increases</b> head-to-toe spread by
+      8–12 °C while downdraft cuts it. Once a duct runs to daylight, adding an inline fan later is a
+      $60 change. <b>Run it passive; leave the option.</b></p></div>
   </div>
 
   <div class="stats">
@@ -672,6 +851,7 @@ footer .mono{font-size:12.5px; line-height:1.9}
   still move the design.</p>
   <ul class="clean">
     <li><span class="tag t-open">Blocking</span> &nbsp;<b>How far below the joists does the beam hang?</b> The scan resolved the joist soffit strongly but never separated the beam from it, and the new framing ties flush to the beam. If it hangs below, <b>the beam is the ceiling</b> — not 95.7 inches — and the bench stack moves with it.</li>
+    <li><span class="tag t-open">Blocking</span> &nbsp;<b>Which twelve feet?</b> The update memo says the width is <b>12 ft</b> — <i>«Это 12.» «12 футов этот width, да?»</i> — correcting a guess of 14. But revision 1 gave 6 ft of hall plus 7 ft of hot room, which is thirteen. Either 12 is the total and something gives up a foot, or it is the hot room alone and the room is far bigger than the recording said. <b>The scan's 10.5–11.1 ft between the long walls matches neither</b>, which is a third reason to distrust the scan's absolute scale.</li>
     <li><span class="tag t-open">Blocking</span> &nbsp;<b>The depths of the two rooms.</b> The recording gives 6 ft and 7 ft across and nothing along. Bounded by the measured envelope, but not set by it.</li>
     <li><span class="tag t-inf">Confirm</span> &nbsp;<b>The 9-inch threshold.</b> The scan says a strong horizontal plane sits 9.0 inches above the floor. It does not know what it is looking at. One tape measure settles the entire floor design.</li>
     <li><span class="tag t-inf">Confirm</span> &nbsp;<b>Is the shared house wall insulated?</b> The scan photos suggest it already is, which would be good news — leaving it bare roughly doubles the required kilowatts.</li>
@@ -695,9 +875,13 @@ footer .mono{font-size:12.5px; line-height:1.9}
       <b>676,294</b> vertices across the full basement and <b>98,131</b> at the entrance;
       962 files. Processed on Cloud Run — height census, RANSAC wall fitting, framing-pitch
       periodicity.</p></div>
-    <div class="card"><h3>The sketch</h3><p>Drawn from memory by the owner, 7 Sep 2026.
-      It is the drawing this page is squared against, and it <b>corrected a plan that had been
-      wrongly inferred</b> from the audio.</p></div>
+    <div class="card"><h3>Two sketches</h3><p>Revision 1 corrected a plan that had been wrongly
+      inferred from audio. <b>Revision 2, 7 Sep, is definitive</b> — it adds the ventilation path,
+      benches on three walls, storage and the flipped entrance.</p></div>
+    <div class="card"><h3 class="steam">The update memo</h3><p><b>4 min 42 s</b>, recorded 17 minutes
+      before revision 2 was drawn, and it explains it. Three voices, Russian with English technical
+      terms. Note: the phone auto-names every recording, so <b>there is no file called “sauna
+      update”</b> — it is cited by its file, never its title.</p></div>
     <div class="card"><h3 class="ember">Nine research tracks</h3><p>Design rules, heater and
       electrical, materials, build process, permits, the recessed-heater verdict, doors and
       glass, alternative species, layouts and cut list. <b>Roughly 450 KB of sourced research</b>,
