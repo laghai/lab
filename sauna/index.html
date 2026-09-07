@@ -11,11 +11,13 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <style>
 :root{
-  --ground:#14120F; --surface:#1D1A16; --surface2:#262019; --rule:#352E25; --rule2:#2A241D;
-  --ink:#F3EDE3; --ink2:#B9AF9F; --ink3:#8B8173;
-  --cedar:#D08A45; --ember:#C4552A; --steam:#84AECB; --good:#7FA87F;
+  --ground:#F5F2EC; --surface:#FFFDF9; --surface2:#EDE7DC; --rule:#D3CBBD; --rule2:#E4DED2;
+  --ink:#191713; --ink2:#4C473E; --ink3:#7A7365;
+  --cedar:#9C560F; --ember:#A83A12; --steam:#255F86; --good:#3A6640;
+  --sand:#DED2BB; --timber:#EFE6D6; --deep:#E7DFD1;
   --maxw:1520px;
 }
+html{color-scheme:light}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -29,7 +31,7 @@ h1,h2,h3,.dsp{font-family:"Saira Condensed",Impact,sans-serif; text-transform:up
 
 /* ---------- nav ---------- */
 nav{
-  position:sticky; top:0; z-index:50; background:rgba(20,18,15,.94);
+  position:sticky; top:0; z-index:50; background:rgba(245,242,236,.94);
   backdrop-filter:blur(8px); border-bottom:1px solid var(--rule);
 }
 nav .wrap{display:flex; gap:8px 26px; align-items:center; flex-wrap:wrap; padding-top:14px; padding-bottom:14px}
@@ -233,43 +235,43 @@ footer .mono{font-size:12.5px; line-height:1.9}
       <svg viewBox="0 0 640 520" role="img" aria-labelledby="stkT">
         <title id="stkT">Section showing the vertical stack from the sand floor to the subfloor above</title>
         <defs><pattern id="sand" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-          <line x1="0" y1="0" x2="0" y2="8" stroke="#4A4132" stroke-width="1.6"/></pattern></defs>
-        <rect x="150" y="430" width="440" height="52" fill="#2A2419"/>
+          <line x1="0" y1="0" x2="0" y2="8" stroke="var(--sand)" stroke-width="1.6"/></pattern></defs>
+        <rect x="150" y="430" width="440" height="52" fill="var(--sand)"/>
         <rect x="150" y="430" width="440" height="52" fill="url(#sand)"/>
-        <line x1="150" y1="430" x2="590" y2="430" stroke="#F3EDE3" stroke-width="2.4"/>
-        <text x="370" y="462" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#B9AF9F">COMPACTED SAND · DATUM 0</text>
+        <line x1="150" y1="430" x2="590" y2="430" stroke="var(--ink)" stroke-width="2.4"/>
+        <text x="370" y="462" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="13" fill="var(--ink2)">COMPACTED SAND · DATUM 0</text>
 
-        <rect x="150" y="392" width="120" height="38" fill="#262019" stroke="#D08A45" stroke-width="2"/>
-        <text x="210" y="416" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#D08A45">THRESHOLD</text>
+        <rect x="150" y="392" width="120" height="38" fill="var(--surface2)" stroke="var(--cedar)" stroke-width="2"/>
+        <text x="210" y="416" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--cedar)">THRESHOLD</text>
 
-        <rect x="150" y="100" width="440" height="44" fill="#262019" stroke="#F3EDE3" stroke-width="1.6"/>
-        <line x1="150" y1="100" x2="590" y2="100" stroke="#F3EDE3" stroke-width="2.6"/>
-        <g stroke="#4A4132" stroke-width="1.4">
+        <rect x="150" y="100" width="440" height="44" fill="var(--surface2)" stroke="var(--ink)" stroke-width="1.6"/>
+        <line x1="150" y1="100" x2="590" y2="100" stroke="var(--ink)" stroke-width="2.6"/>
+        <g stroke="var(--sand)" stroke-width="1.4">
           <line x1="200" y1="100" x2="200" y2="144"/><line x1="250" y1="100" x2="250" y2="144"/>
           <line x1="300" y1="100" x2="300" y2="144"/><line x1="350" y1="100" x2="350" y2="144"/>
           <line x1="400" y1="100" x2="400" y2="144"/><line x1="450" y1="100" x2="450" y2="144"/>
           <line x1="500" y1="100" x2="500" y2="144"/><line x1="550" y1="100" x2="550" y2="144"/>
         </g>
-        <text x="370" y="88" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="#B9AF9F">SUBFLOOR — THE HOUSE ABOVE</text>
-        <text x="370" y="128" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#8B8173">JOISTS · reads as 2×10</text>
+        <text x="370" y="88" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--ink2)">SUBFLOOR — THE HOUSE ABOVE</text>
+        <text x="370" y="128" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--ink3)">JOISTS · reads as 2×10</text>
 
-        <g stroke="#84AECB" stroke-width="1.5" fill="none">
+        <g stroke="var(--steam)" stroke-width="1.5" fill="none">
           <line x1="100" y1="430" x2="100" y2="144"/>
           <path d="M96,426 L100,432 L104,426"/><path d="M96,148 L100,142 L104,148"/>
         </g>
-        <text x="90" y="278" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="15" font-weight="600" fill="#84AECB">95.7 in</text>
-        <text x="90" y="298" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#8B8173">7 ft 11.7 in</text>
+        <text x="90" y="278" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="15" font-weight="600" fill="var(--steam)">95.7 in</text>
+        <text x="90" y="298" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--ink3)">7 ft 11.7 in</text>
 
-        <g stroke="#D08A45" stroke-width="1.5" fill="none">
+        <g stroke="var(--cedar)" stroke-width="1.5" fill="none">
           <line x1="130" y1="430" x2="130" y2="392"/>
           <path d="M126,426 L130,432 L134,426"/><path d="M126,396 L130,390 L134,396"/>
         </g>
-        <text x="122" y="380" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="14" font-weight="600" fill="#D08A45">9.0</text>
+        <text x="122" y="380" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="14" font-weight="600" fill="var(--cedar)">9.0</text>
 
-        <line x1="150" y1="330" x2="590" y2="330" stroke="#7FA87F" stroke-width="1.6" stroke-dasharray="7 5"/>
-        <text x="590" y="322" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#7FA87F">FINISHED CEILING ≈ 85 in</text>
-        <line x1="150" y1="392" x2="590" y2="392" stroke="#7FA87F" stroke-width="1.6" stroke-dasharray="7 5"/>
-        <text x="590" y="410" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="13" fill="#7FA87F">FINISHED FLOOR</text>
+        <line x1="150" y1="330" x2="590" y2="330" stroke="var(--good)" stroke-width="1.6" stroke-dasharray="7 5"/>
+        <text x="590" y="322" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="13" fill="var(--good)">FINISHED CEILING ≈ 85 in</text>
+        <line x1="150" y1="392" x2="590" y2="392" stroke="var(--good)" stroke-width="1.6" stroke-dasharray="7 5"/>
+        <text x="590" y="410" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="13" fill="var(--good)">FINISHED FLOOR</text>
       </svg>
       <figcaption style="margin-top:14px">Vertical only. The 9-inch threshold is the constraint nobody knew about
       until the scan found it — the entire floor assembly has to fit inside it.</figcaption>
@@ -347,80 +349,80 @@ footer .mono{font-size:12.5px; line-height:1.9}
     <svg viewBox="0 0 1060 700" role="img" aria-labelledby="plnT">
       <title id="plnT">Plan of the basement showing the sauna at left, the hall at right, benches, heater niche and entrance</title>
       <defs><pattern id="hatch2" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0" x2="0" y2="9" stroke="#352E25" stroke-width="1.6"/></pattern></defs>
+        <line x1="0" y1="0" x2="0" y2="9" stroke="var(--rule)" stroke-width="1.6"/></pattern></defs>
 
       <!-- outer -->
-      <rect x="70" y="150" width="880" height="470" fill="none" stroke="#4A4132" stroke-width="1.4" stroke-dasharray="8 6"/>
-      <text x="82" y="140" font-family="'Saira Condensed',sans-serif" font-size="20" fill="#8B8173" letter-spacing="2">BASEMENT</text>
+      <rect x="70" y="150" width="880" height="470" fill="none" stroke="var(--sand)" stroke-width="1.4" stroke-dasharray="8 6"/>
+      <text x="82" y="140" font-family="'Saira Condensed',sans-serif" font-size="20" fill="var(--ink3)" letter-spacing="2">BASEMENT</text>
 
       <!-- house wall left -->
-      <rect x="112" y="185" width="16" height="400" fill="#262019"/>
+      <rect x="112" y="185" width="16" height="400" fill="var(--surface2)"/>
       <rect x="112" y="185" width="16" height="400" fill="url(#hatch2)"/>
-      <text x="104" y="390" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="#8B8173" transform="rotate(-90 104 390)">EXISTING HOUSE WALL</text>
+      <text x="104" y="390" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--ink3)" transform="rotate(-90 104 390)">EXISTING HOUSE WALL</text>
 
       <!-- top wall -->
-      <rect x="112" y="185" width="700" height="14" fill="#262019"/>
+      <rect x="112" y="185" width="700" height="14" fill="var(--surface2)"/>
       <rect x="112" y="185" width="700" height="14" fill="url(#hatch2)"/>
 
       <!-- posts -->
-      <g stroke="#8B8173" stroke-width="2" fill="none">
+      <g stroke="var(--ink3)" stroke-width="2" fill="none">
         <rect x="150" y="158" width="26" height="26"/><line x1="150" y1="158" x2="176" y2="184"/><line x1="176" y1="158" x2="150" y2="184"/>
         <rect x="474" y="158" width="26" height="26"/><line x1="474" y1="158" x2="500" y2="184"/><line x1="500" y1="158" x2="474" y2="184"/>
         <rect x="786" y="158" width="26" height="26"/><line x1="786" y1="158" x2="812" y2="184"/><line x1="812" y1="158" x2="786" y2="184"/>
       </g>
-      <text x="500" y="150" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="#8B8173">POSTS</text>
+      <text x="500" y="150" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="var(--ink3)">POSTS</text>
 
       <!-- sauna -->
-      <rect x="128" y="199" width="360" height="386" fill="#241C14" stroke="#D08A45" stroke-width="2.5"/>
+      <rect x="128" y="199" width="360" height="386" fill="var(--timber)" stroke="var(--cedar)" stroke-width="2.5"/>
       <!-- benches L -->
-      <rect x="132" y="203" width="66" height="378" fill="#D08A45" opacity=".2" stroke="#D08A45" stroke-width="1.4"/>
-      <rect x="198" y="203" width="286" height="62" fill="#D08A45" opacity=".2" stroke="#D08A45" stroke-width="1.4"/>
-      <text x="165" y="420" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="19" fill="#D08A45" letter-spacing="3" transform="rotate(-90 165 420)">BENCHES</text>
-      <text x="341" y="240" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="19" fill="#D08A45" letter-spacing="3">BENCHES</text>
+      <rect x="132" y="203" width="66" height="378" fill="var(--cedar)" opacity=".16" stroke="var(--cedar)" stroke-width="1.4"/>
+      <rect x="198" y="203" width="286" height="62" fill="var(--cedar)" opacity=".16" stroke="var(--cedar)" stroke-width="1.4"/>
+      <text x="165" y="420" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="19" fill="var(--cedar)" letter-spacing="3" transform="rotate(-90 165 420)">BENCHES</text>
+      <text x="341" y="240" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="19" fill="var(--cedar)" letter-spacing="3">BENCHES</text>
 
-      <text x="320" y="455" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="46" fill="#F3EDE3" letter-spacing="3">SAUNA</text>
-      <text x="320" y="492" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="30" fill="#8B8173" letter-spacing="4">БАНЯ</text>
+      <text x="320" y="455" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="46" fill="var(--ink)" letter-spacing="3">SAUNA</text>
+      <text x="320" y="492" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="30" fill="var(--ink3)" letter-spacing="4">БАНЯ</text>
 
       <!-- heater niche -->
-      <rect x="440" y="300" width="48" height="66" fill="#C4552A" opacity=".28" stroke="#C4552A" stroke-width="2"/>
-      <text x="464" y="340" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="17" font-weight="600" fill="#C4552A">H</text>
-      <text x="464" y="288" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="#C4552A">HEATER NICHE</text>
+      <rect x="440" y="300" width="48" height="66" fill="var(--ember)" opacity=".2" stroke="var(--ember)" stroke-width="2"/>
+      <text x="464" y="340" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="17" font-weight="600" fill="var(--ember)">H</text>
+      <text x="464" y="288" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="11.5" fill="var(--ember)">HEATER NICHE</text>
 
       <!-- sauna door -->
-      <line x1="488" y1="430" x2="488" y2="520" stroke="#84AECB" stroke-width="4"/>
-      <path d="M488,520 A90,90 0 0,0 578,430" fill="none" stroke="#84AECB" stroke-width="1.4" stroke-dasharray="5 4"/>
-      <text x="512" y="548" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#84AECB">GLASS DOOR</text>
+      <line x1="488" y1="430" x2="488" y2="520" stroke="var(--steam)" stroke-width="4"/>
+      <path d="M488,520 A90,90 0 0,0 578,430" fill="none" stroke="var(--steam)" stroke-width="1.4" stroke-dasharray="5 4"/>
+      <text x="512" y="548" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--steam)">GLASS DOOR</text>
 
       <!-- hall -->
-      <rect x="488" y="199" width="324" height="386" fill="#1D1A16" stroke="#8B8173" stroke-width="1.8"/>
-      <text x="650" y="300" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="34" fill="#F3EDE3" letter-spacing="3">HALL</text>
-      <text x="650" y="334" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="23" fill="#8B8173" letter-spacing="3">ПРЕДБАННИК</text>
+      <rect x="488" y="199" width="324" height="386" fill="var(--surface)" stroke="var(--ink3)" stroke-width="1.8"/>
+      <text x="650" y="300" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="34" fill="var(--ink)" letter-spacing="3">HALL</text>
+      <text x="650" y="334" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="23" fill="var(--ink3)" letter-spacing="3">ПРЕДБАННИК</text>
 
       <!-- entrance -->
-      <line x1="596" y1="585" x2="700" y2="585" stroke="#D08A45" stroke-width="4"/>
-      <path d="M596,585 A104,104 0 0,1 700,481" fill="none" stroke="#D08A45" stroke-width="1.4" stroke-dasharray="5 4"/>
-      <text x="648" y="614" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="17" fill="#D08A45" letter-spacing="2">BASEMENT ENTRANCE</text>
+      <line x1="596" y1="585" x2="700" y2="585" stroke="var(--cedar)" stroke-width="4"/>
+      <path d="M596,585 A104,104 0 0,1 700,481" fill="none" stroke="var(--cedar)" stroke-width="1.4" stroke-dasharray="5 4"/>
+      <text x="648" y="614" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="17" fill="var(--cedar)" letter-spacing="2">BASEMENT ENTRANCE</text>
 
       <!-- dims -->
-      <g stroke="#84AECB" stroke-width="1.4" fill="none">
+      <g stroke="var(--steam)" stroke-width="1.4" fill="none">
         <line x1="128" y1="656" x2="488" y2="656"/>
         <path d="M132,652 L126,656 L132,660"/><path d="M484,652 L490,656 L484,660"/>
         <line x1="488" y1="656" x2="812" y2="656"/>
         <path d="M492,652 L486,656 L492,660"/><path d="M808,652 L814,656 L808,660"/>
-        <line x1="128" y1="592" x2="128" y2="662" stroke-dasharray="3 3" opacity=".5"/>
-        <line x1="488" y1="592" x2="488" y2="662" stroke-dasharray="3 3" opacity=".5"/>
-        <line x1="812" y1="592" x2="812" y2="662" stroke-dasharray="3 3" opacity=".5"/>
+        <line x1="128" y1="592" x2="128" y2="662" stroke-dasharray="3 3" opacity=".55"/>
+        <line x1="488" y1="592" x2="488" y2="662" stroke-dasharray="3 3" opacity=".55"/>
+        <line x1="812" y1="592" x2="812" y2="662" stroke-dasharray="3 3" opacity=".55"/>
       </g>
-      <text x="308" y="648" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="#84AECB">7 ft</text>
-      <text x="650" y="648" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="#84AECB">6 ft</text>
+      <text x="308" y="648" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="var(--steam)">7 ft</text>
+      <text x="650" y="648" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="var(--steam)">6 ft</text>
 
-      <g stroke="#C4552A" stroke-width="1.6" fill="none">
+      <g stroke="var(--ember)" stroke-width="1.6" fill="none">
         <line x1="880" y1="199" x2="880" y2="585"/>
         <path d="M876,203 L880,197 L884,203"/><path d="M876,581 L880,587 L884,581"/>
       </g>
-      <text x="896" y="386" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="#C4552A">DEPTH ?</text>
-      <text x="896" y="406" font-family="'IBM Plex Mono',monospace" font-size="12" fill="#8B8173">never stated</text>
-      <text x="70" y="686" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="#8B8173">WIDTHS FROM THE RECORDING · DEPTHS AND THE BEAM POSITION STILL OPEN · NOT TO SCALE</text>
+      <text x="896" y="386" font-family="'IBM Plex Mono',monospace" font-size="16" font-weight="600" fill="var(--ember)">DEPTH ?</text>
+      <text x="896" y="406" font-family="'IBM Plex Mono',monospace" font-size="12" fill="var(--ink3)">never stated</text>
+      <text x="70" y="686" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--ink3)">WIDTHS FROM THE RECORDING · DEPTHS AND THE BEAM POSITION STILL OPEN · NOT TO SCALE</text>
     </svg>
   </div>
 
@@ -528,38 +530,38 @@ footer .mono{font-size:12.5px; line-height:1.9}
       <svg viewBox="0 0 620 470" role="img" aria-labelledby="flrT">
         <title id="flrT">Floor build-up from compacted sand to finished tile in nine inches</title>
         <g font-family="'IBM Plex Mono',monospace" font-size="13">
-          <rect x="60" y="400" width="420" height="46" fill="#2A2419" stroke="#4A4132"/>
-          <text x="500" y="428" fill="#8B8173">compacted sand</text>
-          <rect x="60" y="386" width="420" height="14" fill="#84AECB" opacity=".5"/>
-          <text x="500" y="398" fill="#84AECB">15-mil liner</text>
-          <rect x="130" y="352" width="90" height="34" fill="#4A4132" stroke="#B9AF9F"/>
-          <rect x="320" y="352" width="90" height="34" fill="#4A4132" stroke="#B9AF9F"/>
-          <text x="500" y="374" fill="#B9AF9F">cap block + bedding</text>
-          <rect x="60" y="342" width="420" height="10" fill="#7FA87F" opacity=".6"/>
-          <text x="500" y="352" fill="#7FA87F">EPDM isolator</text>
-          <rect x="60" y="252" width="420" height="90" fill="#241C14" stroke="#D08A45" stroke-width="1.6"/>
-          <g stroke="#D08A45" stroke-width="1.2" opacity=".6">
+          <rect x="60" y="400" width="420" height="46" fill="var(--sand)" stroke="var(--sand)"/>
+          <text x="500" y="428" fill="var(--ink3)">compacted sand</text>
+          <rect x="60" y="386" width="420" height="14" fill="var(--steam)" opacity=".55"/>
+          <text x="500" y="398" fill="var(--steam)">15-mil liner</text>
+          <rect x="130" y="352" width="90" height="34" fill="var(--sand)" stroke="var(--ink2)"/>
+          <rect x="320" y="352" width="90" height="34" fill="var(--sand)" stroke="var(--ink2)"/>
+          <text x="500" y="374" fill="var(--ink2)">cap block + bedding</text>
+          <rect x="60" y="342" width="420" height="10" fill="var(--good)" opacity=".45"/>
+          <text x="500" y="352" fill="var(--good)">EPDM isolator</text>
+          <rect x="60" y="252" width="420" height="90" fill="var(--timber)" stroke="var(--cedar)" stroke-width="1.6"/>
+          <g stroke="var(--cedar)" stroke-width="1.2" opacity=".6">
             <line x1="120" y1="252" x2="120" y2="342"/><line x1="200" y1="252" x2="200" y2="342"/>
             <line x1="280" y1="252" x2="280" y2="342"/><line x1="360" y1="252" x2="360" y2="342"/>
             <line x1="440" y1="252" x2="440" y2="342"/>
           </g>
-          <text x="500" y="290" fill="#D08A45">2×6 joists @16″</text>
-          <text x="500" y="310" fill="#8B8173">untreated · R-23</text>
-          <rect x="60" y="234" width="420" height="18" fill="#332B20" stroke="#B9AF9F"/>
-          <text x="500" y="248" fill="#B9AF9F">¾″ plywood</text>
-          <rect x="60" y="222" width="420" height="12" fill="#84AECB" opacity=".45"/>
-          <text x="500" y="232" fill="#84AECB">foil VB</text>
-          <rect x="60" y="204" width="420" height="18" fill="#262019" stroke="#B9AF9F"/>
-          <text x="500" y="218" fill="#B9AF9F">backer + membrane</text>
-          <rect x="60" y="184" width="420" height="20" fill="#3A3128" stroke="#F3EDE3"/>
-          <text x="500" y="199" fill="#F3EDE3">porcelain tile</text>
+          <text x="500" y="290" fill="var(--cedar)">2×6 joists @16″</text>
+          <text x="500" y="310" fill="var(--ink3)">untreated · R-23</text>
+          <rect x="60" y="234" width="420" height="18" fill="var(--deep)" stroke="var(--ink2)"/>
+          <text x="500" y="248" fill="var(--ink2)">¾″ plywood</text>
+          <rect x="60" y="222" width="420" height="12" fill="var(--steam)" opacity=".3"/>
+          <text x="500" y="232" fill="var(--steam)">foil VB</text>
+          <rect x="60" y="204" width="420" height="18" fill="var(--surface2)" stroke="var(--ink2)"/>
+          <text x="500" y="218" fill="var(--ink2)">backer + membrane</text>
+          <rect x="60" y="184" width="420" height="20" fill="var(--deep)" stroke="var(--ink)"/>
+          <text x="500" y="199" fill="var(--ink)">porcelain tile</text>
         </g>
-        <g stroke="#D08A45" stroke-width="1.6" fill="none">
+        <g stroke="var(--cedar)" stroke-width="1.6" fill="none">
           <line x1="34" y1="400" x2="34" y2="184"/>
           <path d="M30,396 L34,402 L38,396"/><path d="M30,188 L34,182 L38,188"/>
         </g>
-        <text x="24" y="300" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="17" font-weight="600" fill="#D08A45">9.0″</text>
-        <text x="60" y="160" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="#7FA87F">8-11/16″ OF HARD LAYERS · 5/16″ OF SLACK IN THE BEDDING</text>
+        <text x="24" y="300" text-anchor="end" font-family="'IBM Plex Mono',monospace" font-size="17" font-weight="600" fill="var(--cedar)">9.0″</text>
+        <text x="60" y="160" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--good)">8-11/16″ OF HARD LAYERS · 5/16″ OF SLACK IN THE BEDDING</text>
       </svg>
     </div>
     <div>
@@ -614,9 +616,9 @@ footer .mono{font-size:12.5px; line-height:1.9}
   <div class="svgbox scroller">
     <svg viewBox="0 0 1000 300" role="img" aria-labelledby="budT">
       <title id="budT">Budget range against the twenty thousand dollar target</title>
-      <g font-family="'IBM Plex Mono',monospace" font-size="13" fill="#8B8173">
-        <line x1="70" y1="240" x2="960" y2="240" stroke="#352E25" stroke-width="1.4"/>
-        <g stroke="#352E25" stroke-width="1">
+      <g font-family="'IBM Plex Mono',monospace" font-size="13" fill="var(--ink3)">
+        <line x1="70" y1="240" x2="960" y2="240" stroke="var(--rule)" stroke-width="1.4"/>
+        <g stroke="var(--rule)" stroke-width="1">
           <line x1="70" y1="60" x2="70" y2="246"/><line x1="292" y1="60" x2="292" y2="246"/>
           <line x1="515" y1="60" x2="515" y2="246"/><line x1="738" y1="60" x2="738" y2="246"/>
           <line x1="960" y1="60" x2="960" y2="246"/>
@@ -625,19 +627,19 @@ footer .mono{font-size:12.5px; line-height:1.9}
         <text x="515" y="266">$25k</text><text x="738" y="266">$30k</text><text x="960" y="266">$35k</text>
       </g>
       <!-- target line -->
-      <line x1="292" y1="44" x2="292" y2="246" stroke="#7FA87F" stroke-width="2.5"/>
-      <text x="300" y="40" font-family="'Saira Condensed',sans-serif" font-size="21" fill="#7FA87F" letter-spacing="1.5">$20,000 TARGET</text>
+      <line x1="292" y1="44" x2="292" y2="246" stroke="var(--good)" stroke-width="2.5"/>
+      <text x="300" y="40" font-family="'Saira Condensed',sans-serif" font-size="21" fill="var(--good)" letter-spacing="1.5">$20,000 TARGET</text>
       <!-- full range -->
-      <rect x="310" y="96" width="484" height="46" fill="#C4552A" opacity=".28" stroke="#C4552A" stroke-width="1.6"/>
-      <text x="80" y="126" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#B9AF9F">AS SPECIFIED</text>
-      <text x="552" y="124" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="26" fill="#F3EDE3">$20,400 — $31,470</text>
+      <rect x="310" y="96" width="484" height="46" fill="var(--ember)" opacity=".2" stroke="var(--ember)" stroke-width="1.6"/>
+      <text x="80" y="126" font-family="'IBM Plex Mono',monospace" font-size="14" fill="var(--ink2)">AS SPECIFIED</text>
+      <text x="552" y="124" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="26" fill="var(--ink)">$20,400 — $31,470</text>
       <!-- after levers -->
-      <rect x="248" y="164" width="330" height="46" fill="#7FA87F" opacity=".24" stroke="#7FA87F" stroke-width="1.6"/>
-      <text x="80" y="194" font-family="'IBM Plex Mono',monospace" font-size="14" fill="#B9AF9F">AFTER LEVERS</text>
-      <text x="413" y="192" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="26" fill="#F3EDE3">≈ $22,300</text>
+      <rect x="248" y="164" width="330" height="46" fill="var(--good)" opacity=".18" stroke="var(--good)" stroke-width="1.6"/>
+      <text x="80" y="194" font-family="'IBM Plex Mono',monospace" font-size="14" fill="var(--ink2)">AFTER LEVERS</text>
+      <text x="413" y="192" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-size="26" fill="var(--ink)">≈ $22,300</text>
       <!-- midpoint marker -->
-      <line x1="552" y1="88" x2="552" y2="150" stroke="#F3EDE3" stroke-width="2"/>
-      <text x="552" y="82" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="#F3EDE3">MIDPOINT $25,900</text>
+      <line x1="552" y1="88" x2="552" y2="150" stroke="var(--ink)" stroke-width="2"/>
+      <text x="552" y="82" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="12.5" fill="var(--ink)">MIDPOINT $25,900</text>
     </svg>
   </div>
 
