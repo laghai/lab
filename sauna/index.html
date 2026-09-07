@@ -168,10 +168,10 @@ footer .mono{font-size:12.5px; line-height:1.9}
   <div class="stats">
     <div class="stat"><div class="v">95.7<span style="font-size:.45em"> in</span></div>
       <div class="k">Floor to joist soffit<br>measured, 676k points</div></div>
-    <div class="stat"><div class="v steam">9.0<span style="font-size:.45em"> in</span></div>
-      <div class="k">The whole floor budget<br>set by the existing threshold</div></div>
-    <div class="stat"><div class="v plain">85<span style="font-size:.45em"> in</span></div>
-      <div class="k">Finished ceiling<br>7 ft 1 in — a good sauna</div></div>
+    <div class="stat"><div class="v steam">10.9<span style="font-size:.45em"> ft</span></div>
+      <div class="k">Basement cross dimension<br>measured, interior scan</div></div>
+    <div class="stat"><div class="v plain">81–84<span style="font-size:.45em"> in</span></div>
+      <div class="k">Finished ceiling<br>margin over the heater minimum: 4–7 in</div></div>
     <div class="stat"><div class="v ember">8<span style="font-size:.45em"> kW</span></div>
       <div class="k">Heater<br>6 kW is outside its listing</div></div>
     <div class="stat"><div class="v">$25.9<span style="font-size:.45em">k</span></div>
@@ -443,14 +443,17 @@ footer .mono{font-size:12.5px; line-height:1.9}
 
 <!-- heater -->
 <g>
-  <rect x="590" y="540" width="58" height="96" fill="var(--ember,#A83A12)" fill-opacity=".18" stroke="var(--ember,#A83A12)" stroke-width="2.4"/>
+  <rect x="592" y="452" width="60" height="96" fill="var(--ember,#A83A12)" fill-opacity=".18" stroke="var(--ember,#A83A12)" stroke-width="2.4"/>
   <g stroke="var(--ember,#A83A12)" stroke-width="2" fill="none">
-    <path d="M602,562 q8,-10 16,0 q8,10 16,0"/>
-    <path d="M602,588 q8,-10 16,0 q8,10 16,0"/>
-    <path d="M602,614 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M604,474 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M604,500 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M604,526 q8,-10 16,0 q8,10 16,0"/>
   </g>
+  <line x1="622" y1="440" x2="622" y2="452" stroke="var(--ember,#A83A12)" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <line x1="622" y1="548" x2="622" y2="560" stroke="var(--ember,#A83A12)" stroke-width="1.2" stroke-dasharray="3 3"/>
 </g>
-<text x="576" y="596" text-anchor="end" font-size="16" fill="var(--ember,#A83A12)" letter-spacing="2">HEATER</text>
+<text x="580" y="494" text-anchor="end" font-size="16" fill="var(--ember,#A83A12)" letter-spacing="2">HEATER</text>
+<text x="580" y="514" text-anchor="end" font-size="12.5" fill="var(--ink3,#7A7365)">centred on the wall</text>
 
 <!-- sauna room label -->
 <text x="420" y="470" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="58" fill="var(--ink,#191713)" letter-spacing="4">SAUNA</text>
@@ -459,35 +462,53 @@ footer .mono{font-size:12.5px; line-height:1.9}
 <!-- ============ VENTILATION ============ -->
 <!-- cold air intake, in the partition beside the heater -->
 <g>
-  <rect x="650" y="646" width="22" height="52" fill="var(--steam,#255F86)" fill-opacity=".3" stroke="var(--steam,#255F86)" stroke-width="2.2"/>
-  <line x1="700" y1="672" x2="676" y2="672" stroke="var(--steam,#255F86)" stroke-width="2.4" marker-end="url(#arrow)"/>
+  <rect x="650" y="586" width="22" height="56" fill="var(--steam,#255F86)" fill-opacity=".3" stroke="var(--steam,#255F86)" stroke-width="2.2"/>
+  <line x1="706" y1="614" x2="676" y2="614" stroke="var(--steam,#255F86)" stroke-width="2.4" marker-end="url(#arrow)"/>
 </g>
 <g fill="var(--steam,#255F86)" font-size="14" letter-spacing="1.4">
-  <text x="712" y="662">COLD AIR</text><text x="712" y="680">INTAKE VENT</text>
-  <text x="712" y="698" font-size="12" fill="var(--ink3,#7A7365)">low, beside the heater</text>
+  <text x="716" y="600">SUPPLY · 6 in</text>
+  <text x="716" y="618" font-size="12" fill="var(--ink3,#7A7365)">low beside the heater,</text>
+  <text x="716" y="634" font-size="12" fill="var(--ink3,#7A7365)">drawn from the hall</text>
 </g>
 
 <!-- hot air exhaust, opposite wall -->
 <g>
-  <rect x="170" y="392" width="24" height="52" fill="var(--ember,#A83A12)" fill-opacity=".3" stroke="var(--ember,#A83A12)" stroke-width="2.2"/>
-  <line x1="164" y1="418" x2="122" y2="418" stroke="var(--ember,#A83A12)" stroke-width="2.4" marker-end="url(#arrowE)"/>
+  <rect x="170" y="690" width="24" height="56" fill="var(--ember,#A83A12)" fill-opacity=".34" stroke="var(--ember,#A83A12)" stroke-width="2.4"/>
+  <line x1="164" y1="718" x2="96" y2="718" stroke="var(--ember,#A83A12)" stroke-width="2.6" marker-end="url(#arrowE)"/>
+  <rect x="170" y="250" width="24" height="52" fill="var(--ember,#A83A12)" fill-opacity=".16" stroke="var(--ember,#A83A12)" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="164" y1="276" x2="96" y2="276" stroke="var(--ember,#A83A12)" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowE)"/>
+  <path d="M96,276 L60,276 L60,718 L96,718" fill="none" stroke="var(--ember,#A83A12)" stroke-width="2.6"/>
+  <line x1="60" y1="497" x2="24" y2="497" stroke="var(--ember,#A83A12)" stroke-width="3" marker-end="url(#arrowE)"/>
 </g>
-<g fill="var(--ember,#A83A12)" font-size="14" letter-spacing="1.4" text-anchor="end">
-  <text x="112" y="404">HOT AIR</text><text x="112" y="422">EXHAUST VENT</text>
+<g fill="var(--ember,#A83A12)" font-size="13.5" letter-spacing="1.2" text-anchor="end">
+  <text x="158" y="702">WORKING EXHAUST · 4 in</text>
+  <text x="158" y="720" font-size="11.5" fill="var(--ink3,#7A7365)">low, under the far bench</text>
+  <text x="158" y="736" font-size="11.5" fill="var(--ink3,#7A7365)">OPEN when bathing</text>
+  <text x="158" y="262">PURGE EXHAUST · 4 in</text>
+  <text x="158" y="280" font-size="11.5" fill="var(--ink3,#7A7365)">high, near ceiling</text>
+  <text x="158" y="296" font-size="11.5" fill="var(--ink3,#7A7365)">SHUT when bathing</text>
 </g>
+<text x="30" y="478" font-size="14" font-weight="600" fill="var(--ember,#A83A12)" letter-spacing="1.4">TO OUTSIDE</text>
+<text x="30" y="536" font-size="11.5" fill="var(--ink3,#7A7365)">6 in insulated, sloped out,</text>
+<text x="30" y="552" font-size="11.5" fill="var(--ink3,#7A7365)">backdraft damper at the cap</text>
 
 <!-- airflow arc -->
-<path d="M636,650 C600,430 420,330 250,404" fill="none" stroke="var(--steam,#255F86)"
-      stroke-width="2.4" stroke-dasharray="12 7" marker-end="url(#arrow)"/>
-<text x="430" y="368" text-anchor="middle" font-size="15" fill="var(--steam,#255F86)" letter-spacing="2.5">AIR FLOW</text>
+<path d="M646,610 C560,560 540,380 420,372 C300,364 250,520 244,700" fill="none" stroke="var(--steam,#255F86)"
+      stroke-width="2.6" stroke-dasharray="12 7" marker-end="url(#arrow)"/>
+<text x="392" y="352" text-anchor="middle" font-size="15" fill="var(--steam,#255F86)" letter-spacing="2.5">AIR FLOW · BATHING</text>
+<text x="392" y="332" text-anchor="middle" font-size="12" fill="var(--ink3,#7A7365)">up over the stones, down across the benches, out low</text>
 
 <!-- ============ sauna entrance ============ -->
 <g>
   <line x1="661" y1="306" x2="661" y2="430" stroke="var(--steam,#255F86)" stroke-width="5"/>
-  <path d="M661,430 A124,124 0 0,0 785,306" fill="none" stroke="var(--steam,#255F86)" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <path d="M661,306 A124,124 0 0,1 785,430" fill="none" stroke="var(--steam,#255F86)" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <line x1="661" y1="306" x2="785" y2="306" stroke="var(--steam,#255F86)" stroke-width="4"/>
+  <circle cx="661" cy="306" r="6" fill="var(--steam,#255F86)"/>
 </g>
 <g fill="var(--steam,#255F86)" font-size="15" letter-spacing="2">
-  <text x="690" y="386" transform="rotate(-90 690 386)" text-anchor="middle">SAUNA ENTRANCE</text>
+  <text x="646" y="386" transform="rotate(-90 646 386)" text-anchor="middle">SAUNA ENTRANCE</text>
+  <text x="800" y="300" font-size="12.5" fill="var(--ink3,#7A7365)">HINGE FAR SIDE ·</text>
+  <text x="800" y="317" font-size="12.5" fill="var(--ink3,#7A7365)">SWINGS OUT · NO LATCH</text>
 </g>
 
 <!-- ============ HALL ============ -->
@@ -556,8 +577,8 @@ footer .mono{font-size:12.5px; line-height:1.9}
 <!-- ============ legend / title block ============ -->
 <g>
   <line x1="96" y1="952" x2="1304" y2="952" stroke="var(--ink,#191713)" stroke-width="2"/>
-  <text x="96" y="978" font-size="14" fill="var(--ink,#191713)" letter-spacing="2.2">TAHOE SAUNA · PLAN · REVISION 2 · 7 SEP 2026</text>
-  <text x="1304" y="978" font-size="12.5" fill="var(--ink3,#7A7365)" letter-spacing="1.4" text-anchor="end">REDRAWN FROM THE OWNER'S SKETCH · WIDTHS SPOKEN · DEPTHS AND BEAM UNRESOLVED · NOT TO SCALE</text>
+  <text x="96" y="978" font-size="14" fill="var(--ink,#191713)" letter-spacing="2.2">TAHOE SAUNA · PLAN · REVISION 3 · 7 SEP 2026 · VENTILATION DESIGNED</text>
+  <text x="1304" y="978" font-size="12.5" fill="var(--ink3,#7A7365)" letter-spacing="1.4" text-anchor="end">HEATER CENTRED · DOOR PER SKETCH, HINGE FAR SIDE · EXHAUST DUCTED OUTDOORS · DEPTH AND BEAM UNRESOLVED · NOT TO SCALE</text>
 </g>
 <g font-size="13" letter-spacing="1.4">
   <rect x="96" y="880" width="26" height="13" fill="var(--cedar,#9C560F)" fill-opacity=".2" stroke="var(--cedar,#9C560F)" stroke-width="1.5"/>
@@ -572,8 +593,11 @@ footer .mono{font-size:12.5px; line-height:1.9}
   </div>
 
   <div class="call ember">
-    <h3 style="color:var(--ember)">The one thing on this drawing I would not build as drawn</h3>
-    <p><b>The hot exhaust is shown discharging into the unfinished basement.</b> A hot room vents
+    <h3 style="color:var(--good)">RESOLVED — the exhaust goes outdoors</h3>
+    <p><b style="color:var(--good)">Confirmed with the owner, 7 Sep: the hot exhaust will be ducted
+    outside.</b> This was the one thing on the sketch that could not be built as drawn, and it is
+    now settled. The reasoning, kept because it decides four details of the duct run:</p>
+    <p>A hot room vents
     air at 90–110 °C carrying the water you just threw on the stones. Put that into an unheated
     basement and it condenses — <b>on the cold framing directly under the floor of the house</b>.
     Not once: every session, for years. It is the classic way a beautifully built sauna quietly
@@ -586,14 +610,14 @@ footer .mono{font-size:12.5px; line-height:1.9}
   </div>
 
   <div class="cards" style="margin-top:36px">
-    <div class="card"><h3 class="ember">Three things you two have not agreed on</h3>
-      <p><b>Where the door goes.</b> One of you wants it with the heater centred; the other says it
-      sits too close to the cold basement entrance and wants the layout flipped. <b>The revised
-      sketch implements the flip</b> — but the memo never shows the other agreeing.</p></div>
-    <div class="card"><h3 class="ember">Heater centred, or on the partition?</h3>
-      <p><i>«печка, я думаю, лучше всего будет по центру»</i>. The sketch puts it against the
-      partition instead. Centring it moves the bench geometry, the clearances and the intake —
-      <b>not a cosmetic choice</b>.</p></div>
+    <div class="card"><h3 style="color:var(--good)">DECIDED · door as drawn</h3>
+      <p>The flip stands. The entrance stays as far from the cold basement door as it can get, and
+      the drawing follows it. <b>Hinge on the far side, swinging out into the hall</b> — so the leaf
+      opens away from your approach and away from the hall bench.</p></div>
+    <div class="card"><h3 style="color:var(--good)">DECIDED · heater centred</h3>
+      <p>Centred on its wall, not in a corner — <i>«лучше всего будет по центру»</i>. The supply vent
+      moves with it, sitting low immediately beside it so incoming air is caught by the convection
+      plume before it can cross the floor.</p></div>
     <div class="card"><h3 class="ember">A U of benches in a small room</h3>
       <p>Revision 2 wraps three walls. The design research is explicit against it: <b>avoid U-shaped
       arrangements in small rooms</b> — an L is right at this size. A U also eats the floor the löyly
