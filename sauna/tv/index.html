@@ -16,13 +16,14 @@
   --sand:#DCD0B9; --timber:#EFE6D6;
 }
 *{box-sizing:border-box}
-html{color-scheme:light; scroll-behavior:smooth; scroll-snap-type:y mandatory; overflow-y:scroll}
+html{color-scheme:light; scroll-behavior:smooth; scroll-snap-type:y mandatory;
+  overflow-y:scroll; -webkit-text-size-adjust:100%}
 body{margin:0;background:var(--ground);color:var(--ink);
   font-family:"IBM Plex Mono",ui-monospace,monospace;
   -webkit-font-smoothing:antialiased}
 h1,h2,.dsp{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;font-weight:700}
 
-.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;
+.slide{min-height:100vh;min-height:100svh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;
   padding:3.2vh 4vw 2.2vh;position:relative}
 .slide + .slide{border-top:1px solid var(--rule)}
 
@@ -35,13 +36,13 @@ h2{font-size:clamp(30px,4.6vw,78px);line-height:.92;letter-spacing:.01em}
 .legend .warn{color:var(--ember)}
 
 .body{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
-.body svg{width:100%;height:100%;max-height:76vh}
-.body img{max-width:100%;max-height:76vh;object-fit:contain;border:1px solid var(--rule)}
+.body svg{width:100%;height:100%;max-height:72svh}
+.body img{max-width:100%;max-height:72svh;object-fit:contain;border:1px solid var(--rule)}
 
 .grid{display:grid;gap:1.1vw;width:100%}
 .g2{grid-template-columns:1fr 1fr}
 .g3{grid-template-columns:repeat(3,1fr)}
-.grid img{width:100%;height:34vh;object-fit:cover;border:1px solid var(--rule)}
+.grid img{width:100%;height:32svh;object-fit:cover;border:1px solid var(--rule)}
 .cap{font-size:clamp(11px,.92vw,16px);color:var(--ink3);margin-top:.5vh;letter-spacing:.02em}
 
 .big{display:grid;grid-template-columns:repeat(auto-fit,minmax(15vw,1fr));gap:1px;
@@ -63,9 +64,11 @@ ul.pts .t{font-size:clamp(10px,.82vw,15px);letter-spacing:.1em;text-transform:up
 
 .foot{position:absolute;bottom:1.2vh;right:4vw;font-size:clamp(10px,.78vw,14px);
   color:var(--ink3);letter-spacing:.12em}
-nav.dots{position:fixed;right:.9vw;top:50%;transform:translateY(-50%);z-index:9;
-  display:flex;flex-direction:column;gap:.7vh}
-nav.dots a{width:9px;height:9px;border:1px solid var(--ink3);border-radius:50%;display:block}
+nav.dots{position:fixed;right:1.4vw;top:50%;transform:translateY(-50%);z-index:9;
+  display:flex;flex-direction:column;gap:1.5vh}
+nav.dots a{width:13px;height:13px;border:1.5px solid var(--ink3);border-radius:50%;display:block;
+  position:relative}
+nav.dots a::after{content:"";position:absolute;inset:-9px}   /* 31px touch target */
 nav.dots a:hover,nav.dots a:focus-visible{background:var(--cedar);border-color:var(--cedar);outline:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
@@ -103,7 +106,7 @@ nav.dots a:hover,nav.dots a:focus-visible{background:var(--cedar);border-color:v
 <!-- 3 -->
 <section class="slide" id="s3">
   <div class="head"><span class="n">02</span><h2>The plan</h2></div>
-  <div class="body"><img src="../assets/plan.svg" alt="Dimensioned plan of the sauna and hall." style="max-height:74vh"></div>
+  <div class="body"><img src="../assets/plan.svg" alt="Dimensioned plan of the sauna and hall." style="max-height:70svh"></div>
   <p class="legend">Sauna left, hall right. Benches on three walls. <b>Heater centred.</b>
   Door out, hinged far side. <span class="warn">Depths not set.</span>
   &nbsp;&nbsp;<a href="../3d/" style="color:var(--cedar)">→ 3D framing model</a></p>
@@ -332,7 +335,7 @@ nav.dots a:hover,nav.dots a:focus-visible{background:var(--cedar);border-color:v
 <section class="slide" id="s12">
   <div class="head"><span class="n">11</span><h2>What we need</h2></div>
   <div class="body" style="flex-direction:column;gap:2.4vh">
-    <img src="../assets/studs.jpg" alt="Stud wall with insulation bulging past the studs." style="max-height:44vh">
+    <img src="../assets/studs.jpg" alt="Stud wall with insulation bulging past the studs." style="max-height:40svh">
     <div class="big" style="max-width:100%">
       <div><div class="v s">0</div><div class="k">Tape readings so far<br>every number is the phone's estimate</div></div>
       <div><div class="v e">3</div><div class="k">Measurements that unblock<br>beam · floor · depth</div></div>

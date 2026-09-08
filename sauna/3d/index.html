@@ -15,7 +15,7 @@
   --cedar:#96500B;--ember:#A3350E;--steam:#1F5B84;--good:#35603B;
 }
 *{box-sizing:border-box}
-html,body{height:100%;margin:0}
+html,body{height:100%;height:100svh;margin:0}
 body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,monospace;
   display:flex;flex-direction:column;overflow:hidden}
 header{padding:14px 22px;border-bottom:1px solid var(--rule);display:flex;
@@ -25,16 +25,16 @@ h1{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;marg
 header .sub{font-size:12.5px;color:var(--ink3);letter-spacing:.06em}
 main{flex:1;display:flex;min-height:0}
 #view{flex:1;position:relative;min-width:0}
-canvas{display:block;width:100%;height:100%}
+canvas{display:block;width:100%;height:100%;touch-action:none}   /* or Safari scrolls instead of orbiting */
 aside{width:330px;flex:0 0 330px;border-left:1px solid var(--rule);background:var(--surface);
-  overflow-y:auto;padding:18px 20px}
+  overflow-y:auto;-webkit-overflow-scrolling:touch;padding:18px 20px}
 @media(max-width:900px){main{flex-direction:column}aside{width:auto;flex:0 0 auto;
-  border-left:none;border-top:1px solid var(--rule);max-height:42vh}}
+  border-left:none;border-top:1px solid var(--rule);max-height:42svh}}
 h2{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;
   font-size:14px;letter-spacing:.09em;margin:0 0 10px;color:var(--ink2)}
 .grp{margin-bottom:22px}
-label{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:5px 0;cursor:pointer}
-input[type=checkbox]{accent-color:var(--cedar);width:15px;height:15px}
+label{display:flex;align-items:center;gap:11px;font-size:15px;padding:9px 0;cursor:pointer}
+input[type=checkbox]{accent-color:var(--cedar);width:21px;height:21px}
 .sw{width:13px;height:13px;border:1px solid var(--ink3);flex:0 0 auto}
 table{width:100%;border-collapse:collapse;font-size:12px}
 td{padding:5px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -57,7 +57,7 @@ td.n{text-align:right;white-space:nowrap;font-weight:600}
   <span class="sub" style="margin-left:auto"><a href="../tv/" style="color:var(--cedar)">← review deck</a></span>
 </header>
 <main>
-  <div id="view"><div class="hint">drag to orbit · scroll to zoom · right-drag to pan</div></div>
+  <div id="view"><div class="hint">one finger to orbit · pinch to zoom · two fingers to pan</div></div>
   <aside>
     <div class="warn">
       <b>This model is mostly assumption.</b> The project has <b>zero tape readings</b>.
@@ -225,25 +225,60 @@ function place(){
     target.z + dist*Math.sin(rot.ph)*Math.sin(rot.th));
   cam.lookAt(target);
 }
-let drag=null;
-rnd.domElement.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,b:e.button};rnd.domElement.setPointerCapture(e.pointerId)});
-rnd.domElement.addEventListener('pointerup',e=>{drag=null});
-rnd.domElement.addEventListener('pointermove',e=>{
-  if(!drag) return;
-  const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.x=e.clientX; drag.y=e.clientY;
-  if(drag.b===2){
-    const s=dist*0.0016;
-    target.x -= dx*s*Math.sin(rot.th+Math.PI/2); target.z -= dx*s*-Math.cos(rot.th+Math.PI/2);
-    target.y += dy*s;
-  } else {
-    rot.th -= dx*0.007; rot.ph = Math.max(0.08, Math.min(Math.PI-0.08, rot.ph - dy*0.007));
-  }
-  place();
+// Pointer-based: one pointer orbits, two pinch to zoom and drag to pan. Works for
+// mouse, trackpad and touch without branching on input type.
+const pts = new Map();
+let pinch0 = null, mid0 = null;
+
+function mid(){
+  const a = [...pts.values()];
+  return {x:(a[0].x+a[1].x)/2, y:(a[0].y+a[1].y)/2};
+}
+function spread(){
+  const a = [...pts.values()];
+  return Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y);
+}
+function pan(dx, dy){
+  const s = dist*0.0016;
+  target.x -= dx*s*Math.cos(rot.th);
+  target.z -= dx*s*Math.sin(rot.th);
+  target.y += dy*s;
+}
+const cv = rnd.domElement;
+cv.addEventListener('pointerdown', e => {
+  cv.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+  if (pts.size === 2){ pinch0 = spread(); mid0 = mid(); }
 });
-rnd.domElement.addEventListener('contextmenu',e=>e.preventDefault());
-rnd.domElement.addEventListener('wheel',e=>{
-  e.preventDefault(); dist = Math.max(1.2, Math.min(90, dist*(1+Math.sign(e.deltaY)*0.1))); place();
-},{passive:false});
+cv.addEventListener('pointerup', e => { pts.delete(e.pointerId); pinch0 = null; });
+cv.addEventListener('pointercancel', e => { pts.delete(e.pointerId); pinch0 = null; });
+cv.addEventListener('pointermove', e => {
+  const prev = pts.get(e.pointerId);
+  if (!prev) return;
+  pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+
+  if (pts.size === 1){
+    if (e.buttons === 2){ pan(e.clientX-prev.x, e.clientY-prev.y); }
+    else {
+      rot.th -= (e.clientX-prev.x)*0.007;
+      rot.ph = Math.max(0.08, Math.min(Math.PI-0.08, rot.ph - (e.clientY-prev.y)*0.007));
+    }
+    place();
+  } else if (pts.size === 2 && pinch0){
+    const sp = spread(), m = mid();
+    dist = Math.max(1.2, Math.min(90, dist * (pinch0/sp)));
+    pinch0 = sp;
+    pan(m.x-mid0.x, m.y-mid0.y);
+    mid0 = m;
+    place();
+  }
+});
+cv.addEventListener('contextmenu', e => e.preventDefault());
+cv.addEventListener('wheel', e => {
+  e.preventDefault();
+  dist = Math.max(1.2, Math.min(90, dist*(1+Math.sign(e.deltaY)*0.1)));
+  place();
+}, {passive:false});
 
 for (const [id,key] of [['c-floor','floor'],['c-studs','studs'],['c-ceil','ceil'],
                         ['c-bench','bench'],['c-heater','heater'],['c-clad','clad'],['c-vent','vent']]){
