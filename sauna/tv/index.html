@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tahoe Sauna — Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F2EC; --surface:#FFFDF9; --surface2:#EBE4D8; --rule:#CDC4B4;
+  --ink:#17150F; --ink2:#4A453B; --ink3:#7C7466;
+  --cedar:#96500B; --ember:#A3350E; --steam:#1F5B84; --good:#35603B;
+  --sand:#DCD0B9; --timber:#EFE6D6;
+}
+*{box-sizing:border-box}
+html{color-scheme:light; scroll-behavior:smooth; scroll-snap-type:y mandatory; overflow-y:scroll}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  -webkit-font-smoothing:antialiased}
+h1,h2,.dsp{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;font-weight:700}
+
+.slide{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;
+  padding:3.2vh 4vw 2.2vh;position:relative}
+.slide + .slide{border-top:1px solid var(--rule)}
+
+.head{display:flex;align-items:baseline;gap:2.2vw;flex-wrap:wrap;margin-bottom:1.6vh}
+.n{font-size:clamp(13px,1.15vw,20px);color:var(--cedar);letter-spacing:.14em;font-weight:600}
+h2{font-size:clamp(30px,4.6vw,78px);line-height:.92;letter-spacing:.01em}
+.legend{font-size:clamp(13px,1.32vw,23px);color:var(--ink2);letter-spacing:.02em;
+  margin-top:.7vh;max-width:80ch;line-height:1.45}
+.legend b{color:var(--ink)}
+.legend .warn{color:var(--ember)}
+
+.body{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+.body svg{width:100%;height:100%;max-height:76vh}
+.body img{max-width:100%;max-height:76vh;object-fit:contain;border:1px solid var(--rule)}
+
+.grid{display:grid;gap:1.1vw;width:100%}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.grid img{width:100%;height:34vh;object-fit:cover;border:1px solid var(--rule)}
+.cap{font-size:clamp(11px,.92vw,16px);color:var(--ink3);margin-top:.5vh;letter-spacing:.02em}
+
+.big{display:grid;grid-template-columns:repeat(auto-fit,minmax(15vw,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);width:100%}
+.big div{background:var(--surface);padding:2.4vh 1.6vw}
+.big .v{font-family:"Saira Condensed",sans-serif;font-weight:700;
+  font-size:clamp(38px,5.6vw,104px);line-height:.9;color:var(--cedar)}
+.big .v.e{color:var(--ember)} .big .v.s{color:var(--steam)} .big .v.k{color:var(--ink)}
+.big .k{font-size:clamp(11px,.92vw,17px);color:var(--ink3);letter-spacing:.09em;
+  text-transform:uppercase;margin-top:1vh;line-height:1.4}
+
+ul.pts{list-style:none;padding:0;margin:0;width:100%}
+ul.pts li{font-size:clamp(16px,2.05vw,38px);line-height:1.3;padding:1.5vh 0;
+  border-bottom:1px solid var(--rule);display:flex;gap:1.6vw;align-items:baseline}
+ul.pts li:last-child{border-bottom:none}
+ul.pts .t{font-size:clamp(10px,.82vw,15px);letter-spacing:.1em;text-transform:uppercase;
+  padding:.35em .7em;border:1px solid currentColor;white-space:nowrap;flex:0 0 auto}
+.t-open{color:var(--ember)} .t-need{color:var(--steam)} .t-ok{color:var(--good)}
+
+.foot{position:absolute;bottom:1.2vh;right:4vw;font-size:clamp(10px,.78vw,14px);
+  color:var(--ink3);letter-spacing:.12em}
+nav.dots{position:fixed;right:.9vw;top:50%;transform:translateY(-50%);z-index:9;
+  display:flex;flex-direction:column;gap:.7vh}
+nav.dots a{width:9px;height:9px;border:1px solid var(--ink3);border-radius:50%;display:block}
+nav.dots a:hover,nav.dots a:focus-visible{background:var(--cedar);border-color:var(--cedar);outline:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<nav class="dots" aria-label="slides">
+  <a href="#s1" title="Title"></a><a href="#s2" title="Now"></a><a href="#s3" title="Plan"></a>
+  <a href="#s4" title="Section"></a><a href="#s5" title="Airflow"></a><a href="#s6" title="Benches"></a>
+  <a href="#s7" title="Heater"></a><a href="#s8" title="Wood"></a><a href="#s9" title="Floor"></a>
+  <a href="#s10" title="Money"></a><a href="#s11" title="Open"></a><a href="#s12" title="Need"></a>
+</nav>
+
+<!-- 1 -->
+<section class="slide" id="s1">
+  <div class="head"><span class="n">TAHOE · BASEMENT · OWNER-BUILT</span></div>
+  <h2 style="font-size:clamp(44px,8vw,140px)">A sauna,<br>built by hand</h2>
+  <div class="body"><img src="../assets/sketch-r2.jpg" alt="The owner's revised sketch of the sauna and hall."></div>
+  <p class="legend">The drawing everything is squared against.</p>
+  <span class="foot">1 / 12</span>
+</section>
+
+<!-- 2 -->
+<section class="slide" id="s2">
+  <div class="head"><span class="n">01</span><h2>What's there now</h2></div>
+  <div class="body"><div class="grid g3">
+    <div><img src="../assets/space-3.jpg" alt="Stud wall with insulation, gas pipe, water heater."><p class="cap">Gas line — moves</p></div>
+    <div><img src="../assets/space-5.jpg" alt="Ceiling joists, ducts, pipes."><p class="cap">Ducts — reroute</p></div>
+    <div><img src="../assets/space-1.jpg" alt="The basement space."><p class="cap">The bay</p></div>
+  </div></div>
+  <p class="legend">Everything visible goes. <b>Gas pipe and ducts move — licensed trades.</b></p>
+  <span class="foot">2 / 12</span>
+</section>
+
+<!-- 3 -->
+<section class="slide" id="s3">
+  <div class="head"><span class="n">02</span><h2>The plan</h2></div>
+  <div class="body"><img src="../assets/plan.svg" alt="Dimensioned plan of the sauna and hall." style="max-height:74vh"></div>
+  <p class="legend">Sauna left, hall right. Benches on three walls. <b>Heater centred.</b>
+  Door out, hinged far side. <span class="warn">Depths not set.</span></p>
+  <span class="foot">3 / 12</span>
+</section>
+
+<!-- 4 -->
+<section class="slide" id="s4">
+  <div class="head"><span class="n">03</span><h2>How much height</h2></div>
+  <div class="body">
+  <svg viewBox="0 0 1240 560" role="img" aria-label="Section showing floor to joists, the floor build-up, and the finished ceiling.">
+    <defs><pattern id="sd" width="9" height="9" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="9" stroke="var(--sand)" stroke-width="2.4"/></pattern></defs>
+    <rect x="250" y="452" width="740" height="66" fill="var(--sand)" opacity=".5"/>
+    <rect x="250" y="452" width="740" height="66" fill="url(#sd)"/>
+    <line x1="250" y1="452" x2="990" y2="452" stroke="var(--ink)" stroke-width="3"/>
+    <text x="620" y="496" text-anchor="middle" font-size="19" fill="var(--ink2)" letter-spacing="2">SAND — TODAY</text>
+
+    <rect x="250" y="96" width="740" height="52" fill="var(--surface2)" stroke="var(--ink)" stroke-width="2.4"/>
+    <g stroke="var(--rule)" stroke-width="2">
+      <line x1="330" y1="96" x2="330" y2="148"/><line x1="410" y1="96" x2="410" y2="148"/>
+      <line x1="490" y1="96" x2="490" y2="148"/><line x1="570" y1="96" x2="570" y2="148"/>
+      <line x1="650" y1="96" x2="650" y2="148"/><line x1="730" y1="96" x2="730" y2="148"/>
+      <line x1="810" y1="96" x2="810" y2="148"/><line x1="890" y1="96" x2="890" y2="148"/></g>
+    <text x="620" y="82" text-anchor="middle" font-size="19" fill="var(--ink2)" letter-spacing="2">HOUSE FLOOR ABOVE</text>
+
+    <rect x="250" y="376" width="740" height="76" fill="var(--timber)" stroke="var(--cedar)" stroke-width="2.4" stroke-dasharray="9 6"/>
+    <text x="620" y="422" text-anchor="middle" font-size="21" fill="var(--cedar)" letter-spacing="2">NEW FLOOR — HEIGHT UNKNOWN</text>
+
+    <g stroke="var(--steam)" stroke-width="2.6" fill="none">
+      <line x1="176" y1="452" x2="176" y2="148"/>
+      <path d="M170,446 L176,456 L182,446"/><path d="M170,154 L176,144 L182,154"/></g>
+    <text x="158" y="288" text-anchor="end" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="54" fill="var(--steam)">~96"</text>
+    <text x="158" y="320" text-anchor="end" font-size="17" fill="var(--ink3)" letter-spacing="1.5">TO THE JOISTS</text>
+
+    <line x1="250" y1="336" x2="990" y2="336" stroke="var(--good)" stroke-width="2.6" stroke-dasharray="10 7"/>
+    <text x="1006" y="330" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="40" fill="var(--good)">81–84"</text>
+    <text x="1006" y="358" font-size="16" fill="var(--ink3)" letter-spacing="1.4">FINISHED CEILING</text>
+    <text x="1006" y="382" font-size="16" fill="var(--ember)" letter-spacing="1.4">CODE MIN 80"</text>
+  </svg></div>
+  <p class="legend"><b>~8 ft to the joists — that's the good news.</b>
+  <span class="warn">Margin over code may be as little as an inch. Needs a tape.</span></p>
+  <span class="foot">4 / 12</span>
+</section>
+
+<!-- 5 -->
+<section class="slide" id="s5">
+  <div class="head"><span class="n">04</span><h2>How the air moves</h2></div>
+  <div class="body">
+  <svg viewBox="0 0 1240 560" role="img" aria-label="Section showing supply low by the heater, air rising over the stones, sweeping the ceiling, descending over the benches and leaving by a low exhaust, with a high purge vent for cool-down.">
+    <defs>
+      <marker id="fa" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
+        <path d="M0,1 L10,5.5 L0,10 z" fill="var(--steam)"/></marker>
+      <marker id="fe" markerWidth="11" markerHeight="11" refX="9" refY="5.5" orient="auto">
+        <path d="M0,1 L10,5.5 L0,10 z" fill="var(--ember)"/></marker>
+    </defs>
+    <rect x="210" y="90" width="800" height="380" fill="var(--surface)" stroke="var(--ink)" stroke-width="3"/>
+    <!-- benches left -->
+    <rect x="228" y="330" width="250" height="30" fill="var(--cedar)" opacity=".22" stroke="var(--cedar)" stroke-width="2"/>
+    <rect x="228" y="248" width="200" height="30" fill="var(--cedar)" opacity=".22" stroke="var(--cedar)" stroke-width="2"/>
+    <text x="248" y="392" font-size="17" fill="var(--cedar)" letter-spacing="2">BENCHES</text>
+    <!-- heater right -->
+    <rect x="880" y="330" width="86" height="130" fill="var(--ember)" opacity=".18" stroke="var(--ember)" stroke-width="2.6"/>
+    <g stroke="var(--ember)" stroke-width="2.4" fill="none">
+      <path d="M896,356 q11,-13 22,0 q11,13 22,0"/><path d="M896,386 q11,-13 22,0 q11,13 22,0"/></g>
+    <text x="923" y="486" text-anchor="middle" font-size="18" fill="var(--ember)" letter-spacing="2">HEATER</text>
+    <!-- supply -->
+    <rect x="994" y="410" width="32" height="46" fill="var(--steam)" opacity=".35" stroke="var(--steam)" stroke-width="2.4"/>
+    <line x1="1080" y1="433" x2="1032" y2="433" stroke="var(--steam)" stroke-width="3.4" marker-end="url(#fa)"/>
+    <text x="1094" y="428" font-size="18" fill="var(--steam)" letter-spacing="1.5">SUPPLY</text>
+    <text x="1094" y="452" font-size="15" fill="var(--ink3)">from the hall</text>
+    <!-- the loop -->
+    <path d="M930,326 C930,190 880,150 700,150 C480,150 400,210 372,300" fill="none"
+          stroke="var(--steam)" stroke-width="4" stroke-dasharray="15 9" marker-end="url(#fa)"/>
+    <!-- low exhaust -->
+    <rect x="194" y="410" width="32" height="46" fill="var(--ember)" opacity=".35" stroke="var(--ember)" stroke-width="2.6"/>
+    <line x1="190" y1="433" x2="120" y2="433" stroke="var(--ember)" stroke-width="3.4" marker-end="url(#fe)"/>
+    <text x="112" y="428" text-anchor="end" font-size="18" fill="var(--ember)" letter-spacing="1.5">OUT — LOW</text>
+    <text x="112" y="452" text-anchor="end" font-size="15" fill="var(--ink3)">open when bathing</text>
+    <!-- high purge -->
+    <rect x="194" y="120" width="32" height="42" fill="var(--ember)" opacity=".14" stroke="var(--ember)" stroke-width="2.2" stroke-dasharray="7 5"/>
+    <line x1="190" y1="141" x2="120" y2="141" stroke="var(--ember)" stroke-width="2.6" stroke-dasharray="7 5" marker-end="url(#fe)"/>
+    <text x="112" y="136" text-anchor="end" font-size="18" fill="var(--ember)" letter-spacing="1.5">OUT — HIGH</text>
+    <text x="112" y="160" text-anchor="end" font-size="15" fill="var(--ink3)">cool-down only</text>
+  </svg></div>
+  <p class="legend"><b>Two dampers, no fan.</b> Shut the high vent and the air is pulled
+  <b>down across the benches</b> instead of venting the hottest air straight out. <b>Both ducted outside.</b></p>
+  <span class="foot">5 / 12</span>
+</section>
+
+<!-- 6 -->
+<section class="slide" id="s6">
+  <div class="head"><span class="n">05</span><h2>Where you sit</h2></div>
+  <div class="body">
+  <svg viewBox="0 0 1240 560" role="img" aria-label="Bench section showing upper bench 44 inches below the ceiling, lower bench 17 inches down, and the stones topping out at foot level.">
+    <line x1="180" y1="86" x2="1060" y2="86" stroke="var(--ink)" stroke-width="3.4"/>
+    <text x="180" y="72" font-size="18" fill="var(--ink2)" letter-spacing="2">CEILING</text>
+    <line x1="180" y1="480" x2="1060" y2="480" stroke="var(--ink)" stroke-width="3.4"/>
+    <text x="180" y="508" font-size="18" fill="var(--ink2)" letter-spacing="2">FLOOR</text>
+
+    <rect x="300" y="268" width="330" height="26" fill="var(--cedar)" opacity=".3" stroke="var(--cedar)" stroke-width="2.6"/>
+    <text x="316" y="256" font-size="19" fill="var(--cedar)" letter-spacing="2">UPPER — 24" DEEP</text>
+    <rect x="300" y="366" width="260" height="26" fill="var(--cedar)" opacity=".22" stroke="var(--cedar)" stroke-width="2.4"/>
+    <text x="316" y="356" font-size="18" fill="var(--cedar)" letter-spacing="2">LOWER — 18"</text>
+    <rect x="300" y="432" width="170" height="22" fill="var(--cedar)" opacity=".16" stroke="var(--cedar)" stroke-width="2"/>
+    <text x="316" y="424" font-size="16" fill="var(--cedar)" letter-spacing="2">FOOT</text>
+
+    <rect x="860" y="352" width="110" height="128" fill="var(--ember)" opacity=".16" stroke="var(--ember)" stroke-width="2.6"/>
+    <line x1="860" y1="366" x2="970" y2="366" stroke="var(--ember)" stroke-width="3"/>
+    <text x="915" y="512" text-anchor="middle" font-size="18" fill="var(--ember)" letter-spacing="2">STONES</text>
+
+    <g stroke="var(--steam)" stroke-width="2.6" fill="none">
+      <line x1="240" y1="86" x2="240" y2="268"/>
+      <path d="M234,92 L240,82 L246,92"/><path d="M234,262 L240,272 L246,262"/></g>
+    <text x="222" y="186" text-anchor="end" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="46" fill="var(--steam)">44"</text>
+    <text x="222" y="212" text-anchor="end" font-size="15" fill="var(--ink3)" letter-spacing="1.4">HEAD ROOM</text>
+
+    <g stroke="var(--steam)" stroke-width="2.4" fill="none">
+      <line x1="680" y1="294" x2="680" y2="366"/>
+      <path d="M674,300 L680,290 L686,300"/><path d="M674,360 L680,370 L686,360"/></g>
+    <text x="698" y="338" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="34" fill="var(--steam)">17"</text>
+
+    <line x1="560" y1="366" x2="880" y2="366" stroke="var(--good)" stroke-width="2.4" stroke-dasharray="10 7"/>
+    <text x="600" y="392" font-size="17" fill="var(--good)" letter-spacing="1.4">YOUR FEET SIT AT THE TOP OF THE STONES</text>
+  </svg></div>
+  <p class="legend"><b>That green line is the whole rule.</b> Feet at stone level, or the löyly never reaches you.
+  <span class="warn">Why the heater gets sunk into the floor.</span></p>
+  <span class="foot">6 / 12</span>
+</section>
+
+<!-- 7 -->
+<section class="slide" id="s7">
+  <div class="head"><span class="n">06</span><h2>The heater</h2></div>
+  <div class="body"><div class="big">
+    <div><div class="v e">8 kW</div><div class="k">Minimum legal size<br>6 kW is outside its listing</div></div>
+    <div><div class="v s">#8</div><div class="k">Copper · 240 V<br>40 A breaker</div></div>
+    <div><div class="v">HUUM</div><div class="k">The one make whose manual<br>permits sinking it in the floor</div></div>
+    <div><div class="v k">170 kg</div><div class="k">Stone mass<br>vs 90 Harvia, 20 Tylö</div></div>
+  </div></div>
+  <p class="legend"><b>Stone mass is what turns a ladle of water into steam that lasts.</b> No GFCI — the makers say so themselves.</p>
+  <span class="foot">7 / 12</span>
+</section>
+
+<!-- 8 -->
+<section class="slide" id="s8">
+  <div class="head"><span class="n">07</span><h2>The wood</h2></div>
+  <div class="body"><div class="big">
+    <div><div class="v">CEDAR</div><div class="k">Walls and ceiling only</div></div>
+    <div><div class="v k">ASPEN</div><div class="k">Everything you sit on<br>clear grade — knots burn</div></div>
+    <div><div class="v e">NOT ALDER</div><div class="k">Densest wood in play<br>runs hot</div></div>
+    <div><div class="v s">~450 ft²</div><div class="k">Tongue and groove<br>raw bundles, we cut</div></div>
+  </div></div>
+  <p class="legend">Cedar off the benches — not because it's hot (it's the coolest), but because
+  <b>it's the one species with sauna dermatitis in the literature.</b></p>
+  <span class="foot">8 / 12</span>
+</section>
+
+<!-- 9 -->
+<section class="slide" id="s9">
+  <div class="head"><span class="n">08</span><h2>The floor</h2></div>
+  <div class="body">
+  <svg viewBox="0 0 1240 480" role="img" aria-label="Floor build-up from compacted sand up to tile.">
+    <g font-size="19" letter-spacing="1.4">
+      <rect x="200" y="392" width="620" height="56" fill="var(--sand)" opacity=".55"/>
+      <text x="850" y="428" fill="var(--ink2)">compacted sand</text>
+      <rect x="200" y="374" width="620" height="18" fill="var(--steam)" opacity=".5"/>
+      <text x="850" y="390" fill="var(--steam)">membrane · radon pipe</text>
+      <rect x="290" y="330" width="120" height="44" fill="var(--rule)" stroke="var(--ink2)" stroke-width="2"/>
+      <rect x="610" y="330" width="120" height="44" fill="var(--rule)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="850" y="360" fill="var(--ink2)">concrete pads</text>
+      <rect x="200" y="222" width="620" height="108" fill="var(--timber)" stroke="var(--cedar)" stroke-width="2.4"/>
+      <text x="850" y="272" fill="var(--cedar)">joists + insulation</text>
+      <text x="850" y="298" font-size="16" fill="var(--ink3)">no treated wood anywhere</text>
+      <rect x="200" y="196" width="620" height="26" fill="var(--surface2)" stroke="var(--ink2)" stroke-width="2"/>
+      <text x="850" y="216" fill="var(--ink2)">subfloor</text>
+      <rect x="200" y="168" width="620" height="28" fill="var(--ink3)" opacity=".35" stroke="var(--ink)" stroke-width="2"/>
+      <text x="850" y="190" fill="var(--ink)">tile</text>
+    </g>
+    <g stroke="var(--ember)" stroke-width="2.6" fill="none">
+      <line x1="150" y1="392" x2="150" y2="168"/>
+      <path d="M144,386 L150,396 L156,386"/><path d="M144,174 L150,164 L156,174"/></g>
+    <text x="132" y="272" text-anchor="end" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="44" fill="var(--ember)">?</text>
+    <text x="132" y="300" text-anchor="end" font-size="16" fill="var(--ink3)" letter-spacing="1.4">HEIGHT UNKNOWN</text>
+  </svg></div>
+  <p class="legend">No slab. Pads on sand, joists on pads. <b>Radon pipe goes in while it's open — $150 now, impossible later.</b></p>
+  <span class="foot">9 / 12</span>
+</section>
+
+<!-- 10 -->
+<section class="slide" id="s10">
+  <div class="head"><span class="n">09</span><h2>The money</h2></div>
+  <div class="body">
+  <svg viewBox="0 0 1240 400" role="img" aria-label="Budget range against the twenty thousand dollar target.">
+    <g font-size="19" fill="var(--ink3)">
+      <line x1="120" y1="300" x2="1160" y2="300" stroke="var(--rule)" stroke-width="2"/>
+      <text x="120" y="336">$15k</text><text x="380" y="336">$20k</text>
+      <text x="640" y="336">$25k</text><text x="900" y="336">$30k</text><text x="1140" y="336">$35k</text>
+    </g>
+    <line x1="380" y1="60" x2="380" y2="308" stroke="var(--good)" stroke-width="4"/>
+    <text x="396" y="54" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="34" fill="var(--good)">TARGET $20k</text>
+    <rect x="401" y="112" width="566" height="56" fill="var(--ember)" opacity=".22" stroke="var(--ember)" stroke-width="2.4"/>
+    <text x="684" y="152" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="40" fill="var(--ink)">$20.4k — $31.5k</text>
+    <rect x="329" y="196" width="386" height="56" fill="var(--good)" opacity=".2" stroke="var(--good)" stroke-width="2.4"/>
+    <text x="522" y="236" text-anchor="middle" font-family="'Saira Condensed',sans-serif" font-weight="700" font-size="38" fill="var(--ink)">≈ $22.3k after cuts</text>
+  </svg></div>
+  <p class="legend"><b>It doesn't close as specified.</b> Biggest lever is width — <b>$300–450 a foot.</b>
+  <span class="warn">Panel upgrade, if needed, is $1.5–4k on top and free to check.</span></p>
+  <span class="foot">10 / 12</span>
+</section>
+
+<!-- 11 -->
+<section class="slide" id="s11">
+  <div class="head"><span class="n">10</span><h2>Still open</h2></div>
+  <div class="body"><ul class="pts">
+    <li><span class="t t-open">Blocking</span><span>How far does the beam hang below the joists?</span></li>
+    <li><span class="t t-open">Blocking</span><span>How deep are the two rooms?</span></li>
+    <li><span class="t t-open">Blocking</span><span>How thick is the new floor?</span></li>
+    <li><span class="t t-open">Decide</span><span>Is $20,000 a target, or a ceiling?</span></li>
+    <li><span class="t t-need">Check</span><span>Can the panel take another 40 A?</span></li>
+  </ul></div>
+  <p class="legend">Five questions. <b>Three of them are one afternoon with a tape.</b></p>
+  <span class="foot">11 / 12</span>
+</section>
+
+<!-- 12 -->
+<section class="slide" id="s12">
+  <div class="head"><span class="n">11</span><h2>What we need</h2></div>
+  <div class="body" style="flex-direction:column;gap:2.4vh">
+    <img src="../assets/studs.jpg" alt="Stud wall with insulation bulging past the studs." style="max-height:44vh">
+    <div class="big" style="max-width:100%">
+      <div><div class="v s">0</div><div class="k">Tape readings so far<br>every number is the phone's estimate</div></div>
+      <div><div class="v e">3</div><div class="k">Measurements that unblock<br>beam · floor · depth</div></div>
+      <div><div class="v k">1</div><div class="k">Photo of the panel<br>and its main breaker</div></div>
+    </div>
+  </div>
+  <p class="legend"><b>The scan has no ruler in it.</b> We tried to calibrate against the framing —
+  the insulation bulges past the studs, so there's nothing regular to measure.
+  <b>Your tape is the first real measurement this project will have.</b></p>
+  <span class="foot">12 / 12</span>
+</section>
+
+</body>
+</html>

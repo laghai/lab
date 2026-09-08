@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1000" role="img" aria-labelledby="ttl desc" font-family="'IBM Plex Mono', ui-monospace, monospace">
+<title id="ttl">Tahoe sauna — plan, revision 2</title>
+<desc id="desc">Plan of the basement sauna and hall. The sauna occupies the left bay against the existing house wall, with benches wrapping three walls, a heater against the partition, a cold air intake beside the heater and a hot air exhaust on the opposite wall. The fully finished hall lies to the right with its own bench, the basement entrance at the bottom and a double door to the unfinished basement at the top.</desc>
+
+<defs>
+  <pattern id="wallhatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="7" stroke="#7C7466" stroke-width="1.5"/>
+  </pattern>
+  <marker id="arrow" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+    <path d="M0,1 L8,4.5 L0,8 z" fill="#1F5B84"/>
+  </marker>
+  <marker id="arrowE" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto">
+    <path d="M0,1 L8,4.5 L0,8 z" fill="#A3350E"/>
+  </marker>
+  <marker id="tick" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto">
+    <line x1="3" y1="9" x2="9" y2="3" stroke="#4A453B" stroke-width="1.5"/>
+  </marker>
+</defs>
+
+<rect width="1400" height="1000" fill="#FFFDF9"/>
+
+<!-- ============ context labels ============ -->
+<g fill="#7C7466" font-size="17" letter-spacing="2.5">
+  <text x="150" y="70">UNFINISHED BASEMENT</text>
+  <text x="700" y="70">UNFINISHED</text>
+</g>
+
+<!-- ============ storage shelves (dashed, outside the sauna) ============ -->
+<g stroke="#7C7466" stroke-width="1.6" stroke-dasharray="9 6" fill="none">
+  <rect x="286" y="128" width="380" height="56"/>
+  <rect x="96" y="300" width="72" height="190"/>
+</g>
+<g fill="#7C7466" font-size="14" letter-spacing="1.6">
+  <text x="476" y="163" text-anchor="middle">STORAGE SHELVES</text>
+  <text x="132" y="390" text-anchor="middle" transform="rotate(-90 132 390)">STORAGE SHELVES</text>
+</g>
+
+<!-- ============ WALLS ============ -->
+<!-- existing house wall, left -->
+<g>
+  <rect x="172" y="200" width="20" height="600" fill="#EBE4D8" stroke="#17150F" stroke-width="2.4"/>
+  <rect x="172" y="200" width="20" height="600" fill="url(#wallhatch)"/>
+</g>
+<!-- top wall -->
+<g>
+  <rect x="172" y="200" width="960" height="18" fill="#EBE4D8" stroke="#17150F" stroke-width="2.4"/>
+  <rect x="172" y="200" width="960" height="18" fill="url(#wallhatch)"/>
+</g>
+<!-- bottom wall -->
+<g>
+  <rect x="172" y="782" width="960" height="18" fill="#EBE4D8" stroke="#17150F" stroke-width="2.4"/>
+  <rect x="172" y="782" width="960" height="18" fill="url(#wallhatch)"/>
+</g>
+<!-- right wall of hall -->
+<g>
+  <rect x="1114" y="200" width="18" height="600" fill="#EBE4D8" stroke="#17150F" stroke-width="2.4"/>
+  <rect x="1114" y="200" width="18" height="600" fill="url(#wallhatch)"/>
+</g>
+<!-- sauna / hall partition, NEW framing -->
+<g>
+  <rect x="654" y="218" width="14" height="88"  fill="#96500B" opacity=".22"/>
+  <rect x="654" y="218" width="14" height="88"  fill="none" stroke="#96500B" stroke-width="2.2"/>
+  <rect x="654" y="430" width="14" height="352" fill="#96500B" opacity=".22"/>
+  <rect x="654" y="430" width="14" height="352" fill="none" stroke="#96500B" stroke-width="2.2"/>
+</g>
+
+<!-- ============ posts ============ -->
+<g stroke="#4A453B" stroke-width="2.2" fill="#FFFDF9">
+  <rect x="646" y="174" width="30" height="30"/><line x1="646" y1="174" x2="676" y2="204"/><line x1="676" y1="174" x2="646" y2="204"/>
+  <rect x="1102" y="174" width="30" height="30"/><line x1="1102" y1="174" x2="1132" y2="204"/><line x1="1132" y1="174" x2="1102" y2="204"/>
+</g>
+<text x="661" y="166" text-anchor="middle" font-size="12.5" fill="#7C7466" letter-spacing="1.2">POST</text>
+
+<!-- ============ SAUNA ============ -->
+<rect x="192" y="218" width="462" height="564" fill="#96500B" opacity=".05"/>
+
+<!-- benches, three walls -->
+<g fill="#96500B" fill-opacity=".2" stroke="#96500B" stroke-width="1.8">
+  <rect x="192" y="218" width="462" height="62"/>
+  <rect x="192" y="218" width="62"  height="564"/>
+  <rect x="192" y="720" width="462" height="62"/>
+</g>
+<g fill="#96500B" font-size="16" letter-spacing="3.5">
+  <text x="454" y="257" text-anchor="middle">BENCH</text>
+  <text x="223" y="500" text-anchor="middle" transform="rotate(-90 223 500)">BENCH</text>
+  <text x="454" y="759" text-anchor="middle">BENCH</text>
+</g>
+
+<!-- heater -->
+<g>
+  <rect x="592" y="452" width="60" height="96" fill="#A3350E" fill-opacity=".18" stroke="#A3350E" stroke-width="2.4"/>
+  <g stroke="#A3350E" stroke-width="2" fill="none">
+    <path d="M604,474 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M604,500 q8,-10 16,0 q8,10 16,0"/>
+    <path d="M604,526 q8,-10 16,0 q8,10 16,0"/>
+  </g>
+  <line x1="622" y1="440" x2="622" y2="452" stroke="#A3350E" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <line x1="622" y1="548" x2="622" y2="560" stroke="#A3350E" stroke-width="1.2" stroke-dasharray="3 3"/>
+</g>
+<text x="580" y="494" text-anchor="end" font-size="16" fill="#A3350E" letter-spacing="2">HEATER</text>
+<text x="580" y="514" text-anchor="end" font-size="12.5" fill="#7C7466">centred on the wall</text>
+
+<!-- sauna room label -->
+<text x="420" y="470" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="58" fill="#17150F" letter-spacing="4">SAUNA</text>
+<text x="420" y="512" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="34" fill="#7C7466" letter-spacing="6">БАНЯ</text>
+
+<!-- ============ VENTILATION ============ -->
+<!-- cold air intake, in the partition beside the heater -->
+<g>
+  <rect x="650" y="586" width="22" height="56" fill="#1F5B84" fill-opacity=".3" stroke="#1F5B84" stroke-width="2.2"/>
+  <line x1="706" y1="614" x2="676" y2="614" stroke="#1F5B84" stroke-width="2.4" marker-end="url(#arrow)"/>
+</g>
+<g fill="#1F5B84" font-size="14" letter-spacing="1.4">
+  <text x="716" y="600">SUPPLY · 6 in</text>
+  <text x="716" y="618" font-size="12" fill="#7C7466">low beside the heater,</text>
+  <text x="716" y="634" font-size="12" fill="#7C7466">drawn from the hall</text>
+</g>
+
+<!-- hot air exhaust, opposite wall -->
+<g>
+  <rect x="170" y="690" width="24" height="56" fill="#A3350E" fill-opacity=".34" stroke="#A3350E" stroke-width="2.4"/>
+  <line x1="164" y1="718" x2="96" y2="718" stroke="#A3350E" stroke-width="2.6" marker-end="url(#arrowE)"/>
+  <rect x="170" y="250" width="24" height="52" fill="#A3350E" fill-opacity=".16" stroke="#A3350E" stroke-width="2" stroke-dasharray="6 4"/>
+  <line x1="164" y1="276" x2="96" y2="276" stroke="#A3350E" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowE)"/>
+  <path d="M96,276 L60,276 L60,718 L96,718" fill="none" stroke="#A3350E" stroke-width="2.6"/>
+  <line x1="60" y1="497" x2="24" y2="497" stroke="#A3350E" stroke-width="3" marker-end="url(#arrowE)"/>
+</g>
+<g fill="#A3350E" font-size="13.5" letter-spacing="1.2" text-anchor="end">
+  <text x="158" y="702">WORKING EXHAUST · 4 in</text>
+  <text x="158" y="720" font-size="11.5" fill="#7C7466">low, under the far bench</text>
+  <text x="158" y="736" font-size="11.5" fill="#7C7466">OPEN when bathing</text>
+  <text x="158" y="262">PURGE EXHAUST · 4 in</text>
+  <text x="158" y="280" font-size="11.5" fill="#7C7466">high, near ceiling</text>
+  <text x="158" y="296" font-size="11.5" fill="#7C7466">SHUT when bathing</text>
+</g>
+<text x="30" y="478" font-size="14" font-weight="600" fill="#A3350E" letter-spacing="1.4">TO OUTSIDE</text>
+<text x="30" y="536" font-size="11.5" fill="#7C7466">6 in insulated, sloped out,</text>
+<text x="30" y="552" font-size="11.5" fill="#7C7466">backdraft damper at the cap</text>
+
+<!-- airflow arc -->
+<path d="M646,610 C560,560 540,380 420,372 C300,364 250,520 244,700" fill="none" stroke="#1F5B84"
+      stroke-width="2.6" stroke-dasharray="12 7" marker-end="url(#arrow)"/>
+<text x="392" y="352" text-anchor="middle" font-size="15" fill="#1F5B84" letter-spacing="2.5">AIR FLOW · BATHING</text>
+<text x="392" y="332" text-anchor="middle" font-size="12" fill="#7C7466">up over the stones, down across the benches, out low</text>
+
+<!-- ============ sauna entrance ============ -->
+<g>
+  <line x1="661" y1="306" x2="661" y2="430" stroke="#1F5B84" stroke-width="5"/>
+  <path d="M661,306 A124,124 0 0,1 785,430" fill="none" stroke="#1F5B84" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <line x1="661" y1="306" x2="785" y2="306" stroke="#1F5B84" stroke-width="4"/>
+  <circle cx="661" cy="306" r="6" fill="#1F5B84"/>
+</g>
+<g fill="#1F5B84" font-size="15" letter-spacing="2">
+  <text x="646" y="386" transform="rotate(-90 646 386)" text-anchor="middle">SAUNA ENTRANCE</text>
+  <text x="800" y="300" font-size="12.5" fill="#7C7466">HINGE FAR SIDE ·</text>
+  <text x="800" y="317" font-size="12.5" fill="#7C7466">SWINGS OUT · NO LATCH</text>
+</g>
+
+<!-- ============ HALL ============ -->
+<text x="890" y="292" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="38" fill="#17150F" letter-spacing="3">FULLY FINISHED</text>
+<text x="890" y="336" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="38" fill="#17150F" letter-spacing="3">HALL</text>
+<text x="890" y="372" text-anchor="middle" font-size="19" fill="#7C7466" letter-spacing="5">ПРЕДБАННИК</text>
+
+<!-- hall bench -->
+<g>
+  <rect x="1052" y="392" width="62" height="330" fill="#96500B" fill-opacity=".2" stroke="#96500B" stroke-width="1.8"/>
+  <text x="1083" y="557" text-anchor="middle" font-size="16" fill="#96500B" letter-spacing="3.5" transform="rotate(-90 1083 557)">BENCH</text>
+</g>
+
+<!-- double door to unfinished basement -->
+<g stroke="#4A453B">
+  <line x1="880" y1="207" x2="990" y2="207" stroke-width="5"/>
+  <line x1="990" y1="207" x2="1100" y2="207" stroke-width="5"/>
+  <path d="M880,207 A110,110 0 0,1 990,97"  fill="none" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <path d="M1100,207 A110,110 0 0,0 990,97" fill="none" stroke-width="1.6" stroke-dasharray="7 5"/>
+</g>
+<text x="990" y="82" text-anchor="middle" font-size="15" fill="#4A453B" letter-spacing="2">DOOR TO BASEMENT · DOUBLE</text>
+
+<!-- basement entrance -->
+<g stroke="#96500B">
+  <line x1="800" y1="791" x2="908" y2="791" stroke-width="5"/>
+  <path d="M800,791 A108,108 0 0,1 908,683" fill="none" stroke-width="1.6" stroke-dasharray="7 5"/>
+</g>
+<text x="854" y="856" text-anchor="middle" font-family="'Saira Condensed',Impact,sans-serif" font-size="21" fill="#96500B" letter-spacing="2.5">BASEMENT ENTRANCE</text>
+
+<!-- ============ DIMENSIONS ============ -->
+<g stroke="#4A453B" stroke-width="1.3" fill="none">
+  <!-- 36 in door -->
+  <line x1="800" y1="826" x2="908" y2="826" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="800" y1="800" x2="800" y2="832" stroke-dasharray="3 3" opacity=".55"/>
+  <line x1="908" y1="800" x2="908" y2="832" stroke-dasharray="3 3" opacity=".55"/>
+  <!-- ~18 in -->
+  <line x1="908" y1="826" x2="962" y2="826" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="962" y1="800" x2="962" y2="832" stroke-dasharray="3 3" opacity=".55"/>
+</g>
+<text x="854" y="818" text-anchor="middle" font-size="15" font-weight="600" fill="#4A453B">36"</text>
+<text x="935" y="818" text-anchor="middle" font-size="14" font-weight="600" fill="#4A453B">~18"</text>
+
+<!-- widths -->
+<g stroke="#1F5B84" stroke-width="1.4" fill="none">
+  <line x1="192" y1="906" x2="654" y2="906" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="668" y1="906" x2="1114" y2="906" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="192" y1="884" x2="192" y2="912" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="654" y1="884" x2="654" y2="912" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="1114" y1="884" x2="1114" y2="912" stroke-dasharray="3 3" opacity=".5"/>
+</g>
+<text x="423" y="898" text-anchor="middle" font-size="17" font-weight="600" fill="#1F5B84">7 ft</text>
+<text x="891" y="898" text-anchor="middle" font-size="17" font-weight="600" fill="#1F5B84">6 ft</text>
+<text x="423" y="932" text-anchor="middle" font-size="12.5" fill="#7C7466" letter-spacing="1.2">SPOKEN WIDTH</text>
+<text x="891" y="932" text-anchor="middle" font-size="12.5" fill="#7C7466" letter-spacing="1.2">SPOKEN WIDTH</text>
+
+<!-- depth, unknown -->
+<g stroke="#A3350E" stroke-width="1.5" fill="none">
+  <line x1="1206" y1="218" x2="1206" y2="782" marker-start="url(#tick)" marker-end="url(#tick)"/>
+  <line x1="1132" y1="218" x2="1212" y2="218" stroke-dasharray="3 3" opacity=".5"/>
+  <line x1="1132" y1="782" x2="1212" y2="782" stroke-dasharray="3 3" opacity=".5"/>
+</g>
+<text x="1228" y="494" font-size="17" font-weight="600" fill="#A3350E">DEPTH</text>
+<text x="1228" y="516" font-size="15" font-weight="600" fill="#A3350E">NOT SET</text>
+<text x="1228" y="538" font-size="12" fill="#7C7466">never spoken</text>
+
+<!-- ============ legend / title block ============ -->
+<g>
+  <line x1="96" y1="952" x2="1304" y2="952" stroke="#17150F" stroke-width="2"/>
+  <text x="96" y="978" font-size="14" fill="#17150F" letter-spacing="2.2">TAHOE SAUNA · PLAN · REVISION 3 · 7 SEP 2026 · VENTILATION DESIGNED</text>
+  <text x="1304" y="978" font-size="12.5" fill="#7C7466" letter-spacing="1.4" text-anchor="end">HEATER CENTRED · DOOR PER SKETCH, HINGE FAR SIDE · EXHAUST DUCTED OUTDOORS · DEPTH AND BEAM UNRESOLVED · NOT TO SCALE</text>
+</g>
+<g font-size="13" letter-spacing="1.4">
+  <rect x="96" y="880" width="26" height="13" fill="#96500B" fill-opacity=".2" stroke="#96500B" stroke-width="1.5"/>
+  <text x="132" y="891" fill="#4A453B">BENCH</text>
+  <rect x="96" y="904" width="26" height="13" fill="none" stroke="#96500B" stroke-width="2"/>
+  <text x="132" y="915" fill="#4A453B">NEW FRAMING</text>
+  <rect x="96" y="928" width="26" height="13" fill="url(#wallhatch)" stroke="#17150F" stroke-width="1.5"/>
+  <text x="132" y="939" fill="#4A453B">EXISTING</text>
+</g>
+</svg>
