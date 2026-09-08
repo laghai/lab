@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tahoe Sauna — Framing Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F5F2EC;--surface:#FFFDF9;--rule:#CDC4B4;
+  --ink:#17150F;--ink2:#4A453B;--ink3:#7C7466;
+  --cedar:#96500B;--ember:#A3350E;--steam:#1F5B84;--good:#35603B;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,monospace;
+  display:flex;flex-direction:column;overflow:hidden}
+header{padding:14px 22px;border-bottom:1px solid var(--rule);display:flex;
+  align-items:baseline;gap:20px;flex-wrap:wrap;background:var(--surface)}
+h1{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;
+  font-size:26px;letter-spacing:.03em}
+header .sub{font-size:12.5px;color:var(--ink3);letter-spacing:.06em}
+main{flex:1;display:flex;min-height:0}
+#view{flex:1;position:relative;min-width:0}
+canvas{display:block;width:100%;height:100%}
+aside{width:330px;flex:0 0 330px;border-left:1px solid var(--rule);background:var(--surface);
+  overflow-y:auto;padding:18px 20px}
+@media(max-width:900px){main{flex-direction:column}aside{width:auto;flex:0 0 auto;
+  border-left:none;border-top:1px solid var(--rule);max-height:42vh}}
+h2{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;
+  font-size:14px;letter-spacing:.09em;margin:0 0 10px;color:var(--ink2)}
+.grp{margin-bottom:22px}
+label{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:5px 0;cursor:pointer}
+input[type=checkbox]{accent-color:var(--cedar);width:15px;height:15px}
+.sw{width:13px;height:13px;border:1px solid var(--ink3);flex:0 0 auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td{padding:5px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n{text-align:right;white-space:nowrap;font-weight:600}
+.g{font-size:9.5px;letter-spacing:.07em;padding:1px 5px;border:1px solid currentColor;white-space:nowrap}
+.MEASURED{color:var(--good)}.SPOKEN{color:var(--steam)}.DECIDED{color:var(--steam)}
+.DESIGNED{color:var(--cedar)}.ASSUMED{color:var(--ember)}.STANDARD{color:var(--ink3)}.SKETCH{color:var(--steam)}
+.warn{background:#FBEDE7;border:1px solid var(--ember);padding:11px 13px;font-size:12.5px;
+  line-height:1.5;color:var(--ink2);margin-bottom:20px}
+.warn b{color:var(--ember)}
+.hint{position:absolute;left:16px;bottom:14px;font-size:11.5px;color:var(--ink3);
+  background:rgba(255,253,249,.85);padding:6px 10px;border:1px solid var(--rule)}
+#count{font-size:12px;color:var(--ink3);margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Framing model</h1>
+  <span class="sub">PARAMETRIC · REGENERATES FROM <code>design/params.json</code></span>
+  <span class="sub" style="margin-left:auto"><a href="../tv/" style="color:var(--cedar)">← review deck</a></span>
+</header>
+<main>
+  <div id="view"><div class="hint">drag to orbit · scroll to zoom · right-drag to pan</div></div>
+  <aside>
+    <div class="warn">
+      <b>This model is mostly assumption.</b> The project has <b>zero tape readings</b>.
+      Every red-tagged number below is a placeholder so the geometry can render —
+      it is not evidence. The model regenerates the moment real measurements land.
+    </div>
+    <div class="grp">
+      <h2>Layers</h2>
+      <label><input type="checkbox" id="c-floor" checked><span class="sw" style="background:#C8AE84"></span>Floor joists</label>
+      <label><input type="checkbox" id="c-studs" checked><span class="sw" style="background:#D8BC90"></span>Wall framing</label>
+      <label><input type="checkbox" id="c-ceil" checked><span class="sw" style="background:#C3A87E"></span>Ceiling furring</label>
+      <label><input type="checkbox" id="c-bench" checked><span class="sw" style="background:#B5762A"></span>Benches</label>
+      <label><input type="checkbox" id="c-heater" checked><span class="sw" style="background:#A3350E"></span>Heater + recess</label>
+      <label><input type="checkbox" id="c-clad"><span class="sw" style="background:#E0C79B"></span>Cedar cladding</label>
+      <label><input type="checkbox" id="c-vent" checked><span class="sw" style="background:#1F5B84"></span>Vents + duct</label>
+      <div id="count"></div>
+    </div>
+    <div class="grp">
+      <h2>Dimensions &amp; provenance</h2>
+      <table id="tbl"></table>
+    </div>
+  </aside>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ---------------------------------------------------------------------------
+// Parameters. Mirrors design/params.json — one source, two consumers (this and
+// the cut list). Every value carries the grade it was earned at.
+// ---------------------------------------------------------------------------
+const P = {
+  sauna_w:{v:84,g:'SPOKEN',t:'Sauna width'},
+  hall_w:{v:72,g:'SPOKEN',t:'Hall width'},
+  depth:{v:96,g:'ASSUMED',t:'Depth — never stated'},
+  ceil:{v:82,g:'ASSUMED',t:'Finished ceiling'},
+  floor_up:{v:12,g:'ASSUMED',t:'Floor build-up'},
+  stud_w:{v:1.5,g:'STANDARD',t:'Stud thickness'},
+  stud_d:{v:3.5,g:'STANDARD',t:'Stud depth (2x4)'},
+  spacing:{v:16,g:'STANDARD',t:'Stud spacing o.c.'},
+  joist_d:{v:5.5,g:'DESIGNED',t:'Floor joist (2x6)'},
+  door_w:{v:24,g:'STANDARD',t:'Door leaf'},
+  door_h:{v:76,g:'DESIGNED',t:'Door height'},
+  up_below:{v:44,g:'DESIGNED',t:'Upper bench below ceiling'},
+  up_depth:{v:24,g:'DESIGNED',t:'Upper bench depth'},
+  riser:{v:17,g:'DESIGNED',t:'Riser'},
+  low_depth:{v:18,g:'DESIGNED',t:'Lower bench depth'},
+  htr_w:{v:20,g:'ASSUMED',t:'Heater footprint'},
+  htr_h:{v:29.5,g:'STANDARD',t:'Heater height'},
+  recess:{v:10,g:'SPOKEN',t:'Heater recess'}
+};
+const V = k => P[k].v;
+
+// provenance table
+document.getElementById('tbl').innerHTML = Object.values(P).map(p =>
+  `<tr><td>${p.t}</td><td class="n">${p.v}"</td><td class="n"><span class="g ${p.g}">${p.g}</span></td></tr>`
+).join('');
+
+// ---------------------------------------------------------------------------
+const S = 0.05;                                   // inches -> scene units
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xF5F2EC);
+const el = document.getElementById('view');
+const cam = new THREE.PerspectiveCamera(42, 1, 0.1, 2000);
+const rnd = new THREE.WebGLRenderer({antialias:true});
+rnd.setPixelRatio(Math.min(devicePixelRatio,2));
+el.appendChild(rnd.domElement);
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0xC9BFA9, 0.95));
+const sun = new THREE.DirectionalLight(0xffffff, 0.75); sun.position.set(60,90,40); scene.add(sun);
+const sun2 = new THREE.DirectionalLight(0xffffff, 0.3); sun2.position.set(-50,40,-30); scene.add(sun2);
+
+const G = {floor:new THREE.Group(),studs:new THREE.Group(),ceil:new THREE.Group(),
+           bench:new THREE.Group(),heater:new THREE.Group(),clad:new THREE.Group(),vent:new THREE.Group()};
+Object.values(G).forEach(g=>scene.add(g));
+G.clad.visible = false;
+
+const MAT = {
+  floor:new THREE.MeshLambertMaterial({color:0xC8AE84}),
+  stud: new THREE.MeshLambertMaterial({color:0xD8BC90}),
+  ceil: new THREE.MeshLambertMaterial({color:0xC3A87E}),
+  bench:new THREE.MeshLambertMaterial({color:0xB5762A}),
+  heat: new THREE.MeshLambertMaterial({color:0xA3350E}),
+  clad: new THREE.MeshLambertMaterial({color:0xE0C79B, transparent:true, opacity:0.42}),
+  vent: new THREE.MeshLambertMaterial({color:0x1F5B84})
+};
+const EDGE = new THREE.LineBasicMaterial({color:0x6B6151, transparent:true, opacity:0.4});
+
+let n = 0;
+/** Axis-aligned box from inch dimensions, positioned by its min corner. */
+function box(group, mat, x, y, z, w, h, d){
+  const g = new THREE.BoxGeometry(w*S, h*S, d*S);
+  const m = new THREE.Mesh(g, mat);
+  m.position.set((x+w/2)*S, (y+h/2)*S, (z+d/2)*S);
+  group.add(m);
+  group.add(new THREE.LineSegments(new THREE.EdgesGeometry(g), EDGE).translateX(m.position.x).translateY(m.position.y).translateZ(m.position.z));
+  n++;
+  return m;
+}
+
+// ---- geometry ------------------------------------------------------------
+const W = V('sauna_w'), D = V('depth'), H = V('ceil'), SD = V('stud_d'), SW = V('stud_w'), SP = V('spacing');
+
+// FLOOR: joists across the width, on the short span
+for (let z = 0; z <= D - V('joist_d'); z += SP) box(G.floor, MAT.floor, 0, -V('joist_d'), z, W, V('joist_d'), SW);
+box(G.floor, MAT.floor, 0, -V('joist_d'), 0, W, V('joist_d'), SW);
+box(G.floor, MAT.floor, 0, -V('joist_d'), D-SW, W, V('joist_d'), SW);
+
+// WALLS: plates + studs. Left (house), back, front, and the partition with the door.
+function wall(x, z, len, horiz, doorAt){
+  box(G.studs, MAT.stud, x, 0, z, horiz?len:SD, SW, horiz?SD:len);              // bottom plate
+  box(G.studs, MAT.stud, x, H-SW, z, horiz?len:SD, SW, horiz?SD:len);           // top plate
+  for (let o = 0; o <= len - SW; o += SP){
+    if (doorAt && o+SW > doorAt[0] && o < doorAt[0]+doorAt[1]) continue;
+    horiz ? box(G.studs, MAT.stud, x+o, SW, z, SW, H-2*SW, SD)
+          : box(G.studs, MAT.stud, x, SW, z+o, SD, H-2*SW, SW);
+  }
+  if (doorAt){                                                                   // king/jack/header
+    const [a,wd] = doorAt, dh = V('door_h');
+    [a-SW, a+wd].forEach(o => horiz ? box(G.studs, MAT.stud, x+o, SW, z, SW, H-2*SW, SD)
+                                     : box(G.studs, MAT.stud, x, SW, z+o, SD, H-2*SW, SW));
+    horiz ? box(G.studs, MAT.stud, x+a, dh, z, wd, 3.5, SD)
+          : box(G.studs, MAT.stud, x, dh, z+a, SD, 3.5, wd);
+  }
+}
+wall(0, 0, W, true, null);                       // back wall
+wall(0, D-SD, W, true, null);                    // front wall
+wall(0, 0, D, false, null);                      // left — the house wall
+wall(W-SD, 0, D, false, [18, V('door_w')]);      // partition, door high on it
+
+// CEILING furring
+for (let z = 0; z <= D - SW; z += SP) box(G.ceil, MAT.ceil, 0, H, z, W, SW, SW);
+
+// BENCHES — the U: left, back, front
+const upY = H - V('up_below'), loY = upY - V('riser'), ud = V('up_depth'), ld = V('low_depth');
+box(G.bench, MAT.bench, SD, upY, SD, ud, 2, D-2*SD);
+box(G.bench, MAT.bench, SD, loY, SD+ud, ld, 2, D-2*SD-ud);
+box(G.bench, MAT.bench, SD+ud, upY, SD, W-2*SD-ud, 2, ud);
+box(G.bench, MAT.bench, SD+ud, upY, D-SD-ud, W-2*SD-ud, 2, ud);
+
+// HEATER — centred on the partition, recessed into the floor
+const hw = V('htr_w'), hz = D/2 - hw/2;
+box(G.heater, MAT.heat, W-SD-hw-2, -V('recess'), hz, hw, V('htr_h'), hw);
+box(G.heater, MAT.heat, W-SD-hw-5, -V('recess')-1, hz-3, hw+6, 1, hw+6);   // the well pan
+
+// VENTS + the duct out
+box(G.vent, MAT.vent, W-SD, 6, hz+hw+4, SD, 4, 12);                       // supply, low by the heater
+box(G.vent, MAT.vent, 0, 8, D/2-6, SD, 4, 4);                             // working exhaust, low
+box(G.vent, MAT.vent, 0, H-12, D/2-6, SD, 4, 4);                          // purge, high
+box(G.vent, MAT.vent, -14, 8, D/2-6, 14, 4, 4);                           // duct to outside
+
+// CLADDING shells
+box(G.clad, MAT.clad, 0, 0, -0.8, W, H, 0.8);
+box(G.clad, MAT.clad, -0.8, 0, 0, 0.8, H, D);
+box(G.clad, MAT.clad, 0, H, 0, W, 0.8, D);
+
+document.getElementById('count').textContent = n + ' members drawn';
+
+// ---- camera + orbit (hand-rolled; avoids a second CDN dependency) ---------
+const target = new THREE.Vector3(W/2*S, H/2.4*S, D/2*S);
+let rot = {th: -0.72, ph: 1.06}, dist = Math.max(W,D,H)*S*2.15;
+function place(){
+  cam.position.set(
+    target.x + dist*Math.sin(rot.ph)*Math.cos(rot.th),
+    target.y + dist*Math.cos(rot.ph),
+    target.z + dist*Math.sin(rot.ph)*Math.sin(rot.th));
+  cam.lookAt(target);
+}
+let drag=null;
+rnd.domElement.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,b:e.button};rnd.domElement.setPointerCapture(e.pointerId)});
+rnd.domElement.addEventListener('pointerup',e=>{drag=null});
+rnd.domElement.addEventListener('pointermove',e=>{
+  if(!drag) return;
+  const dx=e.clientX-drag.x, dy=e.clientY-drag.y; drag.x=e.clientX; drag.y=e.clientY;
+  if(drag.b===2){
+    const s=dist*0.0016;
+    target.x -= dx*s*Math.sin(rot.th+Math.PI/2); target.z -= dx*s*-Math.cos(rot.th+Math.PI/2);
+    target.y += dy*s;
+  } else {
+    rot.th -= dx*0.007; rot.ph = Math.max(0.08, Math.min(Math.PI-0.08, rot.ph - dy*0.007));
+  }
+  place();
+});
+rnd.domElement.addEventListener('contextmenu',e=>e.preventDefault());
+rnd.domElement.addEventListener('wheel',e=>{
+  e.preventDefault(); dist = Math.max(1.2, Math.min(90, dist*(1+Math.sign(e.deltaY)*0.1))); place();
+},{passive:false});
+
+for (const [id,key] of [['c-floor','floor'],['c-studs','studs'],['c-ceil','ceil'],
+                        ['c-bench','bench'],['c-heater','heater'],['c-clad','clad'],['c-vent','vent']]){
+  document.getElementById(id).addEventListener('change', e => { G[key].visible = e.target.checked; });
+}
+
+function resize(){
+  const w = el.clientWidth, h = el.clientHeight;
+  cam.aspect = w/h; cam.updateProjectionMatrix(); rnd.setSize(w,h,false);
+}
+addEventListener('resize', resize); resize(); place();
+(function loop(){ requestAnimationFrame(loop); rnd.render(scene,cam); })();
+</script>
+</body>
+</html>
