@@ -60,9 +60,10 @@ td.n{text-align:right;white-space:nowrap;font-weight:600}
   <div id="view"><div class="hint">one finger to orbit · pinch to zoom · two fingers to pan</div></div>
   <aside>
     <div class="warn">
-      <b>This model is mostly assumption.</b> The project has <b>zero tape readings</b>.
-      Every red-tagged number below is a placeholder so the geometry can render —
-      it is not evidence. The model regenerates the moment real measurements land.
+      <b>Now partly measured.</b> Sand-to-joists <b>96 in</b> comes from the point-cloud
+      ceiling census; the <b>10 in</b> floor build-up is the operator's own measurement.
+      <b>Depth is still a placeholder</b> — the one red number that matters. Everything
+      regenerates from <code>params.json</code>.
     </div>
     <div class="grp">
       <h2>Layers</h2>
@@ -71,7 +72,8 @@ td.n{text-align:right;white-space:nowrap;font-weight:600}
       <label><input type="checkbox" id="c-ceil" checked><span class="sw" style="background:#C3A87E"></span>Ceiling furring</label>
       <label><input type="checkbox" id="c-bench" checked><span class="sw" style="background:#B5762A"></span>Benches</label>
       <label><input type="checkbox" id="c-heater" checked><span class="sw" style="background:#A3350E"></span>Heater + recess</label>
-      <label><input type="checkbox" id="c-clad"><span class="sw" style="background:#E0C79B"></span>Cedar cladding</label>
+      <label><input type="checkbox" id="c-clad" checked><span class="sw" style="background:#E0C79B"></span>Cedar cladding + glass door</label>
+      <label><input type="checkbox" id="c-person" checked><span class="sw" style="background:#6E7B8B"></span>Person, 5&#39;10&quot; seated</label>
       <label><input type="checkbox" id="c-vent" checked><span class="sw" style="background:#1F5B84"></span>Vents + duct</label>
       <div id="count"></div>
     </div>
@@ -92,18 +94,17 @@ const P = {
   sauna_w:{v:84,g:'SPOKEN',t:'Sauna width'},
   hall_w:{v:72,g:'SPOKEN',t:'Hall width'},
   depth:{v:96,g:'ASSUMED',t:'Depth — never stated'},
-  ceil:{v:82,g:'ASSUMED',t:'Finished ceiling'},
-  floor_up:{v:12,g:'ASSUMED',t:'Floor build-up'},
+  ceil:{v:84,g:'DERIVED',t:'Finished ceiling'},
+  joist_soffit:{v:96,g:'MEASURED',t:'Sand to joists — scan'},
+  floor_up:{v:10,g:'MEASURED',t:'Floor build-up'},
   stud_w:{v:1.5,g:'STANDARD',t:'Stud thickness'},
   stud_d:{v:3.5,g:'STANDARD',t:'Stud depth (2x4)'},
   spacing:{v:16,g:'STANDARD',t:'Stud spacing o.c.'},
   joist_d:{v:5.5,g:'DESIGNED',t:'Floor joist (2x6)'},
   door_w:{v:24,g:'STANDARD',t:'Door leaf'},
   door_h:{v:76,g:'DESIGNED',t:'Door height'},
-  up_below:{v:44,g:'DESIGNED',t:'Upper bench below ceiling'},
-  up_depth:{v:24,g:'DESIGNED',t:'Upper bench depth'},
-  riser:{v:17,g:'DESIGNED',t:'Riser'},
-  low_depth:{v:18,g:'DESIGNED',t:'Lower bench depth'},
+  seat_h:{v:18,g:'DECIDED',t:'Bench seat height'},
+  seat_d:{v:19,g:'DECIDED',t:'Bench seat depth'},
   htr_w:{v:20,g:'ASSUMED',t:'Heater footprint'},
   htr_h:{v:29.5,g:'STANDARD',t:'Heater height'},
   recess:{v:10,g:'SPOKEN',t:'Heater recess'}
@@ -132,7 +133,7 @@ const sun2 = new THREE.DirectionalLight(0xffffff, 0.3); sun2.position.set(-50,40
 const G = {floor:new THREE.Group(),studs:new THREE.Group(),ceil:new THREE.Group(),
            bench:new THREE.Group(),heater:new THREE.Group(),clad:new THREE.Group(),vent:new THREE.Group()};
 Object.values(G).forEach(g=>scene.add(g));
-G.clad.visible = false;
+G.clad.visible = true;   // finished space by default — framing is the toggle
 
 const MAT = {
   floor:new THREE.MeshLambertMaterial({color:0xC8AE84}),
@@ -190,23 +191,48 @@ wall(W-SD, 0, D, false, [18, V('door_w')]);      // partition, door high on it
 // CEILING furring
 for (let z = 0; z <= D - SW; z += SP) box(G.ceil, MAT.ceil, 0, H, z, W, SW, SW);
 
-// BENCHES — the U: left, back, front
-const upY = H - V('up_below'), loY = upY - V('riser'), ud = V('up_depth'), ld = V('low_depth');
-box(G.bench, MAT.bench, SD, upY, SD, ud, 2, D-2*SD);
-box(G.bench, MAT.bench, SD, loY, SD+ud, ld, 2, D-2*SD-ud);
-box(G.bench, MAT.bench, SD+ud, upY, SD, W-2*SD-ud, 2, ud);
-box(G.bench, MAT.bench, SD+ud, upY, D-SD-ud, W-2*SD-ud, 2, ud);
+// BENCH — ONE seat, wrapping three walls. Top at seat_h above the finished floor.
+const SH = V('seat_h'), SDep = V('seat_d'), TH = 2;      // TH = seat slab thickness
+// left wall run, full depth
+box(G.bench, MAT.bench, SD, SH-TH, SD, SDep, TH, D-2*SD);
+// back and front runs, stopping where the left bench begins
+box(G.bench, MAT.bench, SD+SDep, SH-TH, SD,           W-2*SD-SDep, TH, SDep);
+box(G.bench, MAT.bench, SD+SDep, SH-TH, D-SD-SDep,    W-2*SD-SDep, TH, SDep);
+// front rails, so it reads as a bench and not a floating slab
+box(G.bench, MAT.bench, SD+SDep-1.5, 0, SD, 1.5, SH-TH, D-2*SD);
+box(G.bench, MAT.bench, SD+SDep, 0, SD+SDep-1.5,        W-2*SD-SDep, SH-TH, 1.5);
+box(G.bench, MAT.bench, SD+SDep, 0, D-SD-SDep+SDep-1.5, W-2*SD-SDep, SH-TH, 1.5);
 
 // HEATER — centred on the partition, recessed into the floor
 const hw = V('htr_w'), hz = D/2 - hw/2;
 box(G.heater, MAT.heat, W-SD-hw-2, -V('recess'), hz, hw, V('htr_h'), hw);
 box(G.heater, MAT.heat, W-SD-hw-5, -V('recess')-1, hz-3, hw+6, 1, hw+6);   // the well pan
 
+// A 5 ft 10 in person, seated on the bench, because a model without a body in it
+// gives no sense of whether the room works.
+const MAN = new THREE.MeshLambertMaterial({color:0x6E7B8B});
+G.person = new THREE.Group(); scene.add(G.person);
+(function person(){
+  const px = SD + SDep/2, pz = D/2;          // sitting on the left bench, facing in
+  const seat = SH;
+  const put=(x,y,z,w,h,d)=>box(G.person, MAN, x, y, z, w, h, d);
+  put(px-6,  seat,      pz-7,  12, 25, 14);            // torso
+  put(px-4.5,seat+25,   pz-4.5, 9,  9,  9);            // head
+  put(px+2,  seat-1,    pz-6.5, 17, 5,  13);           // thighs, forward off the bench
+  put(px+14, seat-17,   pz-6.5,  5, 17, 13);           // lower legs down to the floor
+  put(px-8,  seat+4,    pz-9,    4, 18, 4);            // arms
+  put(px-8,  seat+4,    pz+5,    4, 18, 4);
+})();
+
 // VENTS + the duct out
 box(G.vent, MAT.vent, W-SD, 6, hz+hw+4, SD, 4, 12);                       // supply, low by the heater
 box(G.vent, MAT.vent, 0, 8, D/2-6, SD, 4, 4);                             // working exhaust, low
 box(G.vent, MAT.vent, 0, H-12, D/2-6, SD, 4, 4);                          // purge, high
 box(G.vent, MAT.vent, -14, 8, D/2-6, 14, 4, 4);                           // duct to outside
+
+// GLASS DOOR — in the partition opening, and the reason the room does not feel closed
+const GLASS = new THREE.MeshLambertMaterial({color:0xBFD4DC, transparent:true, opacity:0.34});
+box(G.clad, GLASS, W-SD, 0, 18, 1, V('door_h'), V('door_w'));
 
 // CLADDING shells
 box(G.clad, MAT.clad, 0, 0, -0.8, W, H, 0.8);
@@ -281,7 +307,8 @@ cv.addEventListener('wheel', e => {
 }, {passive:false});
 
 for (const [id,key] of [['c-floor','floor'],['c-studs','studs'],['c-ceil','ceil'],
-                        ['c-bench','bench'],['c-heater','heater'],['c-clad','clad'],['c-vent','vent']]){
+                        ['c-bench','bench'],['c-heater','heater'],['c-clad','clad'],
+                        ['c-vent','vent'],['c-person','person']]){
   document.getElementById(id).addEventListener('change', e => { G[key].visible = e.target.checked; });
 }
 
