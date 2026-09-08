@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tahoe Sauna — The Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{--ground:#F5F2EC;--surface:#FFFDF9;--rule:#CDC4B4;--ink:#17150F;--ink2:#4A453B;
+  --ink3:#7C7466;--cedar:#96500B;--ember:#A3350E;--steam:#1F5B84;--good:#35603B}
+*{box-sizing:border-box}
+html,body{height:100%;height:100svh;margin:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,monospace;
+  display:flex;flex-direction:column;overflow:hidden}
+header{padding:13px 20px;border-bottom:1px solid var(--rule);display:flex;align-items:baseline;
+  gap:18px;flex-wrap:wrap;background:var(--surface)}
+h1{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;
+  font-size:25px;letter-spacing:.03em}
+.sub{font-size:12px;color:var(--ink3);letter-spacing:.06em}
+a{color:var(--cedar)}
+main{flex:1;display:flex;min-height:0}
+#view{flex:1;position:relative;min-width:0;background:#E9E4DA}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+aside{width:290px;flex:0 0 290px;border-left:1px solid var(--rule);background:var(--surface);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 18px}
+@media(max-width:900px){main{flex-direction:column}
+  aside{width:auto;flex:0 0 auto;border-left:none;border-top:1px solid var(--rule);max-height:38svh}}
+h2{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;font-size:13px;
+  letter-spacing:.09em;margin:0 0 9px;color:var(--ink2)}
+.grp{margin-bottom:20px}
+label{display:flex;align-items:center;gap:11px;font-size:15px;padding:8px 0;cursor:pointer}
+input[type=checkbox]{accent-color:var(--cedar);width:20px;height:20px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td{padding:5px 0;border-bottom:1px solid var(--rule)}
+td.n{text-align:right;white-space:nowrap;font-weight:600}
+.hint{position:absolute;left:14px;bottom:12px;font-size:11.5px;color:var(--ink3);
+  background:rgba(255,253,249,.88);padding:6px 10px;border:1px solid var(--rule)}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;background:#E9E4DA;font-size:15px;color:var(--ink2)}
+#bar{width:230px;height:5px;background:var(--rule)}
+#bar i{display:block;height:100%;width:0;background:var(--cedar)}
+.note{font-size:12px;line-height:1.55;color:var(--ink2);background:#F1EADF;
+  border:1px solid var(--rule);padding:10px 12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>The scan</h1>
+  <span class="sub">iPhone LiDAR · 1,089,135 faces · textured on device</span>
+  <span class="sub" style="margin-left:auto">
+    <a href="../3d/">design model →</a> &nbsp; <a href="../tv/">review deck →</a></span>
+</header>
+<main>
+  <div id="view">
+    <div id="load">Loading the scan — 26 MB<div id="bar"><i></i></div></div>
+    <div class="hint">one finger to orbit · pinch to zoom · two fingers to pan</div>
+  </div>
+  <aside>
+    <div class="grp"><h2>View</h2>
+      <label><input type="checkbox" id="c-tex" checked>Texture</label>
+      <label><input type="checkbox" id="c-wire">Wireframe</label>
+      <label><input type="checkbox" id="c-grid" checked>Foot grid on the floor</label>
+    </div>
+    <div class="grp"><h2>Measured</h2>
+      <table>
+        <tr><td>Mesh extent X</td><td class="n">236.0 in · 19.7 ft</td></tr>
+        <tr><td>Mesh extent Z</td><td class="n">190.1 in · 15.8 ft</td></tr>
+        <tr><td>Mesh extent Y</td><td class="n">109.2 in · 9.1 ft</td></tr>
+        <tr><td>Sand → joists</td><td class="n">96 in</td></tr>
+        <tr><td>Faces</td><td class="n">1,089,135</td></tr>
+        <tr><td>Vertices</td><td class="n">650,718</td></tr>
+      </table>
+    </div>
+    <div class="note">
+      <b>This is the real capture, not a drawing.</b> Everything the design asserts about the
+      space should be checkable here. The floor grid is one foot per square — use it to read
+      any dimension directly off the mesh.
+    </div>
+  </aside>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+const S = 0.05;                                    // inches -> scene units
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xE9E4DA);
+const el = document.getElementById('view');
+const cam = new THREE.PerspectiveCamera(50, 1, 0.05, 4000);
+const rnd = new THREE.WebGLRenderer({antialias:true});
+rnd.setPixelRatio(Math.min(devicePixelRatio, 2));
+rnd.outputEncoding = THREE.sRGBEncoding;
+el.appendChild(rnd.domElement);
+
+scene.add(new THREE.HemisphereLight(0xffffff, 0xB9AE97, 1.15));
+const d1 = new THREE.DirectionalLight(0xffffff, 0.55); d1.position.set(1,2,1); scene.add(d1);
+const d2 = new THREE.DirectionalLight(0xffffff, 0.35); d2.position.set(-1,1,-1); scene.add(d2);
+
+// one-foot grid, so a dimension can be read straight off the mesh
+const grid = new THREE.GridHelper(40, 40, 0x96500B, 0xC0B6A4);
+grid.material.opacity = 0.5; grid.material.transparent = true;
+scene.add(grid);
+
+let target = new THREE.Vector3(), rot = {th:-0.9, ph:1.15}, dist = 30, model = null;
+function place(){
+  cam.position.set(target.x + dist*Math.sin(rot.ph)*Math.cos(rot.th),
+                   target.y + dist*Math.cos(rot.ph),
+                   target.z + dist*Math.sin(rot.ph)*Math.sin(rot.th));
+  cam.lookAt(target);
+}
+
+new THREE.GLTFLoader().load('../assets/scan.glb', g => {
+  model = g.scene;
+  model.scale.setScalar(S);
+  const box = new THREE.Box3().setFromObject(model);
+  const c = box.getCenter(new THREE.Vector3()), sz = box.getSize(new THREE.Vector3());
+  model.position.sub(c);                       // centre it on the origin
+  model.position.y += sz.y/2;                  // sit it on the grid
+  scene.add(model);
+  target.set(0, sz.y/2, 0);
+  dist = Math.max(sz.x, sz.z) * 1.5;
+  grid.position.y = 0.01;
+  place();
+  document.getElementById('load').remove();
+}, e => {
+  if (e.lengthComputable)
+    document.querySelector('#bar i').style.width = (e.loaded/e.total*100) + '%';
+}, err => {
+  document.getElementById('load').textContent = 'Could not load the scan: ' + err;
+});
+
+document.getElementById('c-tex').onchange = e => model && model.traverse(o => {
+  if (o.isMesh){ o.material.map = e.target.checked ? (o.userData._m ||= o.material.map) : null;
+                 if (!e.target.checked) o.userData._m ||= o.material.map;
+                 o.material.needsUpdate = true; }});
+document.getElementById('c-wire').onchange = e => model && model.traverse(o => {
+  if (o.isMesh) o.material.wireframe = e.target.checked; });
+document.getElementById('c-grid').onchange = e => grid.visible = e.target.checked;
+
+// pointer: one finger orbits, two pinch and pan. Same handling as the design model.
+const pts = new Map(); let pinch0 = null, mid0 = null;
+const mid = () => { const a=[...pts.values()]; return {x:(a[0].x+a[1].x)/2, y:(a[0].y+a[1].y)/2}; };
+const spread = () => { const a=[...pts.values()]; return Math.hypot(a[0].x-a[1].x, a[0].y-a[1].y); };
+function pan(dx,dy){ const s=dist*0.0016;
+  target.x -= dx*s*Math.cos(rot.th); target.z -= dx*s*Math.sin(rot.th); target.y += dy*s; }
+const cv = rnd.domElement;
+cv.addEventListener('pointerdown', e => { cv.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if (pts.size===2){ pinch0=spread(); mid0=mid(); } });
+['pointerup','pointercancel'].forEach(t =>
+  cv.addEventListener(t, e => { pts.delete(e.pointerId); pinch0=null; }));
+cv.addEventListener('pointermove', e => {
+  const p = pts.get(e.pointerId); if (!p) return;
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if (pts.size===1){
+    if (e.buttons===2) pan(e.clientX-p.x, e.clientY-p.y);
+    else { rot.th -= (e.clientX-p.x)*0.007;
+           rot.ph = Math.max(0.06, Math.min(Math.PI-0.06, rot.ph-(e.clientY-p.y)*0.007)); }
+    place();
+  } else if (pts.size===2 && pinch0){
+    const sp=spread(), m=mid();
+    dist = Math.max(1, Math.min(300, dist*(pinch0/sp))); pinch0 = sp;
+    pan(m.x-mid0.x, m.y-mid0.y); mid0 = m; place();
+  }
+});
+cv.addEventListener('contextmenu', e => e.preventDefault());
+cv.addEventListener('wheel', e => { e.preventDefault();
+  dist = Math.max(1, Math.min(300, dist*(1+Math.sign(e.deltaY)*0.1))); place(); }, {passive:false});
+
+function resize(){ const w=el.clientWidth,h=el.clientHeight;
+  cam.aspect=w/h; cam.updateProjectionMatrix(); rnd.setSize(w,h,false); }
+addEventListener('resize', resize); resize(); place();
+(function loop(){ requestAnimationFrame(loop); rnd.render(scene,cam); })();
+</script>
+</body>
+</html>
