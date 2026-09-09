@@ -1,0 +1,80 @@
+{
+ "_": "Idealised volume from the scan. The ONLY source downstream may read.",
+ "frame": {
+  "rotation_deg": 7.25,
+  "origin_xz": [
+   -93.96,
+   -61.52
+  ],
+  "floor_y_raw": -47.62,
+  "units": "inches",
+  "note": "apply: rotate the raw cloud by rotation_deg about Y, subtract origin_xz, subtract floor_y_raw from Y. Then the model frame and the scan frame coincide."
+ },
+ "shell": {
+  "x": [
+   2.5,
+   222.0
+  ],
+  "z": [
+   5.5,
+   137.8
+  ],
+  "y": [
+   0.0,
+   96.2
+  ],
+  "width_ft": 18.29,
+  "depth_ft": 11.03,
+  "height_ft": 8.02,
+  "squareness": {
+   "x_lo_scatter_in": 17.0,
+   "x_hi_scatter_in": 1.0,
+   "z_lo_scatter_in": 10.0,
+   "z_hi_scatter_in": 1.0,
+   "note": "scatter is how far a plane's own inliers spread. That IS the squareness error the idealisation hides."
+  }
+ },
+ "interior_walls": {
+  "x": [
+   2.5,
+   88.7,
+   112.7,
+   132.8,
+   162.9,
+   172.9
+  ],
+  "z": [
+   5.5,
+   137.8,
+   20.6,
+   26.6
+  ]
+ },
+ "features": {
+  "openings": {
+   "z_hi": [
+    {
+     "start_in": 36.0,
+     "width_in": 21.0,
+     "head_in": 84.0
+    }
+   ]
+  },
+  "columns": [
+   {
+    "x": 156.9,
+    "z": 155.7,
+    "w": 9.0,
+    "d": 6.0,
+    "pts": 170,
+    "top": 83.4
+   }
+  ]
+ },
+ "acceptance": {
+  "passed": false,
+  "failures": [
+   "A2.2 faces are real surfaces: weakest face 751 pts = 0.7%"
+  ]
+ }
+}

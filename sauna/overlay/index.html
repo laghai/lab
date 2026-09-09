@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tahoe Sauna — Model on Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{--ground:#F5F2EC;--surface:#FFFDF9;--rule:#CDC4B4;--ink:#17150F;--ink2:#4A453B;
+  --ink3:#7C7466;--cedar:#96500B;--ember:#A3350E;--steam:#1F5B84;--good:#35603B}
+*{box-sizing:border-box}
+html,body{height:100%;height:100svh;margin:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,monospace;
+  display:flex;flex-direction:column;overflow:hidden;font-size:14px}
+header{padding:11px 18px;border-bottom:1px solid var(--rule);display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap;background:var(--surface)}
+h1{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;
+  font-size:23px;letter-spacing:.03em}
+a{color:var(--cedar)}
+.views{display:flex;gap:5px;margin-left:auto}
+.views button{font-family:inherit;font-size:13px;padding:8px 13px;border:1px solid var(--rule);
+  background:var(--ground);color:var(--ink);cursor:pointer;border-radius:2px}
+.views button.on{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:600}
+main{flex:1;display:flex;min-height:0}
+#view{flex:1;position:relative;min-width:0;background:#EDE8DE}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+aside{width:320px;flex:0 0 320px;border-left:1px solid var(--rule);background:var(--surface);
+  overflow-y:auto;-webkit-overflow-scrolling:touch;padding:15px 17px}
+@media(max-width:900px){main{flex-direction:column}
+  aside{width:auto;flex:0 0 auto;border-left:none;border-top:1px solid var(--rule);max-height:42svh}}
+h2{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;font-size:13px;
+  letter-spacing:.09em;margin:0 0 8px;color:var(--ink2)}
+.grp{margin-bottom:18px}
+label{display:flex;align-items:center;gap:10px;font-size:15px;padding:7px 0;cursor:pointer}
+input[type=checkbox],input[type=range]{accent-color:var(--cedar)}
+input[type=checkbox]{width:20px;height:20px}
+input[type=range]{width:100%}
+table{width:100%;border-collapse:collapse;font-size:12px}
+td{padding:5px 0;border-bottom:1px solid var(--rule)}
+td.n{text-align:right;white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums}
+.gate{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--rule);font-size:12px;align-items:baseline}
+.gate b{flex:0 0 42px}
+.pass b{color:var(--good)} .fail b{color:var(--ember)}
+.hint{position:absolute;left:14px;bottom:12px;font-size:11.5px;color:var(--ink3);
+  background:rgba(255,253,249,.9);padding:7px 11px;border:1px solid var(--rule)}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;background:#EDE8DE;color:var(--ink2)}
+#bar{width:220px;height:5px;background:var(--rule)}#bar i{display:block;height:100%;width:0;background:var(--cedar)}
+.warn{background:#FBEDE7;border:1px solid var(--ember);padding:10px 12px;font-size:12px;
+  line-height:1.5;color:var(--ink2);margin-bottom:16px}
+.warn b{color:var(--ember)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Model on scan</h1>
+  <span style="font-size:12px;color:var(--ink3)">stage 5 — validation</span>
+  <div class="views">
+    <button data-v="axon" class="on">Axon</button>
+    <button data-v="top">Top</button>
+    <button data-v="front">Front</button>
+    <button data-v="side">Side</button>
+  </div>
+  <span style="font-size:12.5px"><a href="../annotate/">annotate →</a></span>
+</header>
+<main>
+  <div id="view">
+    <div id="load">Loading scan + model<div id="bar"><i></i></div></div>
+    <div class="hint">The box is the extracted model. The mesh is the scan.
+      <b>They share one frame</b> — if they do not line up, the model is wrong.</div>
+  </div>
+  <aside>
+    <div class="warn" id="verdict">reading acceptance…</div>
+    <div class="grp"><h2>Layers</h2>
+      <label><input type="checkbox" id="c-scan" checked>Scan mesh</label>
+      <label><input type="checkbox" id="c-box" checked>Extracted shell</label>
+      <label><input type="checkbox" id="c-feat" checked>Openings + columns</label>
+      <label><input type="checkbox" id="c-grid" checked>Foot grid</label>
+      <div style="margin-top:8px;font-size:12px;color:var(--ink3)">Scan opacity</div>
+      <input type="range" id="op" min="10" max="100" value="100">
+    </div>
+    <div class="grp"><h2>Acceptance</h2><div id="gates"></div></div>
+    <div class="grp"><h2>Shell</h2><table id="dims"></table></div>
+  </aside>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+const S = 0.05;
+const scene = new THREE.Scene(); scene.background = new THREE.Color(0xEDE8DE);
+const el = document.getElementById('view');
+let cam = new THREE.PerspectiveCamera(48, 1, 0.05, 5000);
+const rnd = new THREE.WebGLRenderer({antialias:true});
+rnd.setPixelRatio(Math.min(devicePixelRatio,2)); rnd.outputEncoding = THREE.sRGBEncoding;
+el.appendChild(rnd.domElement);
+scene.add(new THREE.HemisphereLight(0xffffff,0xB9AE97,1.2));
+const l1=new THREE.DirectionalLight(0xffffff,0.5); l1.position.set(1,2,1); scene.add(l1);
+const l2=new THREE.DirectionalLight(0xffffff,0.3); l2.position.set(-1,1,-1); scene.add(l2);
+
+const G = {scan:new THREE.Group(), box:new THREE.Group(), feat:new THREE.Group()};
+Object.values(G).forEach(g=>scene.add(g));
+const grid = new THREE.GridHelper(40,40,0x96500B,0xC0B6A4);
+grid.material.opacity=.4; grid.material.transparent=true; scene.add(grid);
+
+let target=new THREE.Vector3(), rot={th:-0.85,ph:1.1}, dist=30, SHELL=null;
+
+function place(){ cam.position.set(
+  target.x+dist*Math.sin(rot.ph)*Math.cos(rot.th),
+  target.y+dist*Math.cos(rot.ph),
+  target.z+dist*Math.sin(rot.ph)*Math.sin(rot.th)); cam.lookAt(target); }
+
+// -------- load the model file first; the scan is placed into ITS frame -------------
+fetch('../assets/shell.json').then(r=>r.json()).then(sh=>{
+  SHELL = sh;
+  const A = THREE.MathUtils.degToRad(sh.frame.rotation_deg);
+  const [ox,oz] = sh.frame.origin_xz, fy = sh.frame.floor_y_raw;
+
+  // A5.1 CO-REGISTRATION. Exactly the transform stage 1 recorded:
+  //   x' = x cosA - z sinA - ox ;  z' = x sinA + z cosA - oz ;  y' = y - fy
+  const M = new THREE.Matrix4().set(
+     Math.cos(A), 0, -Math.sin(A), -ox,
+     0,           1,  0,           -fy,
+     Math.sin(A), 0,  Math.cos(A), -oz,
+     0,           0,  0,            1);
+
+  new THREE.GLTFLoader().load('../assets/scan.glb', g=>{
+    const m = g.scene;
+    m.applyMatrix4(M);                 // raw -> canonical, in inches
+    m.scale.multiplyScalar(S);         // inches -> scene
+    m.updateMatrixWorld(true);
+    m.traverse(o=>{ if(o.isMesh){ o.material.transparent=true; o.material.depthWrite=true; }});
+    G.scan.add(m);
+    document.getElementById('load').remove();
+  }, e=>{ if(e.lengthComputable)
+      document.querySelector('#bar i').style.width=(e.loaded/e.total*100)+'%'; },
+     err=>{ document.getElementById('load').textContent='scan failed: '+err; });
+
+  // -------- the extracted shell, drawn as a wireframe box in canonical space -------
+  const [x0,x1]=sh.shell.x, [z0,z1]=sh.shell.z, [y0,y1]=sh.shell.y;
+  const w=x1-x0, d=z1-z0, h=y1-y0;
+  const geo = new THREE.BoxGeometry(w*S, h*S, d*S);
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(geo),
+     new THREE.LineBasicMaterial({color:0xA3350E, linewidth:2}));
+  edges.position.set((x0+w/2)*S, (y0+h/2)*S, (z0+d/2)*S);
+  G.box.add(edges);
+  const fill = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({
+     color:0xA3350E, transparent:true, opacity:0.06, side:THREE.BackSide}));
+  fill.position.copy(edges.position); G.box.add(fill);
+
+  // features
+  (sh.features.columns||[]).forEach(c=>{
+    const g2 = new THREE.BoxGeometry(Math.max(c.w,4)*S, c.top*S, Math.max(c.d,4)*S);
+    const mm = new THREE.Mesh(g2, new THREE.MeshLambertMaterial({color:0x1F5B84,
+      transparent:true, opacity:0.5}));
+    mm.position.set(c.x*S, c.top/2*S, c.z*S); G.feat.add(mm);
+  });
+  Object.entries(sh.features.openings||{}).forEach(([wall,ops])=>{
+    ops.forEach(o=>{
+      const onX = wall.startsWith('x');
+      const pos = wall==='x_lo'?x0 : wall==='x_hi'?x1 : wall==='z_lo'?z0 : z1;
+      const g2 = new THREE.BoxGeometry(onX?2*S:o.width_in*S, o.head_in*S, onX?o.width_in*S:2*S);
+      const mm = new THREE.Mesh(g2, new THREE.MeshBasicMaterial({color:0x35603B,
+        transparent:true, opacity:0.35}));
+      mm.position.set(onX?pos*S:(o.start_in+o.width_in/2)*S, o.head_in/2*S,
+                      onX?(o.start_in+o.width_in/2)*S:pos*S);
+      G.feat.add(mm);
+    });
+  });
+
+  target.set((x0+w/2)*S, h/2*S, (z0+d/2)*S);
+  dist = Math.max(w,d)*S*1.9; place();
+
+  // -------- acceptance + dimensions ---------------------------------------------
+  const a = sh.acceptance||{passed:null,failures:[]};
+  const v = document.getElementById('verdict');
+  if(a.passed){ v.style.background='#EAF1EA'; v.style.borderColor='#35603B';
+    v.innerHTML='<b style="color:#35603B">Acceptance passed.</b> The model may be used downstream.'; }
+  else { v.innerHTML='<b>Model REFUSED — '+(a.failures||[]).length+
+    ' acceptance test(s) failed.</b><br>'+(a.failures||[]).join('<br>')+
+    '<br><br>Shown so the failure is inspectable. <b>Not truth.</b>'; }
+
+  const sq = sh.shell.squareness||{};
+  document.getElementById('gates').innerHTML = [
+    ['A2.1','shell contains the room', a.failures && a.failures.some(f=>f.startsWith('A2.1'))],
+    ['A2.2','faces are real surfaces', a.failures && a.failures.some(f=>f.startsWith('A2.2'))],
+    ['A2.3','squareness reported', false],
+  ].map(([id,txt,bad])=>`<div class="gate ${bad?'fail':'pass'}"><b>${bad?'FAIL':'PASS'}</b><span>${id} ${txt}</span></div>`).join('');
+
+  const f = n => `${Math.floor(n/12)}'${(n%12).toFixed(0)}"`;
+  document.getElementById('dims').innerHTML = `
+    <tr><td>Width  X</td><td class="n">${sh.shell.width_ft} ft</td></tr>
+    <tr><td>Depth  Z</td><td class="n">${sh.shell.depth_ft} ft</td></tr>
+    <tr><td>Height Y</td><td class="n">${sh.shell.height_ft} ft</td></tr>
+    <tr><td>Rotation</td><td class="n">${sh.frame.rotation_deg}&deg;</td></tr>
+    <tr><td>x-lo scatter</td><td class="n" style="color:${sq.x_lo_scatter_in>6?'#A3350E':'inherit'}">${sq.x_lo_scatter_in} in</td></tr>
+    <tr><td>x-hi scatter</td><td class="n" style="color:${sq.x_hi_scatter_in>6?'#A3350E':'inherit'}">${sq.x_hi_scatter_in} in</td></tr>
+    <tr><td>z-lo scatter</td><td class="n" style="color:${sq.z_lo_scatter_in>6?'#A3350E':'inherit'}">${sq.z_lo_scatter_in} in</td></tr>
+    <tr><td>z-hi scatter</td><td class="n" style="color:${sq.z_hi_scatter_in>6?'#A3350E':'inherit'}">${sq.z_hi_scatter_in} in</td></tr>
+    <tr><td>Columns found</td><td class="n">${(sh.features.columns||[]).length}</td></tr>
+    <tr><td>Openings found</td><td class="n">${Object.values(sh.features.openings||{}).flat().length}</td></tr>`;
+});
+
+// -------- orthographic views ------------------------------------------------------
+document.querySelectorAll('.views button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.views button').forEach(x=>x.className='');
+  b.className='on';
+  const v=b.dataset.v;
+  if(v==='axon'){ rot={th:-0.85,ph:1.1}; }
+  if(v==='top')  { rot={th:-Math.PI/2,ph:0.06}; }
+  if(v==='front'){ rot={th:-Math.PI/2,ph:Math.PI/2}; }
+  if(v==='side') { rot={th:0,ph:Math.PI/2}; }
+  place();
+});
+document.getElementById('c-scan').onchange=e=>G.scan.visible=e.target.checked;
+document.getElementById('c-box').onchange =e=>G.box.visible=e.target.checked;
+document.getElementById('c-feat').onchange=e=>G.feat.visible=e.target.checked;
+document.getElementById('c-grid').onchange=e=>grid.visible=e.target.checked;
+document.getElementById('op').oninput=e=>G.scan.traverse(o=>{
+  if(o.isMesh) o.material.opacity=e.target.value/100; });
+
+// -------- pointer -----------------------------------------------------------------
+const pts=new Map(); let pinch0=null,mid0=null;
+const mid=()=>{const a=[...pts.values()];return{x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}};
+const spread=()=>{const a=[...pts.values()];return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)};
+function pan(dx,dy){const s=dist*0.0016;
+  target.x-=dx*s*Math.cos(rot.th); target.z-=dx*s*Math.sin(rot.th); target.y+=dy*s;}
+const cv=rnd.domElement;
+cv.addEventListener('pointerdown',e=>{cv.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===2){pinch0=spread();mid0=mid();}});
+['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,e=>{
+  pts.delete(e.pointerId);pinch0=null;}));
+cv.addEventListener('pointermove',e=>{
+  const p=pts.get(e.pointerId); if(!p) return;
+  const dx=e.clientX-p.x,dy=e.clientY-p.y;
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===1){
+    if(e.buttons===2) pan(dx,dy);
+    else{rot.th-=dx*0.007;rot.ph=Math.max(0.04,Math.min(Math.PI-0.04,rot.ph-dy*0.007));}
+    place();
+  } else if(pts.size===2&&pinch0){
+    const sp=spread(),m=mid();
+    dist=Math.max(1,Math.min(400,dist*(pinch0/sp)));pinch0=sp;
+    pan(m.x-mid0.x,m.y-mid0.y);mid0=m;place();
+  }});
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+cv.addEventListener('wheel',e=>{e.preventDefault();
+  dist=Math.max(1,Math.min(400,dist*(1+Math.sign(e.deltaY)*0.1)));place();},{passive:false});
+function resize(){const w=el.clientWidth,h=el.clientHeight;
+  cam.aspect=w/h;cam.updateProjectionMatrix();rnd.setSize(w,h,false);}
+addEventListener('resize',resize);resize();place();
+(function loop(){requestAnimationFrame(loop);rnd.render(scene,cam);})();
+</script>
+</body>
+</html>
