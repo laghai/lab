@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tahoe Sauna — Annotate the Scan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{--ground:#F5F2EC;--surface:#FFFDF9;--rule:#CDC4B4;--ink:#17150F;--ink2:#4A453B;
+  --ink3:#7C7466;--cedar:#96500B;--ember:#A3350E;--steam:#1F5B84;--good:#35603B}
+*{box-sizing:border-box}
+html,body{height:100%;height:100svh;margin:0}
+body{background:var(--ground);color:var(--ink);font-family:"IBM Plex Mono",ui-monospace,monospace;
+  display:flex;flex-direction:column;overflow:hidden;font-size:14px}
+header{padding:12px 18px;border-bottom:1px solid var(--rule);display:flex;align-items:center;
+  gap:14px;flex-wrap:wrap;background:var(--surface)}
+h1{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;
+  font-size:23px;letter-spacing:.03em}
+a{color:var(--cedar)}
+main{flex:1;display:flex;min-height:0}
+#view{flex:1;position:relative;min-width:0;background:#E9E4DA}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+aside{width:340px;flex:0 0 340px;border-left:1px solid var(--rule);background:var(--surface);
+  display:flex;flex-direction:column;min-height:0}
+@media(max-width:900px){main{flex-direction:column}
+  aside{width:auto;flex:0 0 auto;border-left:none;border-top:1px solid var(--rule);max-height:46svh}}
+.pad{padding:14px 16px;border-bottom:1px solid var(--rule)}
+h2{font-family:"Saira Condensed",Impact,sans-serif;text-transform:uppercase;font-size:13px;
+  letter-spacing:.09em;margin:0 0 9px;color:var(--ink2)}
+.kinds{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kinds button{font-family:inherit;font-size:13px;padding:9px 6px;border:1px solid var(--rule);
+  background:var(--ground);color:var(--ink);cursor:pointer;border-radius:2px}
+.kinds button.on{background:var(--cedar);border-color:var(--cedar);color:#fff;font-weight:600}
+.tools{display:flex;gap:6px;margin-top:9px}
+.tools button{flex:1;font-family:inherit;font-size:13px;padding:9px 4px;border:1px solid var(--rule);
+  background:var(--ground);color:var(--ink);cursor:pointer;border-radius:2px}
+.tools button.on{background:var(--steam);border-color:var(--steam);color:#fff;font-weight:600}
+#list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:10px 16px}
+.row{display:flex;gap:8px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--rule);
+  font-size:12.5px}
+.row .k{font-weight:600;color:var(--cedar);flex:0 0 78px}
+.row .c{color:var(--ink2);flex:1;font-variant-numeric:tabular-nums}
+.row .x{cursor:pointer;color:var(--ember);flex:0 0 auto;padding:0 4px}
+.out{display:flex;gap:6px;padding:12px 16px;border-top:1px solid var(--rule);background:var(--ground)}
+.out button{flex:1;font-family:inherit;font-size:13px;padding:10px 4px;border:1px solid var(--ink2);
+  background:var(--surface);color:var(--ink);cursor:pointer;border-radius:2px}
+.hint{position:absolute;left:14px;bottom:12px;font-size:11.5px;color:var(--ink3);
+  background:rgba(255,253,249,.9);padding:7px 11px;border:1px solid var(--rule);max-width:60%}
+#load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:12px;background:#E9E4DA;color:var(--ink2)}
+#bar{width:220px;height:5px;background:var(--rule)}#bar i{display:block;height:100%;width:0;background:var(--cedar)}
+#meas{position:absolute;top:12px;left:14px;background:rgba(255,253,249,.94);border:1px solid var(--steam);
+  padding:9px 13px;font-size:15px;font-weight:600;color:var(--steam);display:none}
+.note{font-size:12px;line-height:1.5;color:var(--ink2)}
+</style>
+</head>
+<body>
+<header>
+  <h1>Annotate the scan</h1>
+  <span style="font-size:12px;color:var(--ink3)">click the mesh · label it · I snap geometry to it</span>
+  <span style="margin-left:auto;font-size:12.5px">
+    <a href="../scan/">plain scan →</a> &nbsp; <a href="../3d/">design model →</a></span>
+</header>
+<main>
+  <div id="view">
+    <div id="load">Loading the scan — 26 MB<div id="bar"><i></i></div></div>
+    <div id="meas"></div>
+    <div class="hint">Pick a label, then <b>tap the mesh</b>. Orbit with one finger, pinch to zoom,
+      two fingers to pan. In <b>Measure</b> mode two taps give a distance.</div>
+  </div>
+  <aside>
+    <div class="pad">
+      <h2>What am I clicking?</h2>
+      <div class="kinds" id="kinds"></div>
+      <div class="tools">
+        <button id="t-mark" class="on">Mark</button>
+        <button id="t-meas">Measure</button>
+        <button id="t-undo">Undo</button>
+      </div>
+    </div>
+    <div id="list"></div>
+    <div class="out">
+      <button id="copy">Copy JSON</button>
+      <button id="dl">Download</button>
+      <button id="clr">Clear</button>
+    </div>
+  </aside>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+// ---------------------------------------------------------------------------------
+// Coordinates. The mesh arrives in the scanner's own frame; the project works in the
+// ROOM frame — rotated so walls are axis-aligned, origin at the room's min corner,
+// heights measured from the floor. Every number this tool reports is already in that
+// frame and in inches, so an annotation can be dropped straight into params.json.
+// ---------------------------------------------------------------------------------
+const ROT_DEG = -172.7;          // from design/scan/features.json — strongest wall's bearing
+const S = 0.05;                  // inches -> scene units
+const KINDS = ['Post','Door jamb','Door sill','Door head','Wall','Corner',
+               'Floor','Ceiling','Beam','Duct / pipe','Other'];
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xE9E4DA);
+const el = document.getElementById('view');
+const cam = new THREE.PerspectiveCamera(50, 1, 0.05, 4000);
+const rnd = new THREE.WebGLRenderer({antialias:true});
+rnd.setPixelRatio(Math.min(devicePixelRatio,2));
+rnd.outputEncoding = THREE.sRGBEncoding;
+el.appendChild(rnd.domElement);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xB9AE97, 1.2));
+const dl1 = new THREE.DirectionalLight(0xffffff,0.5); dl1.position.set(1,2,1); scene.add(dl1);
+const dl2 = new THREE.DirectionalLight(0xffffff,0.32); dl2.position.set(-1,1,-1); scene.add(dl2);
+
+const grid = new THREE.GridHelper(40,40,0x96500B,0xC0B6A4);
+grid.material.opacity=.45; grid.material.transparent=true; scene.add(grid);
+const marks = new THREE.Group(); scene.add(marks);
+
+let model=null, origin=new THREE.Vector3(), target=new THREE.Vector3();
+let rot={th:-0.9,ph:1.15}, dist=30;
+function place(){ cam.position.set(
+  target.x+dist*Math.sin(rot.ph)*Math.cos(rot.th),
+  target.y+dist*Math.cos(rot.ph),
+  target.z+dist*Math.sin(rot.ph)*Math.sin(rot.th)); cam.lookAt(target); }
+
+new THREE.GLTFLoader().load('../assets/scan.glb', g=>{
+  model=g.scene;
+  // rotate into the room frame, then scale, then sit on the grid
+  model.rotation.y = THREE.MathUtils.degToRad(ROT_DEG);
+  model.updateMatrixWorld(true);
+  let b = new THREE.Box3().setFromObject(model);
+  model.position.sub(b.min);                 // min corner -> origin
+  model.scale.setScalar(S);
+  model.updateMatrixWorld(true);
+  b = new THREE.Box3().setFromObject(model);
+  const sz = b.getSize(new THREE.Vector3());
+  target.set(sz.x/2, sz.y/2, sz.z/2);
+  dist = Math.max(sz.x,sz.z)*1.5;
+  scene.add(model); place();
+  document.getElementById('load').remove();
+  document.querySelector('.hint').innerHTML +=
+    `<br><b>Frame:</b> ${(sz.x/S).toFixed(0)} × ${(sz.z/S).toFixed(0)} in floor, ${(sz.y/S).toFixed(0)} in tall.`;
+}, e=>{ if(e.lengthComputable) document.querySelector('#bar i').style.width=(e.loaded/e.total*100)+'%'; },
+   err=>{ document.getElementById('load').textContent='Could not load: '+err; });
+
+// ---- annotations ----------------------------------------------------------------
+let kind = KINDS[0], mode = 'mark', anns = [], measA = null;
+try { anns = JSON.parse(localStorage.getItem('sauna_anns')||'[]'); } catch(e){ anns=[]; }
+
+const kdiv = document.getElementById('kinds');
+KINDS.forEach(k=>{ const b=document.createElement('button'); b.textContent=k;
+  if(k===kind) b.className='on';
+  b.onclick=()=>{ kind=k; [...kdiv.children].forEach(c=>c.className=''); b.className='on'; };
+  kdiv.appendChild(b); });
+const setMode = m => { mode=m; measA=null; document.getElementById('meas').style.display='none';
+  document.getElementById('t-mark').className = m==='mark'?'on':'';
+  document.getElementById('t-meas').className = m==='meas'?'on':''; };
+document.getElementById('t-mark').onclick=()=>setMode('mark');
+document.getElementById('t-meas').onclick=()=>setMode('meas');
+document.getElementById('t-undo').onclick=()=>{ anns.pop(); redraw(); };
+
+const fmt = n => { const f=Math.floor(Math.abs(n)/12), i=Math.abs(n)%12;
+  return `${n<0?'-':''}${f}'${i.toFixed(1)}"`; };
+
+function redraw(){
+  [...marks.children].forEach(c=>marks.remove(c));
+  anns.forEach((a,i)=>{
+    const m=new THREE.Mesh(new THREE.SphereGeometry(1.6*S,12,10),
+      new THREE.MeshBasicMaterial({color: a.kind==='Post'?0xA3350E:0x1F5B84}));
+    m.position.set(a.x*S,a.y*S,a.z*S); marks.add(m);
+  });
+  document.getElementById('list').innerHTML = anns.map((a,i)=>
+    `<div class="row"><span class="k">${a.kind}</span>
+     <span class="c">x ${fmt(a.x)} &nbsp; z ${fmt(a.z)} &nbsp; h ${fmt(a.y)}</span>
+     <span class="x" data-i="${i}">✕</span></div>`).join('')
+    || '<p class="note">Nothing marked yet. Pick a label and tap the mesh.<br><br>'
+      +'Tap the <b>three posts</b> first — that gives the far wall and where the sauna ends.<br><br>'
+      +'Then the <b>door sill</b> (bottom of the door) and the two <b>door jambs</b>.</p>';
+  document.querySelectorAll('.x').forEach(x=>x.onclick=e=>{
+    anns.splice(+e.target.dataset.i,1); redraw(); });
+  localStorage.setItem('sauna_anns', JSON.stringify(anns));
+}
+redraw();
+
+const ray = new THREE.Raycaster();
+function pick(cx,cy){
+  if(!model) return null;
+  const r = rnd.domElement.getBoundingClientRect();
+  ray.setFromCamera(new THREE.Vector2(((cx-r.left)/r.width)*2-1, -((cy-r.top)/r.height)*2+1), cam);
+  const hit = ray.intersectObject(model,true)[0];
+  if(!hit) return null;
+  return {x: hit.point.x/S, y: hit.point.y/S, z: hit.point.z/S};
+}
+function tap(cx,cy){
+  const p = pick(cx,cy); if(!p) return;
+  if(mode==='mark'){ anns.push({kind, x:+p.x.toFixed(1), y:+p.y.toFixed(1), z:+p.z.toFixed(1)}); redraw(); }
+  else {
+    if(!measA){ measA=p; document.getElementById('meas').style.display='block';
+      document.getElementById('meas').textContent='first point set — tap the second'; }
+    else {
+      const d=Math.hypot(p.x-measA.x,p.y-measA.y,p.z-measA.z);
+      const dh=Math.hypot(p.x-measA.x,p.z-measA.z);
+      document.getElementById('meas').innerHTML =
+        `${d.toFixed(1)} in &nbsp;=&nbsp; ${fmt(d)}<br>`+
+        `<span style="font-size:12px;font-weight:400">horizontal ${fmt(dh)} · vertical ${fmt(Math.abs(p.y-measA.y))}</span>`;
+      measA=null;
+    }
+  }
+}
+
+// ---- pointer: orbit / pinch / pan, and a tap that is not a drag -------------------
+const pts=new Map(); let pinch0=null,mid0=null,down=null,moved=0;
+const mid=()=>{const a=[...pts.values()];return{x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2}};
+const spread=()=>{const a=[...pts.values()];return Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y)};
+function pan(dx,dy){const s=dist*0.0016;
+  target.x-=dx*s*Math.cos(rot.th); target.z-=dx*s*Math.sin(rot.th); target.y+=dy*s;}
+const cv=rnd.domElement;
+cv.addEventListener('pointerdown',e=>{ cv.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pts.size===1){ down={x:e.clientX,y:e.clientY}; moved=0; }
+  if(pts.size===2){ pinch0=spread(); mid0=mid(); down=null; } });
+['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,e=>{
+  if(t==='pointerup' && down && moved<6) tap(e.clientX,e.clientY);
+  pts.delete(e.pointerId); pinch0=null; if(pts.size===0) down=null; }));
+cv.addEventListener('pointermove',e=>{
+  const p=pts.get(e.pointerId); if(!p) return;
+  const dx=e.clientX-p.x, dy=e.clientY-p.y;
+  pts.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  moved += Math.abs(dx)+Math.abs(dy);
+  if(pts.size===1){
+    if(e.buttons===2) pan(dx,dy);
+    else { rot.th-=dx*0.007; rot.ph=Math.max(0.06,Math.min(Math.PI-0.06,rot.ph-dy*0.007)); }
+    place();
+  } else if(pts.size===2&&pinch0){
+    const sp=spread(),m=mid();
+    dist=Math.max(1,Math.min(300,dist*(pinch0/sp))); pinch0=sp;
+    pan(m.x-mid0.x,m.y-mid0.y); mid0=m; place();
+  }});
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+cv.addEventListener('wheel',e=>{e.preventDefault();
+  dist=Math.max(1,Math.min(300,dist*(1+Math.sign(e.deltaY)*0.1))); place();},{passive:false});
+
+// ---- export ----------------------------------------------------------------------
+const payload = () => JSON.stringify({frame:{rot_deg:ROT_DEG,units:'inches',
+  note:'room frame: origin at min corner, y measured up from the floor'},
+  annotations:anns}, null, 1);
+document.getElementById('copy').onclick=async()=>{
+  try{ await navigator.clipboard.writeText(payload());
+       document.getElementById('copy').textContent='Copied ✓';
+       setTimeout(()=>document.getElementById('copy').textContent='Copy JSON',1600);
+  }catch(e){ prompt('Copy this:', payload()); } };
+document.getElementById('dl').onclick=()=>{
+  const b=new Blob([payload()],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+  a.download='sauna-annotations.json'; a.click(); };
+document.getElementById('clr').onclick=()=>{ if(confirm('Clear all marks?')){ anns=[]; redraw(); } };
+
+function resize(){const w=el.clientWidth,h=el.clientHeight;
+  cam.aspect=w/h;cam.updateProjectionMatrix();rnd.setSize(w,h,false);}
+addEventListener('resize',resize); resize(); place();
+(function loop(){requestAnimationFrame(loop);rnd.render(scene,cam);})();
+</script>
+</body>
+</html>
