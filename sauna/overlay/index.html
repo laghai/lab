@@ -127,10 +127,14 @@ fetch('../assets/shell.json').then(r=>r.json()).then(sh=>{
      Math.sin(A), 0,  Math.cos(A), -oz,
      0,           0,  0,            1);
 
+  // Fold the inch->scene scale INTO the transform. Applying M and then setting .scale
+  // separately scales the geometry but NOT the baked translation, which left the mesh
+  // ~90 scene units adrift of the box while looking the right size. Co-registration is
+  // the one thing this page exists to get right, so it is one matrix, not two steps.
+  const MS = new THREE.Matrix4().makeScale(S, S, S).multiply(M);
   new THREE.GLTFLoader().load('../assets/scan.glb', g=>{
     const m = g.scene;
-    m.applyMatrix4(M);                 // raw -> canonical, in inches
-    m.scale.multiplyScalar(S);         // inches -> scene
+    m.applyMatrix4(MS);                // raw inches -> canonical -> scene units
     m.updateMatrixWorld(true);
     m.traverse(o=>{ if(o.isMesh){ o.material.transparent=true; o.material.depthWrite=true; }});
     G.scan.add(m);
